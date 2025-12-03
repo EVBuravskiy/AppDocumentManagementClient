@@ -1,0 +1,9 @@
+﻿namespace AppDocumentManagement.EmployeeService.Models
+{
+    public class Department
+    {
+        public int DepartmentID { get; set; }
+        public string DepartmentTitle { get; set; }
+        public string DepartmentShortTitle { get; set; }
+    }
+}

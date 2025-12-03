@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+option csharp_namespace = "AppDocumentManagement.EmployeeService";
+
+package employeeService;
+
+service employeeApi{
+    //Employee
+    rpc AddEmployee (MEmployee) returns (BoolReply);
+    rpc GetAllEmployees (EmptyRequest) returns (MEmployeesListReply);
+    rpc GetAllAvailableEmployees(EmptyRequest) returns (MEmployeesListReply);
+    rpc GetEmployeeByID(IDRequest) returns (MEmployee);
+    rpc GetEmployeesByDepartmentID(IDRequest) returns (MEmployeesListReply);
+    rpc RemoveEmployee(IDRequest) returns (BoolReply);
+    rpc UpdateEmployee(MEmployee) returns (BoolReply);
+    rpc GetGeneralDirector(EmptyRequest) returns (MEmployee);
+    rpc CheckForAviableEmployee(EmptyRequest) returns (BoolReply);
+
+    //EmployeePhoto
+    rpc AddEmployeePhoto(MEmployeePhoto) returns (BoolReply);
+    rpc GetEmployeePhotos(EmptyRequest) returns (MEmployeePhotoList);
+    rpc GetEmployeePhotoByEmployeeID(IDRequest) returns (MEmployeePhoto);
+
+    //Department
+    rpc AddDepartment (MDepartment) returns (BoolReply);
+    rpc GetAllDepartments (EmptyRequest) returns (MDepartmentListReply);
+    rpc GetDepartmentByID(IDRequest) returns (MDepartment);
+    rpc UpdateDepartment(MDepartment) returns (BoolReply);
+    rpc RemoveDepartment(IDRequest) returns (BoolReply);
+
+    //RegistredUser
+    rpc AddRegistratedUser(MRegistredUser) returns (BoolReply);
+    rpc GetAllRegistredUsers(EmptyRequest) returns (MRegistredUserList);
+    rpc GetRegistredUserByEmployeeID(IDRequest) returns (MRegistredUser);
+    rpc UpdateRegistratedUser(MRegistredUser) returns (BoolReply);
+    rpc RemoveRegistratedUser(IDRequest) returns (BoolReply);
+    rpc GetRegistratedUser(StringRequest) returns (MRegistredUser);
+    rpc CheckAviableAdministrator(EmptyRequest) returns (BoolReply);
+
+}
+
+message StringRequest{
+    string login = 1;
+    string password = 2;
+}
+
+message BoolReply{
+    bool result = 1;
+}
+
+message EmptyRequest{}
+
+message IDRequest{
+    int32 ID = 1;
+}
+
+//Employee
+message MEmployee{
+        int32 EmployeeID = 1;
+        string EmployeeFirstName  = 2;
+        string EmployeeLastName = 3;
+        string EmployeeMiddleName = 4;
+        int32 DepartmentID = 5;
+        string Position = 6;
+        int32 EmployeeRole = 7;
+        string EmployeePhone = 8;
+        string EmployeeEmail = 9;
+        string EmployeeInformation = 10;
+        bool IsDeleted = 11;
+}
+
+message MEmployeesListReply{
+    repeated MEmployee Employees = 1;
+}
+
+////EmployeePhoto
+message MEmployeePhoto{
+    int32 EmployeePhotoID = 1;
+    string FileName = 2;
+    string FileExtension = 3;
+    bytes FileData = 4;
+    int32 EmployeeID = 5;
+}
+
+message MEmployeePhotoList{
+    repeated MEmployeePhoto mEmployeePhotos = 1;
+}
+
+//Department
+message MDepartment{
+        int32 DepartmentID = 1;
+        string DepartmentTitle = 2;
+        string DepartmentShortTitle = 3;
+}
+
+message MDepartmentListReply{
+    repeated MDepartment MDepartments = 1;
+}
+
+//RegistredUser
+message MRegistredUser{
+    int32 RegistredUserID = 1;
+    string RegistredUserLogin = 2;
+    string RegistredUserPassword = 3;
+    int32 UserRole = 4;
+    string RegistredUserTime = 5;
+    int32 EmployeeID = 6;
+    bool IsRegistred = 7;
+}
+
+message MRegistredUserList{
+    repeated MRegistredUser MRegistredUsers = 1;
+}

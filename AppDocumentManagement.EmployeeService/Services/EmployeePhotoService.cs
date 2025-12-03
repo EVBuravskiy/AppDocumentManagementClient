@@ -1,0 +1,47 @@
+﻿using AppDocumentManagement.EmployeeService.Converters;
+using AppDocumentManagement.EmployeeService.Models;
+using Grpc.Net.Client;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AppDocumentManagement.EmployeeService.Service
+{
+    public class EmployeePhotoService
+    {
+        public async Task<bool> AddEmployeePhoto(EmployeePhoto employeePhoto)
+        {
+            MEmployeePhoto mEmployeePhoto = MEmployeePhotoConverter.ConvertToMEmployeePhoto(employeePhoto);
+            using var channel = GrpcChannel.ForAddress("http://localhost:6001");
+            var client = new employeeApi.employeeApiClient(channel);
+            var boolReply = client.AddEmployeePhoto(mEmployeePhoto);
+            return boolReply.Result;
+        }
+
+        public async Task<List<EmployeePhoto>> GetEmployeePhotos()
+        {
+            using var channel = GrpcChannel.ForAddress("http://localhost:6001");
+            var client = new employeeApi.employeeApiClient(channel);
+            MEmployeePhotoList mEmployeePhotoList = client.GetEmployeePhotos(new EmptyRequest());
+            List<EmployeePhoto> employeePhotos = new List<EmployeePhoto>();
+            foreach(MEmployeePhoto mEmployeePhoto in mEmployeePhotoList.MEmployeePhotos)
+            {
+                EmployeePhoto employeePhoto = MEmployeePhotoConverter.ConvertToEmployeePhoto(mEmployeePhoto);
+                employeePhotos.Add(employeePhoto);
+            }
+            return employeePhotos;
+        }
+
+        public async Task<EmployeePhoto> GetEmployeePhotoByEmployeeID(int employeeID)
+        {
+            IDRequest iDRequest = new IDRequest() { ID = employeeID };
+            using var channel = GrpcChannel.ForAddress("http://localhost:6001");
+            var client = new employeeApi.employeeApiClient(channel);
+            MEmployeePhoto mEmployeePhoto = client.GetEmployeePhotoByEmployeeID(iDRequest);
+            EmployeePhoto employeePhoto = MEmployeePhotoConverter.ConvertToEmployeePhoto(mEmployeePhoto);
+            return employeePhoto;
+        }
+    }
+}
