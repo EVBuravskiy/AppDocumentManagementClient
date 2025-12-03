@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+option csharp_namespace = "AppDocumentManagement.InternalDocumentService";
+
+package internalDocumentService;
+
+service internalDocumentAPI {
+  //InternalDocument
+  rpc AddInternalDocument(MInternalDocument) returns (BoolReply);
+  rpc GetInternalDocuments(EmptyRequest) returns (MInternalDocumentList);
+  rpc GetInternalDocumentsByEmployeeRecievedDocumentID(IDRequest) returns (MInternalDocumentList);
+  rpc RemoveInternalDocument(IDRequest) returns (BoolReply);
+  rpc UpdateInternalDocument(MInternalDocument) returns (BoolReply);
+
+  //InternalDocumentFile
+  rpc AddInternalDocumentFile(MInternalDocumentFile) returns (BoolReply);
+  rpc AddInternalDocumentFiles(MInternalDocumentFileList) returns (BoolReply);
+  rpc GetInternalDocumentFiles(IDRequest) returns (MInternalDocumentFileList);
+  rpc RemoveInternalDocumentFile(IDRequest) returns (BoolReply);
+}
+
+message BoolReply{
+    bool result = 1;
+}
+
+message EmptyRequest{}
+
+message IDRequest{
+    int32 ID = 1;
+}
+
+//InternalDocument 
+message MInternalDocument{
+	int32 InternalDocumentID = 1;
+	int32 InternalDocumentType = 2;
+	string InternalDocumentDate = 3;
+	int32 InternalDocumentSygnatoryID = 4;
+	int32 InternalDocumentApprovedManagerID = 5;
+	int32 InternalDocumentRecievedEmployeeID = 6;
+	string RegistrationDate = 7;
+	string InternalDocumentRegistrationNumber = 8;
+	bool IsRegistated = 9;
+	string SendingDate = 10;
+	int32 InternalDocumentStatus = 11;
+	string InternalDocumentTitle = 12;
+	string InternalDocumentContent = 13;
+}
+
+message MInternalDocumentList{
+	repeated MInternalDocument MIntrernalDocuments = 1;
+}
+
+//InternalDocumentFile
+message MInternalDocumentFile{
+	int32 InternalDocumentFileID = 1;
+	string FileName = 2;
+	string FileExtension = 3;
+	bytes FileData = 4;
+	int32 InternalDocumentID = 5;
+}
+
+message MInternalDocumentFileList{
+	repeated MInternalDocumentFile MInternalDocumentFiles = 1;
+}
