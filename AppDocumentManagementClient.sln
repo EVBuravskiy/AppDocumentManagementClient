@@ -5,6 +5,10 @@ VisualStudioVersion = 17.14.36127.28 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDocumentManagement.EmployeeService", "AppDocumentManagement.EmployeeService\AppDocumentManagement.EmployeeService.csproj", "{6EA211DE-C957-4DB4-A98D-B1F46C35F1F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDocumentManagement.ExternalDocumentService", "AppDocumentManagement.ExternalDocumentService\AppDocumentManagement.ExternalDocumentService.csproj", "{F131CACE-9063-4ED7-A461-9BFE54E361F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDocumentManagement.Models", "AppDocumentManagement.Models\AppDocumentManagement.Models.csproj", "{E0833431-1E39-4F65-A905-2B4BCB0CD2BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{6EA211DE-C957-4DB4-A98D-B1F46C35F1F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EA211DE-C957-4DB4-A98D-B1F46C35F1F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EA211DE-C957-4DB4-A98D-B1F46C35F1F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F131CACE-9063-4ED7-A461-9BFE54E361F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F131CACE-9063-4ED7-A461-9BFE54E361F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F131CACE-9063-4ED7-A461-9BFE54E361F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F131CACE-9063-4ED7-A461-9BFE54E361F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0833431-1E39-4F65-A905-2B4BCB0CD2BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0833431-1E39-4F65-A905-2B4BCB0CD2BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0833431-1E39-4F65-A905-2B4BCB0CD2BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0833431-1E39-4F65-A905-2B4BCB0CD2BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

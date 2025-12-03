@@ -1,11 +1,6 @@
 ﻿using AppDocumentManagement.EmployeeService.Converters;
-using AppDocumentManagement.EmployeeService.Models;
+using AppDocumentManagement.Models;
 using Grpc.Net.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppDocumentManagement.EmployeeService.Service
 {

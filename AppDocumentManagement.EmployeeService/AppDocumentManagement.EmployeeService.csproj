@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AppDocumentManagement.Models\AppDocumentManagement.Models.csproj" />
+  </ItemGroup>
+
 </Project>

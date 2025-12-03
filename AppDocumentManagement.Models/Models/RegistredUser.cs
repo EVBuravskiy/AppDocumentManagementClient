@@ -1,4 +1,4 @@
-﻿namespace AppDocumentManagement.EmployeeService.Models
+﻿namespace AppDocumentManagement.Models
 {
     public class RegistredUser
     {

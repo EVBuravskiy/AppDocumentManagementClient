@@ -1,5 +1,5 @@
 ﻿using AppDocumentManagement.EmployeeService.Converters;
-using AppDocumentManagement.EmployeeService.Models;
+using AppDocumentManagement.Models;
 using Grpc.Net.Client;
 
 namespace AppDocumentManagement.EmployeeService.Services

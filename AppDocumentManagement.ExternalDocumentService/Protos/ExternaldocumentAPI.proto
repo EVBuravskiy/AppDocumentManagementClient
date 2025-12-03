@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+option csharp_namespace = "AppDocumentManagement.ExternalDocumentService";
+
+package externalDocumentService;
+
+service externalDocumentAPI {
+	//ExternalDocument
+	rpc AddExternalDocument(MExternalDocument) returns (BoolReply);
+	rpc GetAllExternalDocuments(EmptyRequest) returns (MExternalDocumentList);
+	rpc GetExternalDocumentsByEmployeeReceivedDocumentID(IDRequest) returns (MExternalDocumentList);
+	rpc UpdateExternalDocument(MExternalDocument) returns (BoolReply);
+	rpc RemoveExternalDocument(IDRequest) returns (BoolReply);
+
+	//ExternalDocumentFile
+	rpc AddExternalDocumentFile(MExternalDocumentFile) returns(BoolReply);
+	rpc AddExternalDocumentFiles(MExternalDocumentFileList) returns (BoolReply);
+	rpc GetExternalDocumentFiles(IDRequest) returns (MExternalDocumentFileList);
+	rpc RemoveExternalDocumentFile(IDRequest) returns (BoolReply);
+
+	//ContractorCompany
+	rpc AddContractorCompany(MContractorCompany) returns(BoolReply);
+	rpc GetContractorCompanies(EmptyRequest) returns(MContractorCompanyList);
+	rpc GetAvailableContractorCompanies(EmptyRequest) returns(MContractorCompanyList);
+	rpc GetContractorCompanyByID(IDRequest) returns (MContractorCompany);
+	rpc UpdateContractorCompany(MContractorCompany) returns(BoolReply);
+	rpc RemoveContractorCompany(IDRequest) returns(BoolReply);
+}
+
+message BoolReply{
+    bool result = 1;
+}
+
+message EmptyRequest{}
+
+message IDRequest{
+    int32 ID = 1;
+}
+
+//MExternalDocument
+message MExternalDocument{
+	int32 ExternalDocumentID = 1;
+	string ExternalDocumentTitle = 2;
+	string ExternalDocumentNumber = 3;
+	string ExternalDocumentDate = 4;
+	int32 ContractorCompanyID = 5;
+	int32 ExternalDocumentType = 6;
+	repeated MExternalDocumentFile ExternalDocumentFiles = 7;
+	string ExternalDocumentRegistrationDate = 8;
+	string ExternalDocumentRegistrationNumber = 9;
+	bool IsRegistrated = 10;
+	int32 ReceivingEmployeeID = 11;
+	string ExternalDocumentSendingDate = 12;
+	int32 ExternalDocumentStatus = 13;
+	bool IsDeleted = 14;
+}
+
+message MExternalDocumentList{
+	repeated MExternalDocument MExternalDocuments = 1;
+}
+
+//MExternalDocumentFile
+message MExternalDocumentFile{
+	int32 ExternalDocumentFileID = 1;
+	string ExternalDocumentFileName = 2;
+	string ExternalDocumentFileExternsion = 3;
+	bytes FileData = 4; 
+	int32 ExternalDocumentID = 5;
+}
+
+message MExternalDocumentFileList{
+	repeated MExternalDocumentFile MEsternalDocumentFiles = 1;
+}
+
+//MContractorCompany
+message MContractorCompany{
+	int32 ContractorCompanyID = 1;
+	string ContractorCompanyTitle = 2;
+	string ContractorCompanyShortTitle = 3;
+	string ContractorCompanyAddress = 4;
+	string ContractorCompanyPhone = 5;
+	string ContractorCompanyEmail = 6;
+	string ContractorCompanyInformation = 7;
+	bool IsDeleted = 8;
+}
+
+message MContractorCompanyList{
+	repeated MContractorCompany MContractorCompanyes = 1;
+}

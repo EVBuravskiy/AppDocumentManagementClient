@@ -1,4 +1,4 @@
-﻿using AppDocumentManagement.EmployeeService.Models;
+﻿using AppDocumentManagement.Models;
 using Google.Protobuf;
 
 namespace AppDocumentManagement.EmployeeService.Converters
