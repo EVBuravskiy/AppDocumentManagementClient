@@ -16,9 +16,21 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             externalDocument.RegistrationDate = DateTime.Parse(mExternalDocument.ExternalDocumentRegistrationDate);
             externalDocument.IsRegistated = mExternalDocument.IsRegistrated;
             externalDocument.ReceivingEmployeeID = mExternalDocument.ReceivingEmployeeID;
-            externalDocument.ExternalDocumentSendingDate = DateTime.Parse(mExternalDocument.ExternalDocumentSendingDate);
+            if (mExternalDocument.ExternalDocumentSendingDate != "")
+            {
+                externalDocument.ExternalDocumentSendingDate = DateTime.Parse(mExternalDocument.ExternalDocumentSendingDate);
+            }
             externalDocument.ExternalDocumentStatus = DocumentStatusConverter.BackConvert(mExternalDocument.ExternalDocumentStatus);
             externalDocument.IsDeleted = mExternalDocument.IsDeleted;
+            if (mExternalDocument.ExternalDocumentFiles != null && mExternalDocument.ExternalDocumentFiles.Count > 0)
+            {
+                externalDocument.ExternalDocumentFiles = new List<ExternalDocumentFile>();
+                foreach (MExternalDocumentFile mfile in mExternalDocument.ExternalDocumentFiles)
+                {
+                    ExternalDocumentFile file = MExternalDocumentFileConverter.ConvertToExternalDocumentFile(mfile);
+                    externalDocument.ExternalDocumentFiles.Add(file);
+                }
+            }
             return externalDocument;
         }
 
@@ -29,14 +41,39 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             mExternalDocument.ExternalDocumentTitle = externalDocument.ExternalDocumentTitle;
             mExternalDocument.ExternalDocumentNumber = externalDocument.ExternalDocumentNumber;
             mExternalDocument.ExternalDocumentDate = externalDocument.ExternalDocumentDate.ToShortDateString();
-            mExternalDocument.ContractorCompanyID = externalDocument.ContractorCompanyID;
+            if (externalDocument.ContractorCompany != null)
+            {
+                mExternalDocument.ContractorCompanyID = externalDocument.ContractorCompany.ContractorCompanyID;
+            }
+            else if (externalDocument.ContractorCompanyID != 0)
+            {
+                mExternalDocument.ContractorCompanyID = externalDocument.ContractorCompanyID;
+            }
             mExternalDocument.ExternalDocumentType = ExternalDocumentTypeConverter.ToIntConvert(externalDocument.ExternalDocumentType);
             mExternalDocument.ExternalDocumentRegistrationDate = externalDocument.RegistrationDate.ToShortDateString();
             mExternalDocument.IsRegistrated = externalDocument.IsRegistated;
-            mExternalDocument.ReceivingEmployeeID = externalDocument.ReceivingEmployeeID ?? 0;
-            mExternalDocument.ExternalDocumentSendingDate = externalDocument.ExternalDocumentSendingDate.ToString();
+            if (externalDocument.ReceivingEmployee != null)
+            {
+                mExternalDocument.ReceivingEmployeeID = externalDocument.ReceivingEmployee.EmployeeID;
+            }
+            else if (externalDocument.ReceivingEmployeeID != 0)
+            {
+                mExternalDocument.ReceivingEmployeeID = externalDocument.ReceivingEmployeeID ?? 0;
+            }
+            if (externalDocument.ExternalDocumentSendingDate != null)
+            {
+                mExternalDocument.ExternalDocumentSendingDate = externalDocument.ExternalDocumentSendingDate.ToString();
+            }
             mExternalDocument.ExternalDocumentStatus = DocumentStatusConverter.ToIntConvert(externalDocument.ExternalDocumentStatus);
             mExternalDocument.IsDeleted = externalDocument.IsDeleted;
+            if (externalDocument.ExternalDocumentFiles != null && externalDocument.ExternalDocumentFiles.Count > 0)
+            {
+                foreach (ExternalDocumentFile file in externalDocument.ExternalDocumentFiles)
+                {
+                    MExternalDocumentFile mExternalDocumentFile = MExternalDocumentFileConverter.ConvertToMExternalDocumentFile(file);
+                    mExternalDocument.ExternalDocumentFiles.Add(mExternalDocumentFile);
+                }
+            }
             return mExternalDocument;
         }
     }
