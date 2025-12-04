@@ -9,7 +9,10 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
         public async Task<bool> AddExternalDocumentFile(ExternalDocumentFile externalDocumentFile)
         {
             MExternalDocumentFile mExternalDocumentFile = MExternalDocumentFileConverter.ConvertToMExternalDocumentFile(externalDocumentFile);
-            using var channel = GrpcChannel.ForAddress("http://localhost:6002");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6002", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024
+            });
             var client = new externalDocumentAPI.externalDocumentAPIClient(channel);
             var boolReply = client.AddExternalDocumentFile(mExternalDocumentFile);
             return boolReply.Result;
@@ -23,7 +26,10 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
                 MExternalDocumentFile mExternalDocumentFile = MExternalDocumentFileConverter.ConvertToMExternalDocumentFile(file);
                 mExternalDocumentFileList.MEsternalDocumentFiles.Add(mExternalDocumentFile);
             }
-            using var channel = GrpcChannel.ForAddress("http://localhost:6002");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6002", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024
+            });
             var client = new externalDocumentAPI.externalDocumentAPIClient(channel);
             var boolReply = client.AddExternalDocumentFiles(mExternalDocumentFileList);
             return boolReply.Result;
@@ -32,7 +38,10 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
         public async Task<List<ExternalDocumentFile>> GetExternalDocumentFiles(int externalDocumentID)
         {
             IDRequest iDRequest = new IDRequest() { ID = externalDocumentID };
-            using var channel = GrpcChannel.ForAddress("http://localhost:6002");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6002", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 100 * 1024 * 1024
+            });
             var client = new externalDocumentAPI.externalDocumentAPIClient(channel);
             MExternalDocumentFileList mExternalDocumentFileList = client.GetExternalDocumentFiles(iDRequest);
             List<ExternalDocumentFile> externalDocumentFiles = new List<ExternalDocumentFile>();
@@ -47,7 +56,10 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
         public async Task<bool> RemoveExternalDocumentFile(int externalDocumentFileID)
         {
             IDRequest iDRequest = new IDRequest() { ID= externalDocumentFileID };
-            using var channel = GrpcChannel.ForAddress("http://localhost:6002");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6002", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024
+            });
             var client = new externalDocumentAPI.externalDocumentAPIClient(channel);
             var boolReply = client.RemoveExternalDocumentFile(iDRequest);
             return boolReply.Result;

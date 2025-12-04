@@ -308,7 +308,7 @@ namespace AppDocumentManagement.UI.ViewModels
         {
             Employees.Clear();
             EmployesService employesService = new EmployesService();
-            Employees = employesService.GetAllEmployees().Result;
+            Employees = employesService.GetAllAvailableEmployees().Result;
             if (Departments.Count > 0)
             {
                 foreach (Employee employee in Employees)

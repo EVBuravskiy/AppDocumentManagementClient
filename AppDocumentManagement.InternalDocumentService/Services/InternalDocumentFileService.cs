@@ -9,7 +9,10 @@ namespace AppDocumentManagement.InternalDocumentService.Services
         public async Task<bool> AddInternalDocumentFile(InternalDocumentFile internalDocumentFile)
         {
             MInternalDocumentFile mInternalDocumentFile = MInternalDocumentFileConverter.ConvertToMInternalDocumentFile(internalDocumentFile);
-            using var channel = GrpcChannel.ForAddress("http://localhost:6003");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6003", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024 
+            });
             var client = new internalDocumentAPI.internalDocumentAPIClient(channel);
             var boolReply = client.AddInternalDocumentFile(mInternalDocumentFile);
             return boolReply.Result;
@@ -23,7 +26,10 @@ namespace AppDocumentManagement.InternalDocumentService.Services
                 MInternalDocumentFile mInternalDocumentFile = MInternalDocumentFileConverter.ConvertToMInternalDocumentFile(internalDocumentFile);
                 mInternalDocumentFileList.MInternalDocumentFiles.Add(mInternalDocumentFile);
             }
-            using var channel = GrpcChannel.ForAddress("http://localhost:6003");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6003", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024
+            });
             var client = new internalDocumentAPI.internalDocumentAPIClient(channel);
             var boolReply = client.AddInternalDocumentFiles(mInternalDocumentFileList);
             return boolReply.Result;
@@ -31,7 +37,10 @@ namespace AppDocumentManagement.InternalDocumentService.Services
         public async Task<List<InternalDocumentFile>> GetInternalDocumentFiles(int internalDocumentID)
         {
             IDRequest iDRequest = new IDRequest() { ID = internalDocumentID };
-            using var channel = GrpcChannel.ForAddress("http://localhost:6003");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6003", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024
+            });
             var client = new internalDocumentAPI.internalDocumentAPIClient(channel);
             MInternalDocumentFileList mInternalDocumentFileList = client.GetInternalDocumentFiles(iDRequest);
             List<InternalDocumentFile> internalDocumentFiles = new List<InternalDocumentFile>();
@@ -46,7 +55,10 @@ namespace AppDocumentManagement.InternalDocumentService.Services
         public async Task<bool> RemoveInternalDocumentFile(int internalDocumentFileID)
         {
             IDRequest iDRequest = new IDRequest() { ID= internalDocumentFileID };
-            using var channel = GrpcChannel.ForAddress("http://localhost:6003");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6003", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024
+            });
             var client = new internalDocumentAPI.internalDocumentAPIClient(channel);
             var boolReply = client.RemoveInternalDocumentFile(iDRequest);
             return boolReply.Result;

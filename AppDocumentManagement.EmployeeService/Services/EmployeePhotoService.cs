@@ -9,7 +9,10 @@ namespace AppDocumentManagement.EmployeeService.Service
         public async Task<bool> AddEmployeePhoto(EmployeePhoto employeePhoto)
         {
             MEmployeePhoto mEmployeePhoto = MEmployeePhotoConverter.ConvertToMEmployeePhoto(employeePhoto);
-            using var channel = GrpcChannel.ForAddress("http://localhost:6001");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6001", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024 
+            });
             var client = new employeeApi.employeeApiClient(channel);
             var boolReply = client.AddEmployeePhoto(mEmployeePhoto);
             return boolReply.Result;
@@ -17,7 +20,10 @@ namespace AppDocumentManagement.EmployeeService.Service
 
         public async Task<List<EmployeePhoto>> GetEmployeePhotos()
         {
-            using var channel = GrpcChannel.ForAddress("http://localhost:6001");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6001", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024 
+            });
             var client = new employeeApi.employeeApiClient(channel);
             MEmployeePhotoList mEmployeePhotoList = client.GetEmployeePhotos(new EmptyRequest());
             List<EmployeePhoto> employeePhotos = new List<EmployeePhoto>();
@@ -32,11 +38,18 @@ namespace AppDocumentManagement.EmployeeService.Service
         public async Task<EmployeePhoto> GetEmployeePhotoByEmployeeID(int employeeID)
         {
             IDRequest iDRequest = new IDRequest() { ID = employeeID };
-            using var channel = GrpcChannel.ForAddress("http://localhost:6001");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6001", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024
+            });
             var client = new employeeApi.employeeApiClient(channel);
             MEmployeePhoto mEmployeePhoto = client.GetEmployeePhotoByEmployeeID(iDRequest);
-            EmployeePhoto employeePhoto = MEmployeePhotoConverter.ConvertToEmployeePhoto(mEmployeePhoto);
-            return employeePhoto;
+            if (mEmployeePhoto != null)
+            {
+                EmployeePhoto employeePhoto = MEmployeePhotoConverter.ConvertToEmployeePhoto(mEmployeePhoto);
+                return employeePhoto;
+            }
+            return null;
         }
     }
 }

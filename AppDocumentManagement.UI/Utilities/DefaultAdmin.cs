@@ -48,7 +48,8 @@ namespace AppDocumentManagement.UI.Utilities
             defaultEmployee.EmployeeMiddleName = "Default";
             defaultEmployee.EmployeeRole = EmployeeRole.Performer;
             DepartmentService departmentService = new DepartmentService();
-            Department department = departmentService.GetDepartmentByID(defaultDepartment.DepartmentID).Result;
+            List<Department> departments = departmentService.GetAllDepartments().Result;
+            Department department = departments.FirstOrDefault();
             defaultEmployee.DepartmentID = department.DepartmentID;
             EmployesService employesService = new EmployesService();
             bool result = employesService.AddEmployee(defaultEmployee).Result;
@@ -64,7 +65,8 @@ namespace AppDocumentManagement.UI.Utilities
             registredUser.RegistredUserPassword = PassHasher.CalculateMD5Hash(password);
             registredUser.IsRegistered = true;
             EmployesService employesService = new EmployesService();
-            Employee employee = employesService.GetEmployeeByID(defaultEmployee.EmployeeID).Result;
+            List<Employee> employees = employesService.GetAllEmployees().Result;
+            Employee employee = employees.FirstOrDefault();
             registredUser.EmployeeID = employee.EmployeeID;
             registredUser.UserRole = UserRole.Administrator;
             RegisterUserService registerUserService = new RegisterUserService();

@@ -104,7 +104,10 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 _selectedDepartment = value;
                 OnPropertyChanged(nameof(SelectedDepartment));
-                SelectedDepartmentIndex = DepartmentConverter.DepartmentToInt(value, DepartmentList);
+                if (value != null)
+                {
+                    SelectedDepartmentIndex = DepartmentConverter.DepartmentToInt(value, DepartmentList);
+                }
             }
         }
 
@@ -200,7 +203,8 @@ namespace AppDocumentManagement.UI.ViewModels
             EmployeeMiddleName = selectedEmployee.EmployeeMiddleName;
             SelectedEmployeeRole = selectedEmployee.EmployeeRole;
             EmployeePosition = selectedEmployee.Position;
-            SelectedDepartment = selectedEmployee.EmployeeDepartment;
+            Department department = DepartmentList.SingleOrDefault(d => d.DepartmentID == selectedEmployee.DepartmentID);
+            SelectedDepartment = department;
             GetEmployeePhotoPath();
             SelectedEmployeeID = selectedEmployee.EmployeeID;
             EmployeePhone = selectedEmployee.EmployeePhone;
@@ -279,14 +283,6 @@ namespace AppDocumentManagement.UI.ViewModels
             newEmployee.EmployeeRole = SelectedEmployeeRole;
             newEmployee.Position = EmployeePosition;
             newEmployee.DepartmentID = SelectedDepartment.DepartmentID;
-            if (EmployeeImagePath != "/Resources/Images/defaultContact.png")
-            {
-                string fileName = FileProcessing.GetFileName(EmployeeImagePath);
-                if (!FileProcessing.CheckFileExist(fileName))
-                {
-                    newEmployee.EmployeePhoto = CreateEmployeePhoto(EmployeeImagePath);
-                }
-            }
             newEmployee.EmployeePhone = ValidateData.TrimInputString(EmployeePhone);
             newEmployee.EmployeeEmail = ValidateData.TrimInputString(EmployeeEmail);
             newEmployee.EmployeeInformation = EmployeeInformation;
@@ -304,7 +300,7 @@ namespace AppDocumentManagement.UI.ViewModels
             if (SelectedEmployeeRole == EmployeeRole.GeneralDirector)
             {
                 Employee generalDirector = employesService.GetGeneralDirector().Result;
-                if (generalDirector != null && generalDirector.EmployeeFullName != newEmployee.EmployeeFullName)
+                if (generalDirector.EmployeeID != 0 && generalDirector.EmployeeFullName != newEmployee.EmployeeFullName)
                 {
                     MessageBox.Show("Должность генерального директора организации занята! Выберите другую должность или проверьте вводимые данные");
                     return;
@@ -329,6 +325,34 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 newEmployee.EmployeeID = SelectedEmployeeID;
                 employesService.UpdateEmployee(newEmployee);
+            }
+            if (EmployeeImagePath != "/Resources/Images/defaultContact.png")
+            {
+                string fileName = FileProcessing.GetFileName(EmployeeImagePath);
+                int employeeID = 0;
+                if(SelectedEmployeeID == 0)
+                {
+                    List<Employee> employees = employesService.GetAllEmployees().Result;
+                    Employee addedEmployee = employees.SingleOrDefault(e => e.EmployeeFullName == newEmployee.EmployeeFullName);
+                    if (addedEmployee != null)
+                    {
+                        employeeID = addedEmployee.EmployeeID;
+                    }
+                }
+                else
+                {
+                    employeeID = SelectedEmployeeID;
+                }
+                if (!FileProcessing.CheckFileExist(fileName))
+                {
+                    newEmployee.EmployeePhoto = CreateEmployeePhoto(EmployeeImagePath, employeeID);
+                }
+                EmployeePhotoService photoService = new EmployeePhotoService();
+                EmployeePhoto employeePhoto = photoService.GetEmployeePhotoByEmployeeID(newEmployee.EmployeeID).Result;
+                if (employeePhoto != null)
+                {
+                    photoService.AddEmployeePhoto(newEmployee.EmployeePhoto);
+                }
             }
             MessageBox.Show("Сохранение выполнено");
             EmployeeWindow.Close();
@@ -406,14 +430,14 @@ namespace AppDocumentManagement.UI.ViewModels
             EmployeeImagePath = filePath;
         }
 
-        private EmployeePhoto CreateEmployeePhoto(string inputPhotoPath)
+        private EmployeePhoto CreateEmployeePhoto(string inputPhotoPath, int employeeID)
         {
             string photoPath = FileProcessing.CopyFileToTempFolder(inputPhotoPath);
             EmployeePhoto employeePhoto = new EmployeePhoto();
             employeePhoto.FileName = FileProcessing.GetFileName(photoPath);
             employeePhoto.FileExtension = FileProcessing.GetFileExtension(photoPath);
             employeePhoto.FileData = FileProcessing.GetFileData(photoPath);
-            employeePhoto.Employee = employee;
+            employeePhoto.EmployeeID = employeeID;
             employeePhoto.PhotoPath = photoPath;
             return employeePhoto;
         }

@@ -235,7 +235,7 @@
                                             Width="100">
                                         <Image Width="100"
                                                Height="100"
-                                               Source="{Binding DeputyGeneralDirector.EmployeePhoto.FilePath,
+                                               Source="{Binding DeputyGeneralDirector.EmployeePhoto.PhotoPath,
                                             FallbackValue={StaticResource DefaultContactImage},
                                             TargetNullValue={StaticResource DefaultContactImage}}"
                                                Stretch="UniformToFill"/>
@@ -316,7 +316,7 @@
                                             Width="100">
                                         <Image Width="100"
                                                Height="100"
-                                               Source="{Binding HeaderOfDepartment.EmployeePhoto.FilePath,
+                                               Source="{Binding HeaderOfDepartment.EmployeePhoto.PhotoPath,
                                             FallbackValue={StaticResource DefaultContactImage},
                                             TargetNullValue={StaticResource DefaultContactImage}}"
                                                Stretch="UniformToFill"/>
@@ -438,7 +438,7 @@
                                                             CornerRadius="2">
                                                             <Image Width="75"
                                                            Height="75"
-                                                           Source="{Binding EmployeePhoto.FilePath,
+                                                           Source="{Binding EmployeePhoto.PhotoPath,
                                                         FallbackValue={StaticResource DefaultContactImage},
                                                         TargetNullValue={StaticResource DefaultContactImage}}"
                                                            Stretch="UniformToFill"/>
@@ -546,7 +546,7 @@
                                         VerticalAlignment="Top">
                                     <Image Width="250"
                                                Height="250"
-                                               Source="{Binding SelectedEmployee.EmployeePhoto.FilePath,
+                                               Source="{Binding SelectedEmployee.EmployeePhoto.PhotoPath,
                                             FallbackValue={StaticResource DefaultContactImage},
                                             TargetNullValue={StaticResource DefaultContactImage}}"
                                                Stretch="UniformToFill"/>

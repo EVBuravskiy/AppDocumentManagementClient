@@ -22,12 +22,12 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
         {
             MContractorCompany mContractorCompany = new MContractorCompany();
             mContractorCompany.ContractorCompanyID = contractorCompany.ContractorCompanyID;
-            mContractorCompany.ContractorCompanyTitle = contractorCompany.ContractorCompanyTitle;
-            mContractorCompany.ContractorCompanyShortTitle = contractorCompany.ContractorCompanyShortTitle;
-            mContractorCompany.ContractorCompanyAddress = contractorCompany.ContractorCompanyAddress;
-            mContractorCompany.ContractorCompanyPhone = contractorCompany.ContractorCompanyPhone;
-            mContractorCompany.ContractorCompanyEmail = contractorCompany.ContractorCompanyEmail;
-            mContractorCompany.ContractorCompanyInformation = contractorCompany.ContractorCompanyInformation;
+            mContractorCompany.ContractorCompanyTitle = contractorCompany.ContractorCompanyTitle ?? "";
+            mContractorCompany.ContractorCompanyShortTitle = contractorCompany.ContractorCompanyShortTitle ?? "";
+            mContractorCompany.ContractorCompanyAddress = contractorCompany.ContractorCompanyAddress ?? "";
+            mContractorCompany.ContractorCompanyPhone = contractorCompany.ContractorCompanyPhone ?? "";
+            mContractorCompany.ContractorCompanyEmail = contractorCompany.ContractorCompanyEmail ?? "";
+            mContractorCompany.ContractorCompanyInformation = contractorCompany.ContractorCompanyInformation ?? "";
             mContractorCompany.IsDeleted = contractorCompany.IsDeleted;
             return mContractorCompany;
         }
