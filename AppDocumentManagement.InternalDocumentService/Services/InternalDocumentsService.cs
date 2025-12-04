@@ -1,10 +1,11 @@
 ﻿using AppDocumentManagement.InternalDocumentService.Converters;
 using AppDocumentManagement.Models;
 using Grpc.Net.Client;
+using System.Collections.Generic;
 
 namespace AppDocumentManagement.InternalDocumentService.Services
 {
-    public class InternalDocumentService
+    public class InternalDocumentsService
     {
         public async Task<bool> AddInternalDocument(InternalDocument internalDocument)
         {
@@ -60,6 +61,13 @@ namespace AppDocumentManagement.InternalDocumentService.Services
             var client = new internalDocumentAPI.internalDocumentAPIClient(channel);
             var boolReply = client.RemoveInternalDocument(iDRequest);
             return boolReply.Result;
+        }
+
+        public int GetCountInternalDocumentByType(InternalDocumentType internalDocumentType)
+        {
+            List<InternalDocument> internalDocuments = GetInternalDocuments().Result;
+            List<InternalDocument> internalDocumentsByType = internalDocuments.Where(d => d.InternalDocumentType == internalDocumentType).ToList();
+            return internalDocumentsByType.Count;
         }
     }
 }

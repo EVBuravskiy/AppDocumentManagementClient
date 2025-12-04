@@ -16,5 +16,7 @@
         public string? EmployeeInformation { get; set; }
         public string EmployeeFirstMiddleName => $"{EmployeeFirstName} {EmployeeMiddleName}";
         public bool IsDeleted { get; set; } = false;
+        public EmployeePhoto? EmployeePhoto { get; set; }
+        public Department? EmployeeDepartment { get; set; }
     }
 }

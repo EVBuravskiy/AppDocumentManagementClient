@@ -1,0 +1,404 @@
+﻿using AppDocumentManagement.EmployeeService.Service;
+using AppDocumentManagement.EmployeeService.Services;
+using AppDocumentManagement.Models;
+using AppDocumentManagement.UI.Utilities;
+using AppDocumentManagement.UI.Views;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+
+namespace AppDocumentManagement.UI.ViewModels
+{
+    public class RegisterUserViewModel : BaseViewModelClass
+    {
+        private RegisterUserWindow RegisterUserWindow;
+        private Employee _employee;
+
+        private string _userImagePath;
+        public string UserImagePath
+        {
+            get => _userImagePath;
+            set
+            {
+                _userImagePath = value;
+                OnPropertyChanged(nameof(UserImagePath));
+            }
+        }
+
+        private string _userFirstName;
+        public string UserFirstName
+        {
+            get => _userFirstName;
+            set
+            {
+                _userFirstName = value;
+                OnPropertyChanged(nameof(UserFirstName));
+            }
+        }
+        private string _userLastName;
+        public string UserLastName
+        {
+            get => _userLastName;
+            set
+            {
+                _userLastName = value;
+                OnPropertyChanged(nameof(UserLastName));
+            }
+        }
+
+        private string _userMiddleName;
+        public string UserMiddleName
+        {
+            get => _userMiddleName;
+            set
+            {
+                _userMiddleName = value;
+                OnPropertyChanged(nameof(UserMiddleName));
+            }
+        }
+
+        private string _userDepartmentTitle;
+        public string UserDepartmentTitle
+        {
+            get => _userDepartmentTitle;
+            set
+            {
+                _userDepartmentTitle = value;
+                OnPropertyChanged(nameof(UserDepartmentTitle));
+            }
+        }
+
+        private string _userPosition;
+        public string UserPosition
+        {
+            get => _userPosition;
+            set
+            {
+                _userPosition = value;
+                OnPropertyChanged(nameof(UserPosition));
+            }
+        }
+
+        public List<string> UserRoles { get; set; }
+
+        private UserRole _selectedUserRole;
+
+        public UserRole SelectedUserRole
+        {
+            get => _selectedUserRole;
+            set
+            {
+                _selectedUserRole = value;
+                OnPropertyChanged(nameof(UserRole));
+                SelectedUserRoleIndex = UserRoleConverter.ToIntConvert(value);
+                OnPropertyChanged(nameof(SelectedUserRoleIndex));
+            }
+        }
+
+        private int _userRoleIndex;
+        public int SelectedUserRoleIndex
+        {
+            get => _userRoleIndex;
+            set
+            {
+                if (_userRoleIndex != value)
+                {
+                    _userRoleIndex = value;
+                    OnPropertyChanged(nameof(SelectedUserRoleIndex));
+                    SelectedUserRole = UserRoleConverter.BackConvert(value);
+                    OnPropertyChanged(nameof(SelectedUserRoleIndex));
+                }
+            }
+        }
+
+        private string _userLogin;
+        public string UserLogin
+        {
+            get => _userLogin;
+            set
+            {
+                _userLogin = value;
+                OnPropertyChanged(nameof(UserLogin));
+            }
+        }
+
+        private string _userPassword;
+        public string UserPassword
+        {
+            get => _userPassword;
+            set
+            {
+                _userPassword = value;
+                OnPropertyChanged(nameof(UserPassword));
+            }
+        }
+
+        private bool _isRegistred = false;
+        private int _userId = 0;
+
+        private string requirementsTitle = "ТРЕБОВАНИЯ К ЛОГИНУ И ПАРОЛЮ ПОЛЬЗОВАТЕЛЯ:";
+        public string RequirementsTitle
+        {
+            get => requirementsTitle;
+            set
+            {
+                requirementsTitle = value;
+                OnPropertyChanged(nameof(RequirementsTitle));
+            }
+        }
+
+        private string requirements = "Логин пользователя должен содержать буквы латинского алфавита " +
+            "и иметь длину не менее 5 символов и не более 25 символов:\n" +
+            "Примеры: 'Currentuser', 'Currentuser', ...\n" +
+            "Пароль пользователя должен содержать буквы латинского алфавита и цифры " +
+            "и иметь длину не менее 5 символов:\n" +
+            "Примеры: 'User01','01User', ...\n" +
+            "ВНИМАНИЕ! НЕ ДОПУСКАЕТСЯ ВВЕДЕНИЕ ИНЫХ СИМВОЛОВ, НЕ ПРЕДУСМОТРЕННЫХ ТРЕБОВАНИЯМИ";
+        public string Requirements
+        {
+            get => requirements;
+            set
+            {
+                requirements = value;
+                OnPropertyChanged(nameof(Requirements));
+            }
+        }
+
+        private string loginTipText = "Логин пользователя должен содержать буквы латинского алфавита " +
+            "и иметь длину не менее 5 символов и не более 25 символов:\n" +
+            "Примеры: 'Currentuser', 'Currentuser', ...\n";
+
+        public string LoginTipText
+        {
+            get => loginTipText;
+            set
+            {
+                loginTipText = value;
+                OnPropertyChanged(nameof(LoginTipText));
+            }
+        }
+
+        private string passwordTipText = "Пароль пользователя должен содержать буквы латинского алфавита и цифры " +
+            "и иметь длину не менее 5 символов:\n" +
+            "Примеры: 'User01','01User', ...\n";
+
+        public string PasswordTipText
+        {
+            get => passwordTipText;
+            set
+            {
+                passwordTipText = value;
+                OnPropertyChanged(nameof(PasswordTipText));
+            }
+        }
+
+        public RegisterUserViewModel(RegisterUserWindow window, Employee selectedEmployee, bool isRegistred)
+        {
+            RegisterUserWindow = window;
+            if (!isRegistred)
+            {
+                RegisterUserWindow.DeleteBtn.Visibility = Visibility.Hidden;
+                RegisterUserWindow.EditBtn.Content = "Зарегистрировать";
+            }
+            else
+            {
+                RegisterUserWindow.DeleteBtn.Visibility = Visibility.Visible;
+                RegisterUserWindow.EditBtn.Content = "Сохранить изменения";
+            }
+            _employee = selectedEmployee;
+            InitializeUserPhoto();
+            UserFirstName = selectedEmployee.EmployeeFirstName;
+            UserLastName = selectedEmployee.EmployeeLastName;
+            UserMiddleName = selectedEmployee.EmployeeMiddleName;
+            UserDepartmentTitle = selectedEmployee.EmployeeDepartment.DepartmentTitle;
+            UserPosition = selectedEmployee.Position;
+            InitializeUserRoles();
+            GetUserLogin();
+        }
+
+        private void InitializeUserRoles()
+        {
+            UserRoles = new List<string>();
+            var userRoles = Enum.GetValues(typeof(UserRole));
+            foreach (var role in userRoles)
+            {
+                UserRoles.Add(UserRoleConverter.ConvertToString(role));
+            }
+            SelectedUserRoleIndex = 4;
+        }
+
+        private void InitializeUserPhoto()
+        {
+            EmployeePhoto employeePhoto = new EmployeePhoto();
+            EmployeePhotoService employeePhotoService = new EmployeePhotoService();
+            employeePhoto = employeePhotoService.GetEmployeePhotoByEmployeeID(_employee.EmployeeID).Result;
+            if (employeePhoto != null)
+            {
+                UserImagePath = FileProcessing.SaveEmployeePhotoToTempFolder(employeePhoto);
+            }
+        }
+
+        private void GetUserLogin()
+        {
+            RegisterUserService registerUserService = new RegisterUserService();
+            RegistredUser registredUser = registerUserService.GetRegistredUserByEmployeeID(_employee.EmployeeID).Result;
+            if (registredUser != null)
+            {
+                _userId = registredUser.RegistredUserID;
+                UserLogin = registredUser.RegistredUserLogin;
+                _isRegistred = registredUser.IsRegistered;
+            }
+        }
+
+        public ICommand IRegisterUser => new RelayCommand(registerUser => RegisterUser());
+        private void RegisterUser()
+        {
+            if (!ValidateUser()) return;
+            if (string.IsNullOrEmpty(UserPassword))
+            {
+                MessageBox.Show("Не введен пароль пользователя");
+                return;
+            }
+            if (string.IsNullOrEmpty(UserLogin))
+            {
+                MessageBox.Show("Не введен логин пользователя");
+                return;
+            }
+            RegistredUser registredUser = new RegistredUser();
+            registredUser.RegistredUserLogin = UserLogin;
+            string passwordforhasher = $"{UserLogin}-{UserPassword}";
+            registredUser.RegistredUserPassword = PassHasher.CalculateMD5Hash(passwordforhasher);
+            registredUser.UserRole = SelectedUserRole;
+            registredUser.RegistredUserTime = DateTime.Now;
+            registredUser.EmployeeID = _employee.EmployeeID;
+            bool result = false;
+            if (!_isRegistred)
+            {
+                registredUser.IsRegistered = true;
+                RegisterUserService registerUserService = new RegisterUserService();
+                result = registerUserService.AddRegistratedUser(registredUser).Result;
+            }
+            else
+            {
+                registredUser.RegistredUserID = _userId;
+                RegisterUserService registerUserService = new RegisterUserService();
+                result = registerUserService.UpdateRegistratedUser(registredUser).Result;
+            }
+            if (result)
+            {
+                MessageBox.Show($"Пользователь {registredUser.RegistredUserLogin} зарегистрирован");
+                RegisterUserWindow.Close();
+            }
+            else
+            {
+                MessageBox.Show($"Ошибка! Пользователь {registredUser.RegistredUserLogin} не зарегистрирован");
+            }
+        }
+
+        private bool ValidateUser()
+        {
+            if (string.IsNullOrEmpty(UserLogin))
+            {
+                MessageBox.Show("Введите логин для сотрудника");
+                RegisterUserWindow.EmployeeLogin.BorderThickness = new System.Windows.Thickness(2);
+                RegisterUserWindow.EmployeeLogin.BorderBrush = new SolidColorBrush(Colors.Red);
+                return false;
+            }
+            else if (!ValidateData.ValidateLogin(UserLogin, UserLogin.Length))
+            {
+                MessageBox.Show("Логин сотрудника не соответствует требованиям");
+                RegisterUserWindow.EmployeeLogin.BorderThickness = new System.Windows.Thickness(2);
+                RegisterUserWindow.EmployeeLogin.BorderBrush = new SolidColorBrush(Colors.Red);
+                return false;
+            }
+            else
+            {
+                RegisterUserWindow.EmployeeLogin.BorderThickness = new System.Windows.Thickness(2);
+                RegisterUserWindow.EmployeeLogin.BorderBrush = new SolidColorBrush(Colors.Gray);
+            }
+            if (string.IsNullOrEmpty(UserPassword))
+            {
+                MessageBox.Show("Введите пароль для сотрудника");
+                RegisterUserWindow.EmployeePassword.BorderThickness = new System.Windows.Thickness(2);
+                RegisterUserWindow.EmployeePassword.BorderBrush = new SolidColorBrush(Colors.Red);
+                return false;
+            }
+            else if (!ValidateData.ValidatePassword(UserPassword, UserPassword.Length))
+            {
+                MessageBox.Show("Пароль для сотрудника не соответствует требованиям");
+                RegisterUserWindow.EmployeePassword.BorderThickness = new System.Windows.Thickness(2);
+                RegisterUserWindow.EmployeePassword.BorderBrush = new SolidColorBrush(Colors.Red);
+                return false;
+            }
+            else
+            {
+                RegisterUserWindow.EmployeePassword.BorderThickness = new System.Windows.Thickness(2);
+                RegisterUserWindow.EmployeePassword.BorderBrush = new SolidColorBrush(Colors.Gray);
+            }
+            return true;
+        }
+
+        public void ShowLoginRequirements()
+        {
+            RequirementsTitle = "ТРЕБОВАНИЯ К ЛОГИНУ ПОЛЬЗОВАТЕЛЯ:";
+            Requirements = "Логин пользователя должен содержать буквы латинского алфавита " +
+            "и иметь длину не менее 5 символов и не более 25 символов:\n" +
+            "Примеры: 'Currentuser', 'Currentuser', ...\n" +
+            "ВНИМАНИЕ! НЕ ДОПУСКАЕТСЯ ВВЕДЕНИЕ В ЛОГИН ИНЫХ СИМВОЛОВ, НЕ ПРЕДУСМОТРЕННЫХ ТРЕБОВАНИЯМИ";
+        }
+
+        public void ShowPasswordRequirements()
+        {
+            RequirementsTitle = "ТРЕБОВАНИЯ К ПАРОЛЮ ПОЛЬЗОВАТЕЛЯ:";
+            Requirements = "Пароль пользователя должен содержать буквы латинского алфавита и цифры" +
+            "и иметь длину не менее 5 символов:\n" +
+            "Примеры: 'User01','01User', ...\n" +
+            "ВНИМАНИЕ! НЕ ДОПУСКАЕТСЯ ВВЕДЕНИЕ В ПАРОЛЬ ИНЫХ СИМВОЛОВ, НЕ ПРЕДУСМОТРЕННЫХ ТРЕБОВАНИЯМИ";
+        }
+
+        public void ShowDefaultRequirements()
+        {
+            RequirementsTitle = "ТРЕБОВАНИЯ К ЛОГИНУ И ПАРОЛЮ ПОЛЬЗОВАТЕЛЯ:";
+            Requirements = "Логин пользователя должен содержать буквы латинского алфавита " +
+            "и иметь длину не менее 5 символов и не более 25 символов:\n" +
+            "Примеры: 'Currentuser', 'Currentuser', ...\n" +
+            "Пароль пользователя должен содержать буквы латинского алфавита и цифры" +
+            "и иметь длину не менее 5 символов:\n" +
+            "Примеры: 'User01','01User', ...\n" +
+            "ВНИМАНИЕ! НЕ ДОПУСКАЕТСЯ ВВЕДЕНИЕ ИНЫХ СИМВОЛОВ, НЕ ПРЕДУСМОТРЕННЫХ ТРЕБОВАНИЯМИ";
+        }
+
+        public ICommand IRemoveRegistration => new RelayCommand(removeRegistration => RemoveRegistration());
+        private void RemoveRegistration()
+        {
+            if (_employee != null)
+            {
+                bool result = false;
+                RegisterUserService registerUserService = new RegisterUserService();
+                RegistredUser registredUser = registerUserService.GetRegistredUserByEmployeeID(_employee.EmployeeID).Result;
+                if (registredUser != null)
+                {
+                    registerUserService.RemoveRegistratedUser(registredUser.RegistredUserID);
+                    result = true;
+                }
+                if (result)
+                {
+                    MessageBox.Show($"Регистрация пользователя {_employee.EmployeeFullName} была отменена");
+                }
+                else
+                {
+                    MessageBox.Show($"Ошибка! Регистрация пользователя {_employee.EmployeeFullName} не отменена");
+                }
+                RegisterUserWindow.Close();
+                return;
+            }
+            MessageBox.Show($"Неизвестная ошибка!");
+        }
+
+        public ICommand IExit => new RelayCommand(exit => Exit());
+        private void Exit()
+        {
+            RegisterUserWindow.Close();
+        }
+    }
+}

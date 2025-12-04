@@ -4,7 +4,7 @@ using Grpc.Net.Client;
 
 namespace AppDocumentManagement.ExternalDocumentService.Services
 {
-    public class ExternalDocumentService
+    public class ExternalDocumentsService
     {
         public async Task<bool> AddExternalDocument(ExternalDocument externalDocument)
         {

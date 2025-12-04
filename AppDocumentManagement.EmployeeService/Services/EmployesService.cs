@@ -4,7 +4,7 @@ using Grpc.Net.Client;
 
 namespace AppDocumentManagement.EmployeeService.Service
 {
-    public class EmployeeService
+    public class EmployesService
     {
         public async Task<bool> AddEmployee(Employee employee)
         {

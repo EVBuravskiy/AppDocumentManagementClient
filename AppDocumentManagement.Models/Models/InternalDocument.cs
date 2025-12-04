@@ -15,6 +15,8 @@
         public DocumentStatus InternalDocumentStatus { get; set; }
         public string InternalDocumentTitle { get; set; }
         public string InternalDocumentContent { get; set; }
-
+        public Employee Signatory {  get; set; }
+        public Employee ApprovedManager { get; set; }
+        public Employee EmployeeRecievedDocument { get; set; }
     }
 }

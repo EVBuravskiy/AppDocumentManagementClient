@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\AppIcon.png" />
+    <None Remove="Resources\Images\defaultContact.png" />
+    <None Remove="Resources\Images\SearchIcon.png" />
+    <None Remove="Resources\Images\ShowPassword.png" />
+    <None Remove="Resources\Images\StartPageImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppDocumentManagement.EmployeeService\AppDocumentManagement.EmployeeService.csproj" />
+    <ProjectReference Include="..\AppDocumentManagement.ExternalDocumentService\AppDocumentManagement.ExternalDocumentService.csproj" />
+    <ProjectReference Include="..\AppDocumentManagement.InternalDocumentService\AppDocumentManagement.InternalDocumentService.csproj" />
+    <ProjectReference Include="..\AppDocumentManagement.Models\AppDocumentManagement.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\ShowPassword.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\AppIcon.png" />
+    <Resource Include="Resources\Images\defaultContact.png" />
+    <Resource Include="Resources\Images\SearchIcon.png" />
+    <Resource Include="Resources\Images\StartPageImage.png" />
+  </ItemGroup>
+
+</Project>
