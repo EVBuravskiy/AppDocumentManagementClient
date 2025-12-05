@@ -388,7 +388,7 @@
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
-                                                                   Text="{Binding EmployeeReceivedDocument.Department.DepartmentTitle}"
+                                                                   Text="{Binding EmployeeReceivedDocument.EmployeeDepartment.DepartmentTitle}"
                                                                    Padding="3 0"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
@@ -584,7 +584,7 @@
                                                                    TextWrapping="Wrap"
                                                                    FontSize="12"
                                                                    Padding="3 0"
-                                                                   Text="{Binding Signatory.Department.DepartmentTitle}"/>
+                                                                   Text="{Binding Signatory.EmployeeDepartment.DepartmentTitle}"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
@@ -615,7 +615,7 @@
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
                                                                    Padding="3 0"
-                                                                   Text="{Binding ApprovedManager.Department.DepartmentTitle}"/>
+                                                                   Text="{Binding ApprovedManager.EmployeeDepartment.DepartmentTitle}"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
@@ -634,7 +634,7 @@
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
                                                                    Padding="3 0"
-                                                                   Text="{Binding EmployeeRecievedDocument.Department.DepartmentTitle}"/>
+                                                                   Text="{Binding EmployeeRecievedDocument.EmployeeDepartment.DepartmentTitle}"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"

@@ -192,6 +192,10 @@ namespace AppDocumentManagement.UI.ViewModels
             newInternalDocument.InternalDocumentRegistrationNumber = GetInternalDocumentNumber();
             newInternalDocument.RegistrationDate = DateTime.Now;
             newInternalDocument.IsRegistated = true;
+            if (InternalDocumentFiles.Count > 0)
+            {
+                newInternalDocument.InternalDocumentFiles = InternalDocumentFiles.ToList();
+            }
             return newInternalDocument;
         }
         

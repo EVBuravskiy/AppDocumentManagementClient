@@ -44,6 +44,7 @@ message MInternalDocument{
 	int32 InternalDocumentStatus = 11;
 	string InternalDocumentTitle = 12;
 	string InternalDocumentContent = 13;
+	repeated MInternalDocumentFile InternalDocumentFiles = 14;
 }
 
 message MInternalDocumentList{

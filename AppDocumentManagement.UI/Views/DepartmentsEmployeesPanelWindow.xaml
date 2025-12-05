@@ -602,7 +602,7 @@
                                                    FontSize="24"
                                                    FontWeight="Bold"
                                                    HorizontalAlignment="Left"
-                                                   Text="{Binding SelectedEmployee.Department.DepartmentTitle}"/>
+                                                   Text="{Binding SelectedEmployee.EmployeeDepartment.DepartmentTitle}"/>
                                         <TextBlock Padding="10, 0"
                                                    FontFamily="Arial"
                                                    FontSize="24"

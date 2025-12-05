@@ -18,5 +18,6 @@
         public Employee Signatory {  get; set; }
         public Employee ApprovedManager { get; set; }
         public Employee EmployeeRecievedDocument { get; set; }
+        public List<InternalDocumentFile> InternalDocumentFiles { get; set; }
     }
 }

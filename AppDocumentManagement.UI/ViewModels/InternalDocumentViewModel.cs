@@ -449,7 +449,7 @@ namespace AppDocumentManagement.UI.ViewModels
                 newInternalDocument.ApprovedManagerID = ApprovedManager.EmployeeID;
                 newInternalDocument.ApprovedManager = ApprovedManager;
             }
-            //newInternalDocument.InternalDocumentFiles = InternalDocumentFiles.ToList();
+            newInternalDocument.InternalDocumentFiles = InternalDocumentFiles.ToList();
             newInternalDocument.InternalDocumentStatus = DocumentStatus.UnderConsideration;
             newInternalDocument.InternalDocumentDate = InternalDocumentDate;
             if (InternalDocument != null)

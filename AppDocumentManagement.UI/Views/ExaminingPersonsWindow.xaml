@@ -102,7 +102,7 @@
                                             <Grid Grid.Column="0">
                                                 <Image Width="100"
                                                            Height="100"
-                                                           Source="{Binding EmployeePhoto.FilePath,
+                                                           Source="{Binding EmployeePhoto.PhotoPath,
                                                         FallbackValue={StaticResource DefaultContactImage},
                                                         TargetNullValue={StaticResource DefaultContactImage}}"
                                                            Stretch="UniformToFill"/>
@@ -116,7 +116,7 @@
                                                                FontSize="14"
                                                                FontWeight="Bold"
                                                                HorizontalAlignment="Left"
-                                                               Text="{Binding Department.DepartmentTitle}"/>
+                                                               Text="{Binding EmployeeDepartment.DepartmentTitle}"/>
                                                     <TextBlock Grid.Row="1"
                                                                Margin="0 10 0 5"
                                                                Padding="10, 0"

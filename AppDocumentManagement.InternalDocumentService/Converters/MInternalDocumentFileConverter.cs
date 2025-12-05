@@ -8,7 +8,7 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
         public static InternalDocumentFile ConvertToInternalDocumentFile(MInternalDocumentFile mInternalDocumentFile)
         {
             InternalDocumentFile internalDocumentFile = new InternalDocumentFile();
-            internalDocumentFile.InternalDocumentFileID = mInternalDocumentFile.InternalDocumentID;
+            internalDocumentFile.InternalDocumentFileID = mInternalDocumentFile.InternalDocumentFileID;
             internalDocumentFile.FileName = mInternalDocumentFile.FileName;
             internalDocumentFile.FileExtension = mInternalDocumentFile.FileExtension;
             internalDocumentFile.FileData = mInternalDocumentFile.FileData.ToByteArray();
@@ -19,7 +19,7 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
         public static MInternalDocumentFile ConvertToMInternalDocumentFile(InternalDocumentFile internalDocumentFile)
         {
             MInternalDocumentFile mInternalDocumentFile = new MInternalDocumentFile();
-            mInternalDocumentFile.InternalDocumentFileID = internalDocumentFile.InternalDocumentID;
+            mInternalDocumentFile.InternalDocumentFileID = internalDocumentFile.InternalDocumentFileID;
             mInternalDocumentFile.FileName = internalDocumentFile.FileName;
             mInternalDocumentFile.FileExtension = internalDocumentFile.FileExtension;
             mInternalDocumentFile.FileData = ByteString.CopyFrom(internalDocumentFile.FileData);
