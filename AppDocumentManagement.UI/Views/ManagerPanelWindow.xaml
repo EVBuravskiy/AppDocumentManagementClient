@@ -388,26 +388,26 @@
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
-                                                                   Text="{Binding EmployeeReceivedDocument.EmployeeDepartment.DepartmentTitle}"
+                                                                   Text="{Binding ReceivingEmployee.EmployeeDepartment.DepartmentTitle}"
                                                                    Padding="3 0"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
                                                                    FontSize="10"
-                                                                   Text="{Binding EmployeeReceivedDocument.Position}"
+                                                                   Text="{Binding ReceivingEmployee.Position}"
                                                                    Padding="3 0"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
                                                                    FontSize="11"
-                                                                   Text="{Binding EmployeeReceivedDocument.EmployeeFullName}"
+                                                                   Text="{Binding ReceivingEmployee.EmployeeFullName}"
                                                                    Padding="3 0"/>
                                                     </StackPanel>
                                                     <TextBlock Grid.Column="8"
                                                                Style="{StaticResource AdminDocumentTextblock}"
                                                                TextAlignment="Center"
                                                                TextWrapping="Wrap"
-                                                               Text="{Binding SendingDate, Converter={StaticResource DateConverter}}"
+                                                               Text="{Binding ExternalDocumentSendingDate, Converter={StaticResource DateConverter}}"
                                                                Padding="3 0"/>
                                                 </Grid>
                                             </DataTemplate>

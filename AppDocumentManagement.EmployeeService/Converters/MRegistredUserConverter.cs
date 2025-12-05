@@ -11,9 +11,15 @@ namespace AppDocumentManagement.EmployeeService.Converters
             {
                 registredUser.RegistredUserID = mRegistredUser.RegistredUserID;
                 registredUser.RegistredUserLogin = mRegistredUser.RegistredUserLogin;
-                registredUser.RegistredUserPassword = mRegistredUser.RegistredUserPassword;
+                if (mRegistredUser.RegistredUserPassword != "")
+                {
+                    registredUser.RegistredUserPassword = mRegistredUser.RegistredUserPassword;
+                }
                 registredUser.UserRole = UserRoleConverter.BackConvert(mRegistredUser.UserRole);
-                registredUser.RegistredUserTime = DateTime.Parse(mRegistredUser.RegistredUserTime);
+                if (mRegistredUser.RegistredUserTime != "")
+                {
+                    registredUser.RegistredUserTime = DateTime.Parse(mRegistredUser.RegistredUserTime);
+                }
                 registredUser.EmployeeID = mRegistredUser.EmployeeID;
                 registredUser.IsRegistered = mRegistredUser.IsRegistred;
             }
@@ -27,9 +33,15 @@ namespace AppDocumentManagement.EmployeeService.Converters
             {
                 mRegistredUser.RegistredUserID = registredUser.RegistredUserID;
                 mRegistredUser.RegistredUserLogin = registredUser.RegistredUserLogin;
-                mRegistredUser.RegistredUserPassword = registredUser.RegistredUserPassword;
+                if (registredUser.RegistredUserPassword != null)
+                {
+                    mRegistredUser.RegistredUserPassword = registredUser.RegistredUserPassword;
+                }
                 mRegistredUser.UserRole = UserRoleConverter.ToIntConvert(registredUser.UserRole);
-                mRegistredUser.RegistredUserTime = registredUser.RegistredUserTime.ToShortDateString();
+                if (registredUser.RegistredUserTime != null)
+                {
+                    mRegistredUser.RegistredUserTime = registredUser.RegistredUserTime.ToShortDateString();
+                }
                 mRegistredUser.EmployeeID = registredUser.EmployeeID;
                 mRegistredUser.IsRegistred = registredUser.IsRegistered;
             }

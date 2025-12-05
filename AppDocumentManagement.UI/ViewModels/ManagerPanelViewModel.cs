@@ -351,22 +351,22 @@ namespace AppDocumentManagement.UI.ViewModels
             InternalDocumentsList.Sort((d1, d2) => d2.RegistrationDate.CompareTo(d1.RegistrationDate));
             foreach (InternalDocument internalDocument in InternalDocumentsList)
             {
-                Employee signatory = Employees.Where(s => s.EmployeeID == internalDocument.SignatoryID).FirstOrDefault();
+                Employee signatory = Employees.SingleOrDefault(s => s.EmployeeID == internalDocument.SignatoryID);
                 if (signatory != null)
                 {
-                    Department department = Departments.Where(d => d.DepartmentID == signatory.DepartmentID).FirstOrDefault();
+                    Department department = Departments.SingleOrDefault(d => d.DepartmentID == signatory.DepartmentID);
                     if (department != null) signatory.EmployeeDepartment = department;
                 }
-                Employee approvedManager = Employees.Where(a => a.EmployeeID == internalDocument.ApprovedManagerID).FirstOrDefault();
+                Employee approvedManager = Employees.SingleOrDefault(a => a.EmployeeID == internalDocument.ApprovedManagerID);
                 if (approvedManager != null)
                 {
-                    Department department = Departments.Where(d => d.DepartmentID == approvedManager.DepartmentID).FirstOrDefault();
+                    Department department = Departments.SingleOrDefault(d => d.DepartmentID == approvedManager.DepartmentID);
                     approvedManager.EmployeeDepartment = department;
                 }
-                Employee employeeRecievedDocument = Employees.Where(r => r.EmployeeID == internalDocument.EmployeeRecievedDocumentID).FirstOrDefault();
+                Employee employeeRecievedDocument = Employees.SingleOrDefault(r => r.EmployeeID == internalDocument.EmployeeRecievedDocumentID);
                 if (employeeRecievedDocument != null)
                 {
-                    Department department = Departments.Where(d => d.DepartmentID == employeeRecievedDocument.DepartmentID).FirstOrDefault();
+                    Department department = Departments.SingleOrDefault(d => d.DepartmentID == employeeRecievedDocument.DepartmentID);
                     employeeRecievedDocument.EmployeeDepartment = department;
                 }
                 internalDocument.Signatory = signatory;

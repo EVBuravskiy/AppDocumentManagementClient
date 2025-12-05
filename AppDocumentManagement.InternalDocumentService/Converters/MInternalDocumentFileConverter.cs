@@ -12,7 +12,10 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
             internalDocumentFile.FileName = mInternalDocumentFile.FileName;
             internalDocumentFile.FileExtension = mInternalDocumentFile.FileExtension;
             internalDocumentFile.FileData = mInternalDocumentFile.FileData.ToByteArray();
-            internalDocumentFile.InternalDocumentID = mInternalDocumentFile.InternalDocumentID;
+            if (mInternalDocumentFile.InternalDocumentID != 0)
+            {
+                internalDocumentFile.InternalDocumentID = mInternalDocumentFile.InternalDocumentID;
+            }
             return internalDocumentFile;
         }
 
@@ -23,7 +26,14 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
             mInternalDocumentFile.FileName = internalDocumentFile.FileName;
             mInternalDocumentFile.FileExtension = internalDocumentFile.FileExtension;
             mInternalDocumentFile.FileData = ByteString.CopyFrom(internalDocumentFile.FileData);
-            mInternalDocumentFile.InternalDocumentID = internalDocumentFile.InternalDocumentID;
+            if (internalDocumentFile.InternalDocument != null)
+            {
+                mInternalDocumentFile.InternalDocumentID = internalDocumentFile.InternalDocument.InternalDocumentID;
+            }
+            else if (internalDocumentFile.InternalDocumentID != 0)
+            {
+                mInternalDocumentFile.InternalDocumentID = internalDocumentFile.InternalDocumentID;
+            }
             return mInternalDocumentFile;
         }
     }

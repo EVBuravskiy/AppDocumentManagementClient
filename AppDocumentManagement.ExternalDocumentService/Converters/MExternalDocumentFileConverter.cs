@@ -12,7 +12,10 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             externalDocumentFile.ExternalFileName = mExternalDocumentFile.ExternalDocumentFileName;
             externalDocumentFile.ExternalFileExtension = mExternalDocumentFile.ExternalDocumentFileExternsion;
             externalDocumentFile.ExternalFileData = mExternalDocumentFile.FileData.ToByteArray();
-            externalDocumentFile.ExternalDocumentID = mExternalDocumentFile.ExternalDocumentID;
+            if (mExternalDocumentFile.ExternalDocumentID != 0)
+            {
+                externalDocumentFile.ExternalDocumentID = mExternalDocumentFile.ExternalDocumentID;
+            }
             return externalDocumentFile;
         }
 
@@ -23,7 +26,14 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             mExternalDocumentFile.ExternalDocumentFileName = externalDocumentFile.ExternalFileName;
             mExternalDocumentFile.ExternalDocumentFileExternsion = externalDocumentFile.ExternalFileExtension;
             mExternalDocumentFile.FileData = ByteString.CopyFrom(externalDocumentFile.ExternalFileData);
-            mExternalDocumentFile.ExternalDocumentID = externalDocumentFile.ExternalDocumentID;
+            if (externalDocumentFile.ExternalDocument != null)
+            {
+                mExternalDocumentFile.ExternalDocumentID = externalDocumentFile.ExternalDocument.ExternalDocumentID;
+            }
+            else if (externalDocumentFile.ExternalDocumentID != 0)
+            {
+                mExternalDocumentFile.ExternalDocumentID = externalDocumentFile.ExternalDocumentID;
+            }
             return mExternalDocumentFile;
         }
     }

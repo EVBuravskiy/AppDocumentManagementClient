@@ -106,10 +106,17 @@ namespace AppDocumentManagement.UI.ViewModels
 
         private void InitializeFirstStart()
         {
-            RegisterUserService registerUserService = new RegisterUserService();
-            if (!registerUserService.CheckAviableAdministrator().Result)
+            try
             {
-                DefaultAdmin.CreateDefaultAdmin();
+                RegisterUserService registerUserService = new RegisterUserService();
+                if (!registerUserService.CheckAviableAdministrator().Result)
+                {
+                    DefaultAdmin.CreateDefaultAdmin();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Извините, в текущее время сервер не доступен. Попробуйте позднее");
             }
         }
 
