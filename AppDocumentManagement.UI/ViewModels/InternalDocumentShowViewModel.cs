@@ -285,7 +285,6 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 MessageBox.Show("Ошибка в согласовании документа");
             }
-
         }
 
         public ICommand IExit => new RelayCommand(exit => { InternalDocumentShowWindow.Close(); });

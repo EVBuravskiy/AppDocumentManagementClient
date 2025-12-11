@@ -22,7 +22,7 @@
             <RowDefinition Height="120px"/>
             <RowDefinition Height="240px"/>
             <RowDefinition Height="320px" x:Name="ExternalDocumentFiles"/>
-            <RowDefinition Height="100px" x:Name="ExternalDocumentButtons"/>
+            <RowDefinition Height="120" x:Name="ExternalDocumentButtons"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -205,12 +205,36 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="4">
-            <Button x:Name="RegisterOrUpdateBtn"
+            <Button x:Name="AgreeDocument"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Top"
                     Style="{StaticResource Buttons}"
                     Padding="25 5"
-                    Margin="20 20"
+                    Margin="20 5"
+                    FontFamily="Arial" 
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Command="{Binding IAgreeDocument}">
+                <TextBlock TextAlignment="Center"> Согласовать<LineBreak/>документ</TextBlock>
+            </Button>
+            <Button x:Name="DisAgreeDocument"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Style="{StaticResource Buttons}"
+                    Padding="25 5"
+                    Margin="20 5"
+                    FontFamily="Arial" 
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Command="{Binding IRefuseDocument}">
+                <TextBlock TextAlignment="Center"> Отказать в <LineBreak/> согласовании</TextBlock>
+            </Button>
+            <Button x:Name="RegisterOrUpdateBtn"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource Buttons}"
+                    Padding="25 5"
+                    Margin="20 5"
                     FontFamily="Arial" 
                     FontSize="18"
                     FontWeight="Bold"
@@ -219,9 +243,10 @@
             </Button>
             <Button x:Name="SendDocument"
                     HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
                     Style="{StaticResource Buttons}"
                     Padding="25 5"
-                    Margin="20 20"
+                    Margin="20 5"
                     FontFamily="Arial" 
                     FontSize="18"
                     FontWeight="Bold"

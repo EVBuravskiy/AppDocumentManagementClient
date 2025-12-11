@@ -1,4 +1,5 @@
 ﻿using AppDocumentManagement.ExternalDocumentService.Services;
+using AppDocumentManagement.InternalDocumentService.Services;
 using AppDocumentManagement.Models;
 using AppDocumentManagement.UI.Utilities;
 using AppDocumentManagement.UI.Views;
@@ -14,6 +15,8 @@ namespace AppDocumentManagement.UI.ViewModels
         ExternalDocumentShowWindow ExternalDocumentShowWindow;
 
         ExternalDocument ExternalDocument;
+
+        Employee CurrentEmployee;
 
         private IFileDialogService fileDialogService;
 
@@ -123,9 +126,11 @@ namespace AppDocumentManagement.UI.ViewModels
             }
         }
 
-        public ExternalDocumentShowViewModel(ExternalDocumentShowWindow externalDocumentShowWindow, ExternalDocument inputExternalDocument, ContractorCompany documentContractorCompany, EmployeeRole role)
+        public ExternalDocumentShowViewModel(ExternalDocumentShowWindow externalDocumentShowWindow, Employee currentEmployee, ExternalDocument inputExternalDocument, ContractorCompany documentContractorCompany)
         {
             ExternalDocumentShowWindow = externalDocumentShowWindow;
+            CurrentEmployee = currentEmployee;
+            EmployeeRole role = currentEmployee.EmployeeRole;
             fileDialogService = new WindowsDialogService();
             ExternalDocument = inputExternalDocument;
             ExternalDocument.ContractorCompany = documentContractorCompany;
@@ -225,6 +230,48 @@ namespace AppDocumentManagement.UI.ViewModels
             else MessageBox.Show("Не удалось добавить файл");
             GetExternalDocumentFiles();
             InitializeExternalDocumentFiles();
+        }
+
+        public ICommand IAgreeDocument => new RelayCommand(agreeDocument => AgreeDocument());
+        private void AgreeDocument()
+        {
+            bool result = false;
+            if (CurrentEmployee != null)
+            {
+                ExternalDocument.ExternalDocumentStatus = DocumentStatus.Agreed;
+                ExternalDocumentsService externalDocumentsService = new ExternalDocumentsService();
+                result = externalDocumentsService.UpdateExternalDocument(ExternalDocument).Result;
+            }
+            if (result)
+            {
+                MessageBox.Show($"Документ был согласован: {CurrentEmployee.EmployeeFullName}");
+                ExternalDocumentShowWindow.Close();
+            }
+            else
+            {
+                MessageBox.Show("Ошибка в согласовании документа");
+            }
+        }
+
+        public ICommand IRefuseDocument => new RelayCommand(refuseDocument => RefuseDocument());
+        private void RefuseDocument()
+        {
+            bool result = false;
+            if (CurrentEmployee != null)
+            {
+                ExternalDocument.ExternalDocumentStatus = DocumentStatus.Refused;
+                ExternalDocumentsService externalDocumentsService = new ExternalDocumentsService();
+                result = externalDocumentsService.UpdateExternalDocument(ExternalDocument).Result;
+            }
+            if (result)
+            {
+                MessageBox.Show($"В согласовании документа было отказано: {CurrentEmployee.EmployeeFullName}");
+                ExternalDocumentShowWindow.Close();
+            }
+            else
+            {
+                MessageBox.Show("Ошибка в согласовании документа");
+            }
         }
 
         public ICommand ISendToWork => new RelayCommand(sendToWork => SendToWork());

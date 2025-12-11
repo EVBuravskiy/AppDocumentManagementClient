@@ -108,8 +108,7 @@
                                 <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"
                                                    FontSize="12"
-                                                   Text="Информация об инициаторе / подписанте"
-                                                   Margin="0 5 0 5"/>
+                                                   Margin="0 5 0 5">Информация об <LineBreak/>инициаторе/подписанте</TextBlock>
                                 <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"
                                                    FontSize="14"
@@ -141,8 +140,7 @@
                                 <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"
                                                    FontSize="12"
-                                                   Text="Информация о лице согласовавшем документ"
-                                                   Margin="0 5 0 5"/>
+                                                   Margin="0 5 0 5">Информация о сотруднике<LineBreak/>согласовавшем документ</TextBlock>
                                 <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"
                                                    FontSize="14"
@@ -244,7 +242,7 @@
                         VerticalAlignment="Center"
                         Padding="10 10"
                         Margin="20 0"
-                        Command="{Binding IBrowseInternalDocumentFiles}">
+                        Command="{Binding IBrowseInternalDocumentFile}">
                     <TextBlock TextAlignment="Center">Добавить файл<LineBreak/> в документ</TextBlock>
                 </Button>
             </Grid>
