@@ -1,8 +1,9 @@
-﻿using AppDocumentManagement.EmployeeService.Converters;
+﻿using AppDocumentManagement.EmployeeService;
+using AppDocumentManagement.EmployeesService.Converters;
 using AppDocumentManagement.Models;
 using Grpc.Net.Client;
 
-namespace AppDocumentManagement.EmployeeService.Services
+namespace AppDocumentManagement.EmployeesService.Services
 {
     public class RegisterUserService
     {

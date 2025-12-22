@@ -1,4 +1,4 @@
-﻿using AppDocumentManagement.EmployeeService.Services;
+﻿using AppDocumentManagement.EmployeesService.Services;
 using AppDocumentManagement.Models;
 using AppDocumentManagement.UI.Utilities;
 using AppDocumentManagement.UI.Views;
@@ -171,41 +171,49 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(PasswordTipText));
                 return;
             }
-            RegisterUserService registerUserService = new RegisterUserService();
-            RegistredUser currentUser = registerUserService.GetRegistratedUser(checkedLogin, checkedPassword).Result;
-            if (currentUser.RegistredUserLogin == null)
+            try
             {
-                MessageBox.Show($"Пользователь с логином {checkedLogin} не зарегистрирован\nОбратитесь к администратору приложения");
-                Login = "";
-                Password = "";
-                return;
+                RegisterUserService registerUserService = new RegisterUserService();
+                RegistredUser currentUser = registerUserService.GetRegistratedUser(checkedLogin, checkedPassword).Result;
+                if (currentUser.RegistredUserLogin == null)
+                {
+                    MessageBox.Show($"Пользователь с логином {checkedLogin} не зарегистрирован\nОбратитесь к администратору приложения");
+                    Login = "";
+                    Password = "";
+                    return;
+                }
+                if (currentUser.IsRegistered == false)
+                {
+                    MessageBox.Show($"Неверно введен пароль\nОбратитесь к администратору приложения");
+                    return;
+                }
+                MessageBox.Show($"Вход пользователя: {currentUser.RegistredUserLogin}");
+                switch (currentUser.UserRole)
+                {
+                    case UserRole.Administrator:
+                        AdminPanelWindow adminPanel = new AdminPanelWindow(currentUser.EmployeeID);
+                        adminPanel.Show();
+                        InitialAuthorizationWindow.Close();
+                        break;
+                    case UserRole.GeneralDirector:
+                    case UserRole.DeputyGeneralDirector:
+                    case UserRole.HeadOfDepartment:
+                    case UserRole.Performer:
+                        ManagerPanelWindow managerPanel = new ManagerPanelWindow(currentUser.EmployeeID);
+                        managerPanel.Show();
+                        InitialAuthorizationWindow.Close();
+                        break;
+                    case UserRole.Сlerk:
+                        DocumentRegistrationWindow documentRegistrationWindow = new DocumentRegistrationWindow(currentUser.EmployeeID);
+                        documentRegistrationWindow.Show();
+                        InitialAuthorizationWindow.Close();
+                        break;
+                }
             }
-            if (currentUser.IsRegistered == false)
+            catch
             {
-                MessageBox.Show($"Неверно введен пароль\nОбратитесь к администратору приложения");
-                return;
-            }
-            MessageBox.Show($"Вход пользователя: {currentUser.RegistredUserLogin}");
-            switch (currentUser.UserRole)
-            {
-                case UserRole.Administrator:
-                    AdminPanelWindow adminPanel = new AdminPanelWindow(currentUser.EmployeeID);
-                    adminPanel.Show();
-                    InitialAuthorizationWindow.Close();
-                    break;
-                case UserRole.GeneralDirector:
-                case UserRole.DeputyGeneralDirector: 
-                case UserRole.HeadOfDepartment:
-                 case UserRole.Performer:
-                    ManagerPanelWindow managerPanel = new ManagerPanelWindow(currentUser.EmployeeID);
-                    managerPanel.Show();
-                    InitialAuthorizationWindow.Close();
-                    break;
-                case UserRole.Сlerk: 
-                    DocumentRegistrationWindow documentRegistrationWindow = new DocumentRegistrationWindow(currentUser.EmployeeID);
-                    documentRegistrationWindow.Show();
-                    InitialAuthorizationWindow.Close();
-                    break;
+                MessageBox.Show("Внимание! В текущее время сервер не доступен. Попробуйте зайти позднее");
+                InitialAuthorizationWindow.Close();
             }
         }
     }

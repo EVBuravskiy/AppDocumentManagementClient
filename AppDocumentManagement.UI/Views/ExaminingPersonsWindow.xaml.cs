@@ -1,4 +1,5 @@
-﻿using AppDocumentManagement.UI.ViewModels;
+﻿using AppDocumentManagement.Models;
+using AppDocumentManagement.UI.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,7 +12,7 @@ namespace AppDocumentManagement.UI.Views
     public partial class ExaminingPersonsWindow : Window
     {
         public ExaminingPersonViewModel viewModel;
-        public ExaminingPersonsWindow(bool needManager)
+        public ExaminingPersonsWindow(bool needManager, Department department)
         {
             viewModel = new ExaminingPersonViewModel(this, needManager);
             InitializeComponent();

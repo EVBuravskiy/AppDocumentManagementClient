@@ -1,6 +1,7 @@
-﻿using AppDocumentManagement.Models;
+﻿using AppDocumentManagement.EmployeeService;
+using AppDocumentManagement.Models;
 
-namespace AppDocumentManagement.EmployeeService.Converters
+namespace AppDocumentManagement.EmployeesService.Converters
 {
     public class MDepartmentConverter
     {

@@ -1,6 +1,7 @@
-﻿using AppDocumentManagement.Models;
+﻿using AppDocumentManagement.EmployeeService;
+using AppDocumentManagement.Models;
 
-namespace AppDocumentManagement.EmployeeService.Converters
+namespace AppDocumentManagement.EmployeesService.Converters
 {
     public class MEmployeeConverter
     {
@@ -17,7 +18,10 @@ namespace AppDocumentManagement.EmployeeService.Converters
             employee.EmployeePhone = mEmployee.EmployeePhone;
             employee.EmployeeEmail = mEmployee.EmployeeEmail;
             employee.EmployeeInformation = mEmployee.EmployeeInformation;
-            employee.IsDeleted = mEmployee.IsDeleted;
+            if (mEmployee.EmployeePhoto != null)
+            {
+                employee.EmployeePhoto = MEmployeePhotoConverter.ConvertToEmployeePhoto(mEmployee.EmployeePhoto);
+            }
             return employee;
         }
 
@@ -34,7 +38,10 @@ namespace AppDocumentManagement.EmployeeService.Converters
             mEmployee.EmployeePhone = employee.EmployeePhone ?? "";
             mEmployee.EmployeeEmail = employee.EmployeeEmail ?? "";
             mEmployee.EmployeeInformation = employee.EmployeeInformation ?? "";
-            mEmployee.IsDeleted = employee.IsDeleted;
+            if (employee.EmployeePhoto != null)
+            {
+                mEmployee.EmployeePhoto = MEmployeePhotoConverter.ConvertToMEmployeePhoto(employee.EmployeePhoto);
+            }
             return mEmployee;
         }
     }

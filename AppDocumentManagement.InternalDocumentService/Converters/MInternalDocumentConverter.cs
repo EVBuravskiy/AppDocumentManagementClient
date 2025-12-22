@@ -21,11 +21,11 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
             {
                 internalDocument.RegistrationDate = DateTime.Parse(mInternalDocument.RegistrationDate);
             }
-            internalDocument.InternalDocumentRegistrationNumber = mInternalDocument.InternalDocumentRegistrationNumber; //8
-            internalDocument.IsRegistated = mInternalDocument.IsRegistated; //9
-            if (mInternalDocument.SendingDate != "") //10
+            internalDocument.InternalDocumentRegistrationNumber = mInternalDocument.InternalDocumentRegistrationNumber ?? ""; //8
+            internalDocument.IsRegistered = mInternalDocument.IsRegistered; //9
+            if (mInternalDocument.InternalDocumentSendingDate != "") //10
             {
-                internalDocument.SendingDate = DateTime.Parse(mInternalDocument.SendingDate);
+                internalDocument.InternalDocumentSendingDate = DateTime.Parse(mInternalDocument.InternalDocumentSendingDate);
             }
             internalDocument.InternalDocumentStatus = DocumentStatusConverter.BackConvert(mInternalDocument.InternalDocumentStatus); //11
             internalDocument.InternalDocumentTitle = mInternalDocument.InternalDocumentTitle; //12
@@ -80,10 +80,10 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
                 mInternalDocument.RegistrationDate = internalDocument.RegistrationDate.ToShortDateString();
             }
             mInternalDocument.InternalDocumentRegistrationNumber = internalDocument.InternalDocumentRegistrationNumber ?? ""; //8
-            mInternalDocument.IsRegistated = internalDocument.IsRegistated; //9
-            if (internalDocument.SendingDate != null) //10
+            mInternalDocument.IsRegistered = internalDocument.IsRegistered; //9
+            if (internalDocument.InternalDocumentSendingDate != null) //10
             {
-                mInternalDocument.SendingDate = internalDocument.SendingDate.ToString();
+                mInternalDocument.InternalDocumentSendingDate = internalDocument.InternalDocumentSendingDate.ToString();
             }
             mInternalDocument.InternalDocumentStatus = DocumentStatusConverter.ToIntConvert(internalDocument.InternalDocumentStatus); //11
             mInternalDocument.InternalDocumentTitle = internalDocument.InternalDocumentTitle; //12

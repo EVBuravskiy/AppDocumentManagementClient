@@ -373,7 +373,7 @@
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
-                                                                   Text="{Binding ReceivingEmployee.EmployeeDepartment.DepartmentTitle}"
+                                                                   Text="{Binding ReceivingEmployee.Department.DepartmentTitle}"
                                                                    Padding="3 0"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
@@ -569,7 +569,7 @@
                                                                    TextWrapping="Wrap"
                                                                    FontSize="12"
                                                                    Padding="3 0"
-                                                                   Text="{Binding Signatory.EmployeeDepartment.DepartmentTitle}"/>
+                                                                   Text="{Binding Signatory.Department.DepartmentTitle}"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
@@ -600,7 +600,7 @@
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
                                                                    Padding="3 0"
-                                                                   Text="{Binding ApprovedManager.EmployeeDepartment.DepartmentTitle}"/>
+                                                                   Text="{Binding ApprovedManager.Department.DepartmentTitle}"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
@@ -619,7 +619,7 @@
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
                                                                    Padding="3 0"
-                                                                   Text="{Binding EmployeeRecievedDocument.EmployeeDepartment.DepartmentTitle}"/>
+                                                                   Text="{Binding EmployeeRecievedDocument.Department.DepartmentTitle}"/>
                                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                                    TextAlignment="Center"
                                                                    TextWrapping="Wrap"
@@ -638,7 +638,7 @@
                                                                TextAlignment="Center"
                                                                TextWrapping="Wrap"
                                                                Padding="3 0"
-                                                               Text="{Binding SendingDate, Converter={StaticResource DateConverter}}"/>
+                                                               Text="{Binding InternalDocumentSendingDate, Converter={StaticResource DateConverter}}"/>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>

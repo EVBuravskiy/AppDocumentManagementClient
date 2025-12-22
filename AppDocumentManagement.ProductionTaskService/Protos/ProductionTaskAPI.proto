@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+option csharp_namespace = "AppDocumentManagement.ProductionTaskService";
+
+package productionTaskService;
+
+service productionTaskAPI {
+	//ProductionTask
+	rpc AddProductionTask(MProductionTask) returns (BoolReply);
+	rpc GetProductionTasks(EmptyRequest) returns (MProductionTaskList);
+	rpc GetProductionTasksByEmployeeID(IDRequest) returns (MProductionTaskList);
+	rpc GetProductionTasksByCreatorID(IDRequest) returns (MProductionTaskList);
+	rpc UpdateProductionTaskStatus(MProductionTask) returns (BoolReply);
+
+	//ProductionSubTask
+	rpc AddProductionSubTask(MProductionSubTask) returns(BoolReply);
+	rpc AddProductionSubTasks(MProductionSubTaskList) returns (BoolReply);
+	rpc GetProductionSubTasks(IDRequest) returns (MProductionSubTaskList);
+	rpc UpdateProductionSubTask(MProductionSubTask) returns (BoolReply);
+
+	//ProductionTaskComment
+	rpc AddProductionTaskComment(MProductionTaskComment) returns(BoolReply);
+	rpc AddProductionTaskComments(MProductionTaskCommentList) returns(BoolReply);
+	rpc GetProductionTaskComments(IDRequest) returns(MProductionTaskCommentList);
+
+	//ProductionTaskFile
+	rpc AddProductionTaskFile(MProductionTaskFile) returns(BoolReply);
+	rpc AddProductionTaskFiles(MProductionTaskFileList) returns(BoolReply);
+	rpc GetProductionTaskFiles(IDRequest) returns(MProductionTaskFileList);
+	rpc RemoveProductionTaskFile(IDRequest) returns(BoolReply);
+}
+
+message BoolReply{
+    bool result = 1;
+}
+
+message EmptyRequest{}
+
+message IDRequest{
+    int32 ID = 1;
+}
+
+//MProductionTask
+message MProductionTask{
+	int32 ProductionTaskID = 1;
+	string ProductionTaskTitle = 2;
+	bool Priority = 3;
+	int32 ExternalDocumentID = 4;
+	int32 InternalDocumentID = 5;
+	string ProductionTaskCreateDate = 6;
+	string ProductionTaskDueDate = 7;
+	string ProductionTaskDescription = 8;
+	repeated int32 EmployeesID = 9;
+	int32 EmployeeCreatorID = 10;
+	int32 ProductionTaskStatus = 11;
+	MProductionSubTaskList MProductionSubTasks = 12;
+	MProductionTaskCommentList MProductionTaskComments = 13;
+	MProductionTaskFileList MProductionTaskFiles = 14;
+}
+
+message MProductionTaskList{
+	repeated MProductionTask MProductionTasks = 1;
+}
+
+//MProductionSubTask
+message MProductionSubTask {
+	int32 ProductionSubTaskID = 1;
+	string ProductionSubTaskDescription = 2;
+	string ProductionSubTaskCreateTime = 3;
+	int32 ProductionTaskID = 4;
+	bool IsDone = 5;
+}
+
+message MProductionSubTaskList {
+	repeated MProductionSubTask MProductionSubTasks = 1;
+}
+
+//MProductionTaskComment
+message MProductionTaskComment{
+	int32 ProductionTaskCommentID = 1;
+	string ProductionTaskCommentDate = 2;
+	string ProductionTaskCommentText = 3;
+	int32 ProductionTaskID = 4;
+	int32 EmployeeID = 5;
+}
+
+message MProductionTaskCommentList{
+	repeated MProductionTaskComment MProductionTaskComments = 1;
+}
+
+//MProductionTaskFile
+message MProductionTaskFile{
+	int32 ProductionTaskFileID = 1;
+	string ProductionTaskFileName = 2;
+	string ProductionTaskFileExtension = 3;
+	bytes ProductionTaskFileData = 4; 
+	int32 ProductionTaskID = 5;
+}
+
+message MProductionTaskFileList{
+	repeated MProductionTaskFile MProductionTaskFiles = 1;
+}
+
+//MContractorCompany
+message MContractorCompany{
+	int32 ContractorCompanyID = 1;
+	string ContractorCompanyTitle = 2;
+	string ContractorCompanyShortTitle = 3;
+	string ContractorCompanyAddress = 4;
+	string ContractorCompanyPhone = 5;
+	string ContractorCompanyEmail = 6;
+	string ContractorCompanyInformation = 7;
+}
+
+message MContractorCompanyList{
+	repeated MContractorCompany MContractorCompanyes = 1;
+}

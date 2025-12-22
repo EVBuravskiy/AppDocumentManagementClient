@@ -9,7 +9,7 @@ namespace AppDocumentManagement.UI.Utilities
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value != null)
+            if (value != null)
             {
                 if (value is DateTime date)
                 {

@@ -1,7 +1,8 @@
-﻿using AppDocumentManagement.Models;
+﻿using AppDocumentManagement.EmployeeService;
+using AppDocumentManagement.Models;
 using Google.Protobuf;
 
-namespace AppDocumentManagement.EmployeeService.Converters
+namespace AppDocumentManagement.EmployeesService.Converters
 {
     public class MEmployeePhotoConverter
     {

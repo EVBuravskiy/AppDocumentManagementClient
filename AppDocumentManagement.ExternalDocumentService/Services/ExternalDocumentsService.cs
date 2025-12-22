@@ -29,6 +29,16 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
             return externalDocuments;
         }
 
+        public async Task<ExternalDocument> GetExternalDocumentsByExternalDocumentID(int externalDocumentID)
+        {
+            IDRequest iDRequest = new IDRequest() { ID = externalDocumentID };
+            using var channel = GrpcChannel.ForAddress("http://localhost:6002");
+            var client = new externalDocumentAPI.externalDocumentAPIClient(channel);
+            MExternalDocument mExternalDocument = client.GetExternalDocumentsByExternalDocumentID(iDRequest);
+            ExternalDocument externalDocument = MExternalDocumentConverter.ConvertToExternalDocument(mExternalDocument);
+            return externalDocument;
+        }
+
         public async Task<List<ExternalDocument>> GetExternalDocumentsByEmployeeReceivedDocumentID(int recievedEmployeeID)
         {
             IDRequest iDRequest = new IDRequest() { ID = recievedEmployeeID };

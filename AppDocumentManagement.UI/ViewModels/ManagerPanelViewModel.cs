@@ -1,7 +1,8 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
+﻿using AppDocumentManagement.EmployeesService.Service;
 using AppDocumentManagement.ExternalDocumentService.Services;
 using AppDocumentManagement.InternalDocumentService.Services;
 using AppDocumentManagement.Models;
+using AppDocumentManagement.ProductionTaskService.Services;
 using AppDocumentManagement.UI.Utilities;
 using AppDocumentManagement.UI.Views;
 using System.Collections.ObjectModel;
@@ -177,9 +178,9 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 selectedExternalDocument = value;
                 OnPropertyChanged(nameof(SelectedExternalDocument));
-                if(value != null)
+                if (value != null)
                 {
-                    OpenExternalDocumentShowWindow(selectedExternalDocument, currentUser, selectedExternalDocument.ContractorCompany);
+                    OpenExternalDocumentShowWindow(selectedExternalDocument, selectedExternalDocument.ContractorCompany, currentUser);
                 }
             }
         }
@@ -195,7 +196,7 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 selectedInternalDocument = value;
                 OnPropertyChanged(nameof(SelectedInternalDocument));
-                if(value != null)
+                if (value != null)
                 {
                     OpenInternalDocumentShowWindow(selectedInternalDocument);
                 }
@@ -230,6 +231,50 @@ namespace AppDocumentManagement.UI.ViewModels
 
         private bool IsInternalDocument { get; set; }
 
+        private List<ProductionTask> ProductionTasksList { get; set; }
+
+        public ObservableCollection<ProductionTask> ProductionTaskInProgress { get; set; }
+        public ObservableCollection<ProductionTask> ProductionTaskUnderInspection { get; set; }
+        public ObservableCollection<ProductionTask> ProductionTaskDone { get; set; }
+
+        private ProductionTask selectedProductionTask;
+        public ProductionTask SelectedProductionTask
+        {
+            get => selectedProductionTask;
+            set
+            {
+                selectedProductionTask = value;
+                OnPropertyChanged(nameof(SelectedProductionTask));
+                if (value != null)
+                {
+                    OpenProductionTaskShowWindow();
+                }
+            }
+        }
+
+        private List<ProductionTask> OwnProductionTasksList { get; set; }
+
+        public ObservableCollection<ProductionTask> OwnProductionTaskInProgress { get; set; }
+        public ObservableCollection<ProductionTask> OwnProductionTaskUnderInspection { get; set; }
+        public ObservableCollection<ProductionTask> OwnProductionTaskDone { get; set; }
+
+        private ProductionTask ownSelectedProductionTask;
+        public ProductionTask OwnSelectedProductionTask
+        {
+            get => ownSelectedProductionTask;
+            set
+            {
+                ownSelectedProductionTask = value;
+                OnPropertyChanged(nameof(OwnSelectedProductionTask));
+                if (value != null)
+                {
+                    OpenOwnProductionTaskShowWindow();
+                }
+            }
+        }
+
+        private List<EmployeePhoto> EmployeePhotos { get; set; }
+
         public ManagerPanelViewModel(ManagerPanelWindow window, int currentUserID)
         {
             ManagerPanelWindow = window;
@@ -237,26 +282,46 @@ namespace AppDocumentManagement.UI.ViewModels
             IsInternalDocument = false;
             ExternalDocumentsList = new List<ExternalDocument>();
             InternalDocumentsList = new List<InternalDocument>();
+            ProductionTasksList = new List<ProductionTask>();
+            OwnProductionTasksList = new List<ProductionTask>();
             Employees = new List<Employee>();
             Departments = new List<Department>();
             ContractorCompanies = new List<ContractorCompany>();
+            EmployeePhotos = new List<EmployeePhoto>();
             ExternalDocumentStatus = new ObservableCollection<string>();
             InternalDocumentStatus = new ObservableCollection<string>();
             ExternalDocumentTypes = new ObservableCollection<string>();
             InternalDocumentTypes = new ObservableCollection<string>();
             ExternalDocuments = new ObservableCollection<ExternalDocument>();
             InternalDocuments = new ObservableCollection<InternalDocument>();
+            ProductionTaskInProgress = new ObservableCollection<ProductionTask>();
+            ProductionTaskUnderInspection = new ObservableCollection<ProductionTask>();
+            ProductionTaskDone = new ObservableCollection<ProductionTask>();
+            OwnProductionTaskInProgress = new ObservableCollection<ProductionTask>();
+            OwnProductionTaskUnderInspection = new ObservableCollection<ProductionTask>();
+            OwnProductionTaskDone = new ObservableCollection<ProductionTask>();
             InitializeInternalDocumentStatus();
             InitializeExternalDocumentStatus();
             InitializeExternalDocumentTypes();
             InitializeInternalDocumentTypes();
             GetEmployees();
+            GetEmployeePhotos();
             GetDepartments();
             GetContractorCompanies();
             GetExternalDocuments();
             GetInternalDocuments();
             InitializeExternalDocuments();
             InitializeInternalDocuments();
+            GetProductionTasks();
+            InitializeProductionTasks();
+            if (currentUser != null && currentUser.EmployeeRole != EmployeeRole.Performer)
+            {
+                ManagerPanelWindow.AddTaskBtn.Visibility = System.Windows.Visibility.Visible;
+                ManagerPanelWindow.AddOwnTaskBtn.Visibility = System.Windows.Visibility.Visible;
+                ManagerPanelWindow.OwnTaskBtn.Visibility = System.Windows.Visibility.Visible;
+                GetOwnProductionTasks();
+                InitializeOwnProductionTasks();
+            }
         }
 
         private void InitializeCurrentUser(int currentUserID)
@@ -328,7 +393,7 @@ namespace AppDocumentManagement.UI.ViewModels
         private void GetExternalDocuments()
         {
             ExternalDocumentsList.Clear();
-            ExternalDocumentsService externalDocumentsService = new ExternalDocumentsService(); 
+            ExternalDocumentsService externalDocumentsService = new ExternalDocumentsService();
             ExternalDocumentsList = externalDocumentsService.GetExternalDocumentsByEmployeeReceivedDocumentID(currentUser.EmployeeID).Result;
             if (ExternalDocumentsList.Count > 0)
             {
@@ -343,7 +408,7 @@ namespace AppDocumentManagement.UI.ViewModels
             }
         }
 
-        private void GetInternalDocuments() 
+        private void GetInternalDocuments()
         {
             InternalDocumentsList.Clear();
             InternalDocumentsService internalDocumentsService = new InternalDocumentsService();
@@ -351,23 +416,23 @@ namespace AppDocumentManagement.UI.ViewModels
             InternalDocumentsList.Sort((d1, d2) => d2.RegistrationDate.CompareTo(d1.RegistrationDate));
             foreach (InternalDocument internalDocument in InternalDocumentsList)
             {
-                Employee signatory = Employees.SingleOrDefault(s => s.EmployeeID == internalDocument.SignatoryID);
+                Employee signatory = Employees.Where(s => s.EmployeeID == internalDocument.SignatoryID).FirstOrDefault();
                 if (signatory != null)
                 {
-                    Department department = Departments.SingleOrDefault(d => d.DepartmentID == signatory.DepartmentID);
-                    if (department != null) signatory.EmployeeDepartment = department;
+                    Department department = Departments.Where(d => d.DepartmentID == signatory.DepartmentID).FirstOrDefault();
+                    if (department != null) signatory.Department = department;
                 }
-                Employee approvedManager = Employees.SingleOrDefault(a => a.EmployeeID == internalDocument.ApprovedManagerID);
+                Employee approvedManager = Employees.Where(a => a.EmployeeID == internalDocument.ApprovedManagerID).FirstOrDefault();
                 if (approvedManager != null)
                 {
-                    Department department = Departments.SingleOrDefault(d => d.DepartmentID == approvedManager.DepartmentID);
-                    approvedManager.EmployeeDepartment = department;
+                    Department department = Departments.Where(d => d.DepartmentID == approvedManager.DepartmentID).FirstOrDefault();
+                    approvedManager.Department = department;
                 }
-                Employee employeeRecievedDocument = Employees.SingleOrDefault(r => r.EmployeeID == internalDocument.EmployeeRecievedDocumentID);
+                Employee employeeRecievedDocument = Employees.Where(r => r.EmployeeID == internalDocument.EmployeeRecievedDocumentID).FirstOrDefault();
                 if (employeeRecievedDocument != null)
                 {
-                    Department department = Departments.SingleOrDefault(d => d.DepartmentID == employeeRecievedDocument.DepartmentID);
-                    employeeRecievedDocument.EmployeeDepartment = department;
+                    Department department = Departments.Where(d => d.DepartmentID == employeeRecievedDocument.DepartmentID).FirstOrDefault();
+                    employeeRecievedDocument.Department = department;
                 }
                 internalDocument.Signatory = signatory;
                 internalDocument.ApprovedManager = approvedManager;
@@ -380,6 +445,18 @@ namespace AppDocumentManagement.UI.ViewModels
             Employees.Clear();
             EmployesService employesService = new EmployesService();
             Employees = employesService.GetAllEmployees().Result;
+        }
+
+        private void GetEmployeePhotos()
+        {
+            EmployeePhotos.Clear();
+            EmployeePhotoService employeePhotoService = new EmployeePhotoService();
+            EmployeePhotos = employeePhotoService.GetEmployeePhotos().Result;
+            foreach (EmployeePhoto photo in EmployeePhotos)
+            {
+                string photoPath = FileProcessing.SaveEmployeePhotoToTempFolder(photo);
+                photo.FilePath = photoPath;
+            }
         }
 
         private void GetDepartments()
@@ -400,7 +477,7 @@ namespace AppDocumentManagement.UI.ViewModels
             ExternalDocuments.Clear();
             if (ExternalDocumentsList != null)
             {
-                foreach(ExternalDocument document in ExternalDocumentsList)
+                foreach (ExternalDocument document in ExternalDocumentsList)
                 {
                     ExternalDocuments.Add(document);
                 }
@@ -409,27 +486,27 @@ namespace AppDocumentManagement.UI.ViewModels
         private void InitializeInternalDocuments()
         {
             InternalDocuments.Clear();
-            if(InternalDocumentsList != null )
+            if (InternalDocumentsList != null)
             {
-                foreach (InternalDocument internalDocument in InternalDocumentsList) 
+                foreach (InternalDocument internalDocument in InternalDocumentsList)
                 {
-                    Employee signatory = Employees.Where(s => s.EmployeeID == internalDocument.SignatoryID).FirstOrDefault();
+                    Employee signatory = Employees.SingleOrDefault(s => s.EmployeeID == internalDocument.SignatoryID);
                     if (signatory != null)
                     {
-                        Department department = Departments.Where(d => d.DepartmentID == signatory.DepartmentID).FirstOrDefault();
-                        if (department != null) signatory.EmployeeDepartment = department;
+                        Department department = Departments.SingleOrDefault(d => d.DepartmentID == signatory.DepartmentID);
+                        if (department != null) signatory.Department = department;
                     }
-                    Employee approvedManager = Employees.Where(a => a.EmployeeID == internalDocument.ApprovedManagerID).FirstOrDefault();
+                    Employee approvedManager = Employees.SingleOrDefault(a => a.EmployeeID == internalDocument.ApprovedManagerID);
                     if (approvedManager != null)
                     {
-                        Department department = Departments.Where(d => d.DepartmentID == approvedManager.DepartmentID).FirstOrDefault();
-                        approvedManager.EmployeeDepartment = department;
+                        Department department = Departments.SingleOrDefault(d => d.DepartmentID == approvedManager.DepartmentID);
+                        approvedManager.Department = department;
                     }
-                    Employee employeeRecievedDocument = Employees.Where(r => r.EmployeeID == internalDocument.EmployeeRecievedDocumentID).FirstOrDefault();
+                    Employee employeeRecievedDocument = Employees.SingleOrDefault(r => r.EmployeeID == internalDocument.EmployeeRecievedDocumentID);
                     if (employeeRecievedDocument != null)
                     {
-                        Department department = Departments.Where(d => d.DepartmentID == employeeRecievedDocument.DepartmentID).FirstOrDefault();
-                        employeeRecievedDocument.EmployeeDepartment = department;
+                        Department department = Departments.SingleOrDefault(d => d.DepartmentID == employeeRecievedDocument.DepartmentID);
+                        employeeRecievedDocument.Department = department;
                     }
                     internalDocument.Signatory = signatory;
                     internalDocument.ApprovedManager = approvedManager;
@@ -468,7 +545,8 @@ namespace AppDocumentManagement.UI.ViewModels
         {
             InternalDocuments.Clear();
             List<InternalDocument> internalDocuments = new List<InternalDocument>();
-            if(InternalDocumentsList.Count > 0) {
+            if (InternalDocumentsList.Count > 0)
+            {
                 if (selectedInternalDocumentStatus == "Все внутренние документы")
                 {
                     internalDocuments = InternalDocumentsList;
@@ -479,9 +557,9 @@ namespace AppDocumentManagement.UI.ViewModels
                     internalDocuments = InternalDocumentsList.Where(d => d.InternalDocumentStatus == documentStatus).ToList();
                 }
             }
-            if(internalDocuments.Count > 0)
+            if (internalDocuments.Count > 0)
             {
-                foreach(InternalDocument internalDocument in internalDocuments)
+                foreach (InternalDocument internalDocument in internalDocuments)
                 {
                     InternalDocuments.Add(internalDocument);
                 }
@@ -616,7 +694,164 @@ namespace AppDocumentManagement.UI.ViewModels
             }
         }
 
-        private void OpenExternalDocumentShowWindow(ExternalDocument externalDocument, Employee currentEmployee, ContractorCompany contractorCompany)
+        private void GetProductionTasks()
+        {
+            ProductionTasksService productionTaskService = new ProductionTasksService();
+            ProductionTasksList.Clear();
+            //ProductionTasksList = productionTaskController.GetProductionTasks();
+            ProductionTasksList = productionTaskService.GetProductionTasksByEmployeeID(currentUser.EmployeeID).Result;
+            foreach (ProductionTask task in ProductionTasksList)
+            {
+                if (task.ExternalDocumentID != 0)
+                {
+                    ExternalDocument externalDocument = ExternalDocuments.SingleOrDefault(ed => ed.ExternalDocumentID == task.ExternalDocumentID);
+                    if (externalDocument != null)
+                    {
+                        task.ExternalDocument = externalDocument;
+                    }
+                }
+                if (task.InternalDocumentID != 0)
+                {
+                    InternalDocument internalDocument = InternalDocuments.SingleOrDefault(id => id.InternalDocumentID == task.InternalDocumentID);
+                    if (internalDocument != null)
+                    {
+                        task.InternalDocument = internalDocument;
+                    }
+                }
+                if (task.EmployeesID.Count > 0)
+                {
+                    task.Employees = new List<Employee>();
+                    foreach (int id in task.EmployeesID)
+                    {
+                        Employee employee = Employees.SingleOrDefault(e => e.EmployeeID == id);
+                        if (employee != null)
+                        {
+                            Department department = Departments.FirstOrDefault(d => d.DepartmentID == employee.DepartmentID);
+                            if (department != null)
+                            {
+                                employee.Department = department;
+                            }
+                            EmployeePhoto employeePhoto = EmployeePhotos.FirstOrDefault(p => p.EmployeeID == employee.EmployeeID);
+                            if (employeePhoto != null)
+                            {
+                                employee.EmployeePhoto = employeePhoto;
+                            }
+                            task.Employees.Add(employee);
+                        }
+                    }
+                }
+                ProductionTaskSubService productionTaskSubService = new ProductionTaskSubService();
+                List<ProductionSubTask> subTasks = productionTaskSubService.GetProductionSubTasks(task.ProductionTaskID).Result;
+                task.ProductionSubTasks = subTasks;
+            }
+        }
+
+        private void InitializeProductionTasks()
+        {
+            ProductionTaskInProgress.Clear();
+            ProductionTaskUnderInspection.Clear();
+            ProductionTaskDone.Clear();
+            if (ProductionTasksList.Count > 0)
+            {
+                foreach (ProductionTask productionTask in ProductionTasksList)
+                {
+                    if (productionTask.ProductionTaskStatus == ProductionTaskStatus.InProgress)
+                    {
+                        ProductionTaskInProgress.Add(productionTask);
+                        continue;
+                    }
+                    if (productionTask.ProductionTaskStatus == ProductionTaskStatus.UnderInspection)
+                    {
+                        ProductionTaskUnderInspection.Add(productionTask);
+                        continue;
+                    }
+                    if (productionTask.ProductionTaskStatus == ProductionTaskStatus.Done)
+                    {
+                        ProductionTaskDone.Add(productionTask);
+                    }
+                }
+            }
+        }
+
+        private void GetOwnProductionTasks()
+        {
+            ProductionTasksService productionTasksService = new ProductionTasksService();
+            OwnProductionTasksList.Clear();
+            OwnProductionTasksList = productionTasksService.GetProductionTasksByCreatorID(currentUser.EmployeeID).Result;
+            foreach (ProductionTask task in OwnProductionTasksList)
+            {
+                if (task.ExternalDocumentID != 0)
+                {
+                    ExternalDocument externalDocument = ExternalDocuments.SingleOrDefault(ed => ed.ExternalDocumentID == task.ExternalDocumentID);
+                    if (externalDocument != null)
+                    {
+                        task.ExternalDocument = externalDocument;
+                    }
+                }
+                if (task.InternalDocumentID != 0)
+                {
+                    InternalDocument internalDocument = InternalDocuments.SingleOrDefault(id => id.InternalDocumentID == task.InternalDocumentID);
+                    if (internalDocument != null)
+                    {
+                        task.InternalDocument = internalDocument;
+                    }
+                }
+                if (task.EmployeesID.Count > 0)
+                {
+                    task.Employees = new List<Employee>();
+                    foreach (int id in task.EmployeesID)
+                    {
+                        Employee employee = Employees.SingleOrDefault(e => e.EmployeeID == id);
+                        if (employee != null)
+                        {
+                            Department department = Departments.FirstOrDefault(d => d.DepartmentID == employee.DepartmentID);
+                            if (department != null)
+                            {
+                                employee.Department = department;
+                            }
+                            EmployeePhoto employeePhoto = EmployeePhotos.FirstOrDefault(p => p.EmployeeID == employee.EmployeeID);
+                            if (employeePhoto != null)
+                            {
+                                employee.EmployeePhoto = employeePhoto;
+                            }
+                            task.Employees.Add(employee);
+                        }
+                    }
+                }
+                ProductionTaskSubService productionTaskSubService = new ProductionTaskSubService();
+                List<ProductionSubTask> subTasks = productionTaskSubService.GetProductionSubTasks(task.ProductionTaskID).Result;
+                task.ProductionSubTasks = subTasks;
+            }
+        }
+
+        private void InitializeOwnProductionTasks()
+        {
+            OwnProductionTaskInProgress.Clear();
+            OwnProductionTaskUnderInspection.Clear();
+            OwnProductionTaskDone.Clear();
+            if (OwnProductionTasksList.Count > 0)
+            {
+                foreach (ProductionTask productionTask in OwnProductionTasksList)
+                {
+                    if (productionTask.ProductionTaskStatus == ProductionTaskStatus.InProgress)
+                    {
+                        OwnProductionTaskInProgress.Add(productionTask);
+                        continue;
+                    }
+                    if (productionTask.ProductionTaskStatus == ProductionTaskStatus.UnderInspection)
+                    {
+                        OwnProductionTaskUnderInspection.Add(productionTask);
+                        continue;
+                    }
+                    if (productionTask.ProductionTaskStatus == ProductionTaskStatus.Done)
+                    {
+                        OwnProductionTaskDone.Add(productionTask);
+                    }
+                }
+            }
+        }
+
+        private void OpenExternalDocumentShowWindow(ExternalDocument externalDocument, ContractorCompany contractorCompany, Employee currentEmployee)
         {
             ExternalDocumentShowWindow externalDocumentShowWindow = new ExternalDocumentShowWindow(externalDocument, currentEmployee, contractorCompany);
             externalDocumentShowWindow.ShowDialog();
@@ -635,6 +870,9 @@ namespace AppDocumentManagement.UI.ViewModels
         public ICommand IShowExternalDocuments => new RelayCommand(showExternalDocuments => ShowExternalDocuments());
         private void ShowExternalDocuments()
         {
+            ManagerPanelWindow.TaskPanel.Visibility = System.Windows.Visibility.Hidden;
+            ManagerPanelWindow.OwnTaskPanel.Visibility = System.Windows.Visibility.Hidden;
+            ManagerPanelWindow.DocumentPanel.Visibility = System.Windows.Visibility.Visible;
             ManagerPanelWindow.ComboExternalDocumentStatus.Visibility = System.Windows.Visibility.Visible;
             ManagerPanelWindow.ComboInternalDocumentStatus.Visibility = System.Windows.Visibility.Hidden;
             ManagerPanelWindow.NewInternalDocument.Visibility = System.Windows.Visibility.Hidden;
@@ -650,6 +888,9 @@ namespace AppDocumentManagement.UI.ViewModels
         public ICommand IShowInternalDocuments => new RelayCommand(showInternalDocuments => ShowInternalDocuments());
         private void ShowInternalDocuments()
         {
+            ManagerPanelWindow.TaskPanel.Visibility = System.Windows.Visibility.Hidden;
+            ManagerPanelWindow.OwnTaskPanel.Visibility = System.Windows.Visibility.Hidden;
+            ManagerPanelWindow.DocumentPanel.Visibility = System.Windows.Visibility.Visible;
             ManagerPanelWindow.ComboExternalDocumentStatus.Visibility = System.Windows.Visibility.Hidden;
             ManagerPanelWindow.ComboInternalDocumentStatus.Visibility = System.Windows.Visibility.Visible;
             ManagerPanelWindow.NewInternalDocument.Visibility = System.Windows.Visibility.Visible;
@@ -662,6 +903,26 @@ namespace AppDocumentManagement.UI.ViewModels
             SearchStringContent = "Поиск по фамилии, имени, отчеству инициатора/подписанта, либо содержанию документа...";
         }
 
+        public ICommand IShowTasks => new RelayCommand(showTasks => ShowTasks());
+        private void ShowTasks()
+        {
+            ManagerPanelWindow.OwnTaskPanel.Visibility = System.Windows.Visibility.Hidden;
+            ManagerPanelWindow.TaskPanel.Visibility = System.Windows.Visibility.Visible;
+            ManagerPanelWindow.DocumentPanel.Visibility = System.Windows.Visibility.Hidden;
+            GetProductionTasks();
+            InitializeProductionTasks();
+        }
+
+        public ICommand IShowOwnTasks => new RelayCommand(showOwnTasks => ShowOwnTasks());
+        private void ShowOwnTasks()
+        {
+            ManagerPanelWindow.OwnTaskPanel.Visibility = System.Windows.Visibility.Visible;
+            ManagerPanelWindow.TaskPanel.Visibility = System.Windows.Visibility.Hidden;
+            ManagerPanelWindow.DocumentPanel.Visibility = System.Windows.Visibility.Hidden;
+            GetOwnProductionTasks();
+            InitializeOwnProductionTasks();
+        }
+
         public ICommand ICreateNewInternalDocument => new RelayCommand(createNewInternalDocument => CreateNewInternalDocument());
         private void CreateNewInternalDocument()
         {
@@ -670,6 +931,44 @@ namespace AppDocumentManagement.UI.ViewModels
             creatingInternalDocumentWindow.ShowDialog();
             GetInternalDocuments();
             GetDocumentBySearchString(SearchString);
+        }
+
+        public ICommand IAddNewTask => new RelayCommand(addNewTask => AddNewTask());
+        private void AddNewTask()
+        {
+            AddTasks();
+            GetProductionTasks();
+            InitializeProductionTasks();
+        }
+
+        public ICommand IAddOwnNewTask => new RelayCommand(addOwnNewTask => AddOwnNewTask());
+        private void AddOwnNewTask()
+        {
+            AddTasks();
+            GetOwnProductionTasks();
+            InitializeOwnProductionTasks();
+        }
+
+        private void AddTasks()
+        {
+            ProductionTaskWindow productionTaskWindow = new ProductionTaskWindow(currentUser, null, null);
+            productionTaskWindow.ShowDialog();
+        }
+
+        private void OpenProductionTaskShowWindow()
+        {
+            ProductionTaskShowWindow productionTaskShowWindow = new ProductionTaskShowWindow(currentUser, SelectedProductionTask);
+            productionTaskShowWindow.ShowDialog();
+            GetProductionTasks();
+            InitializeProductionTasks();
+        }
+
+        private void OpenOwnProductionTaskShowWindow()
+        {
+            ProductionTaskShowWindow productionTaskShowWindow = new ProductionTaskShowWindow(currentUser, OwnSelectedProductionTask);
+            productionTaskShowWindow.ShowDialog();
+            GetOwnProductionTasks();
+            InitializeOwnProductionTasks();
         }
 
         public ICommand IExit => new RelayCommand(exit => { ManagerPanelWindow.Close(); });

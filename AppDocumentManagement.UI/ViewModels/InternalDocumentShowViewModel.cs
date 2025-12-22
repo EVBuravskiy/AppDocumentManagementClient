@@ -1,4 +1,4 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
+﻿using AppDocumentManagement.EmployeesService.Service;
 using AppDocumentManagement.InternalDocumentService.Services;
 using AppDocumentManagement.Models;
 using AppDocumentManagement.UI.Utilities;
@@ -96,7 +96,7 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 selectedInternalDocumentFile = value;
                 OnPropertyChanged(nameof(SelectedInternalDocumentFile));
-                if(value != null)
+                if (value != null)
                 {
                     BrowseToSaveInternalDocumentFile();
                 }
@@ -114,7 +114,7 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 InternalDocumentType = InternalDocumentTypeConverter.ConvertToString(InternalDocument.InternalDocumentType);
                 InternalDocumentDate = DateConverter.ConvertDateToString(InternalDocument.InternalDocumentDate);
-                if(InternalDocument.SignatoryID != 0)
+                if (InternalDocument.SignatoryID != 0)
                 {
                     Signatory = GetEmployeeByID(InternalDocument.SignatoryID);
                 }
@@ -131,7 +131,7 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 CurrentEmployee = GetEmployeeByID(currentEmployeeID);
             }
-            if(CurrentEmployee.EmployeeRole == EmployeeRole.Performer)
+            if (CurrentEmployee.EmployeeRole == EmployeeRole.Performer)
             {
                 InternalDocumentShowWindow.InternalDocumentContent.Height = new GridLength(380, GridUnitType.Pixel);
                 InternalDocumentShowWindow.InternalDocumentButtons.Height = new GridLength(0, GridUnitType.Pixel);
@@ -147,7 +147,7 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 DepartmentService departmentService = new DepartmentService();
                 Department department = departmentService.GetDepartmentByID(employee.DepartmentID).Result;
-                employee.EmployeeDepartment = department;
+                employee.Department = department;
             }
             return employee;
         }
@@ -157,7 +157,7 @@ namespace AppDocumentManagement.UI.ViewModels
             InternalDocumentFilesList.Clear();
             if (InternalDocument != null)
             {
-                InternalDocumentFileService internalDocumentFileService = new InternalDocumentFileService();
+                InternalDocumentFileService internalDocumentFileService= new InternalDocumentFileService();
                 InternalDocumentFilesList = internalDocumentFileService.GetInternalDocumentFiles(InternalDocument.InternalDocumentID).Result;
             }
         }
@@ -211,7 +211,7 @@ namespace AppDocumentManagement.UI.ViewModels
         public ICommand IBrowseInternalDocumentFile => new RelayCommand(browseInternalDocumentFile => BrowseInternalDocumentFile());
         private void BrowseInternalDocumentFile()
         {
-            var filePath = fileDialogService.OpenFile("Text files(*.txt)| *.txt | PDF files(*.pdf) | *.pdf | Image files(*.BMP; *.JPG; *.GIF)| *.BMP; *.JPG; *.GIF | All files(*.*) | *.*");
+            var filePath = fileDialogService.OpenFile("Files (*.txt;*.jpg;*.jpeg;*.png;*.pdf)|*.txt;*.jpg;*.jpeg;*.png;*.pdf|All files");
             if (filePath == null) return;
             string fileName = FileProcessing.GetFileName(filePath);
             string fileExtension = FileProcessing.GetFileExtension(filePath);
@@ -239,14 +239,14 @@ namespace AppDocumentManagement.UI.ViewModels
 
         private void SendToWork()
         {
-            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true);
+            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true, null);
             examiningPersonsWindow.ShowDialog();
             bool result = false;
             if (examiningPersonsWindow.viewModel.SelectedEmployee != null)
             {
                 InternalDocument.EmployeeRecievedDocument = examiningPersonsWindow.viewModel.SelectedEmployee;
                 InternalDocument.EmployeeRecievedDocumentID = examiningPersonsWindow.viewModel.SelectedEmployee.EmployeeID;
-                InternalDocument.SendingDate = DateTime.Now;
+                InternalDocument.InternalDocumentSendingDate = DateTime.Now;
                 InternalDocumentsService internalDocumentsService = new InternalDocumentsService();
                 result = internalDocumentsService.UpdateInternalDocument(InternalDocument).Result;
             }
@@ -261,17 +261,22 @@ namespace AppDocumentManagement.UI.ViewModels
             }
         }
 
-        //TODO: Реализовать создание задачи к документу
-        public ICommand ICreateTask;
+        public ICommand ICreateTask => new RelayCommand(createTask => CreateTask());
+        private void CreateTask()
+        {
+            ProductionTaskWindow productionTaskWindow = new ProductionTaskWindow(CurrentEmployee, null, InternalDocument);
+            productionTaskWindow.ShowDialog();
+        }
 
         public ICommand IAgreeInternalDocument => new RelayCommand(agreeInternalDocument => AgreeInternalDocument());
         private void AgreeInternalDocument()
         {
-            bool result = false;    
+            bool result = false;
             if (CurrentEmployee != null)
             {
                 InternalDocument.ApprovedManager = CurrentEmployee;
                 InternalDocument.ApprovedManagerID = CurrentEmployee.EmployeeID;
+                InternalDocument.InternalDocumentStatus = DocumentStatus.Agreed;
                 InternalDocumentsService internalDocumentsService = new InternalDocumentsService();
                 result = internalDocumentsService.UpdateInternalDocument(InternalDocument).Result;
                 ApprovedManager = CurrentEmployee;
@@ -285,6 +290,7 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 MessageBox.Show("Ошибка в согласовании документа");
             }
+
         }
 
         public ICommand IExit => new RelayCommand(exit => { InternalDocumentShowWindow.Close(); });

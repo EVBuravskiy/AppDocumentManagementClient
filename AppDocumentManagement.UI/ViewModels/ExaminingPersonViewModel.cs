@@ -1,4 +1,4 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
+﻿using AppDocumentManagement.EmployeesService.Service;
 using AppDocumentManagement.Models;
 using AppDocumentManagement.UI.Utilities;
 using AppDocumentManagement.UI.Views;
@@ -104,7 +104,7 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             foreach (Employee employee in EmployeesList)
             {
-                employee.EmployeePhoto = EmployeePhotos.Where(p => p.EmployeeID == employee.EmployeeID).FirstOrDefault();
+                employee.EmployeePhoto = EmployeePhotos.SingleOrDefault(p => p.EmployeeID == employee.EmployeeID);
             }
         }
 
@@ -123,7 +123,7 @@ namespace AppDocumentManagement.UI.ViewModels
             foreach (EmployeePhoto photo in EmployeePhotos)
             {
                 string photoPath = FileProcessing.SaveEmployeePhotoToTempFolder(photo);
-                photo.PhotoPath = photoPath;
+                photo.FilePath = photoPath;
             }
         }
 
@@ -137,12 +137,12 @@ namespace AppDocumentManagement.UI.ViewModels
                 {
                     if (DepartmentsList.Count > 0)
                     {
-                        Department department = DepartmentsList.Where(d => d.DepartmentID == employee.DepartmentID).FirstOrDefault();
+                        Department department = DepartmentsList.SingleOrDefault(d => d.DepartmentID == employee.DepartmentID);
                         if (department != null)
                         {
-                            employee.EmployeeDepartment = department;
+                            employee.Department = department;
                         }
-                        EmployeePhoto employeePhoto = EmployeePhotos.Where(p => p.EmployeeID == employee.EmployeeID).FirstOrDefault();
+                        EmployeePhoto employeePhoto = EmployeePhotos.SingleOrDefault(p => p.EmployeeID == employee.EmployeeID);
                         if (employeePhoto != null)
                         {
                             employee.EmployeePhoto = employeePhoto;
@@ -175,7 +175,7 @@ namespace AppDocumentManagement.UI.ViewModels
                 {
                     foreach (var employee in EmployeesList)
                     {
-                        if (employee.EmployeeDepartment.DepartmentTitle.ToLower().Contains(searchString.ToLower()))
+                        if (employee.Department.DepartmentTitle.ToLower().Contains(searchString.ToLower()))
                         {
                             Employees.Add(employee);
                         }

@@ -12,12 +12,13 @@
         public List<ExternalDocumentFile>? ExternalDocumentFiles { get; set; }
         public DateTime RegistrationDate { get; set; }
         public string RegistrationNumber => ExternalDocumentID.ToString();
-        public bool IsRegistated { get; set; }
+        public bool IsRegistered { get; set; }
         public Employee? ReceivingEmployee { get; set; }
         public int? ReceivingEmployeeID { get; set; }
         public DateTime? ExternalDocumentSendingDate { get; set; }
         public DocumentStatus ExternalDocumentStatus { get; set; }
+        public ProductionTask? ProductionTask { get; set; }
+        public int ProductionTaskID { get; set; } = 0;
 
-        public bool IsDeleted { get; set; } = false;
     }
 }

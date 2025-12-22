@@ -30,6 +30,16 @@ namespace AppDocumentManagement.InternalDocumentService.Services
             return internalDocuments;
         }
 
+        public async Task<InternalDocument> GetInternalDocumentsByInternalDocumentID(int internalDocumentID)
+        {
+            IDRequest iDRequest = new IDRequest() { ID = internalDocumentID };
+            using var channel = GrpcChannel.ForAddress("http://localhost:6003");
+            var client = new internalDocumentAPI.internalDocumentAPIClient(channel);
+            MInternalDocument mInternalDocument = client.GetInternalDocumentsByInternalDocumentID(iDRequest);
+            InternalDocument internalDocument = MInternalDocumentConverter.ConvertToInternalDocument(mInternalDocument);
+            return internalDocument;
+        }
+
         public async Task<List<InternalDocument>> GetInternalDocumentsByEmployeeRecievedDocumentID(int recievedEmployeeID)
         {
             IDRequest iDRequest = new IDRequest() { ID = recievedEmployeeID };

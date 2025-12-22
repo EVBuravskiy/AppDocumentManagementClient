@@ -1,5 +1,5 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
-using AppDocumentManagement.EmployeeService.Services;
+﻿using AppDocumentManagement.EmployeesService.Service;
+using AppDocumentManagement.EmployeesService.Services;
 using AppDocumentManagement.Models;
 using AppDocumentManagement.UI.Utilities;
 using AppDocumentManagement.UI.Views;
@@ -179,7 +179,7 @@ namespace AppDocumentManagement.UI.ViewModels
             foreach (EmployeePhoto photo in EmployeePhotos)
             {
                 string photoPath = FileProcessing.SaveEmployeePhotoToTempFolder(photo);
-                photo.PhotoPath = photoPath;
+                photo.FilePath = photoPath;
             }
         }
         private void InitializeEmployees()
@@ -192,7 +192,7 @@ namespace AppDocumentManagement.UI.ViewModels
                 foreach (Employee employee in employees)
                 {
                     Department deparment = Departments.Where(x => x.DepartmentID == employee.DepartmentID).FirstOrDefault();
-                    employee.EmployeeDepartment = deparment;
+                    employee.Department = deparment;
                     employee.DepartmentID = deparment.DepartmentID;
                     EmployeePhoto employeePhoto = EmployeePhotos.Where(p => p.EmployeeID == employee.EmployeeID).FirstOrDefault();
                     employee.EmployeePhoto = employeePhoto;
@@ -224,13 +224,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 registredUser.EmployeeID = employee.EmployeeID;
                 registredUser.EmployeeFullName = employee.EmployeeFullName;
                 registredUser.EmployeePosition = employee.Position;
-                if (employee.EmployeeDepartment != null)
+                if (employee.Department != null)
                 {
-                    registredUser.EmployeeDepartmentTitle = employee.EmployeeDepartment.DepartmentTitle;
+                    registredUser.EmployeeDepartmentTitle = employee.Department.DepartmentTitle;
                 }
                 if (employee.EmployeePhoto != null)
                 {
-                    registredUser.EmployeeImagePath = employee.EmployeePhoto.PhotoPath;
+                    registredUser.EmployeeImagePath = employee.EmployeePhoto.FilePath;
                 }
                 RegistredUser user = RegistratedUsers.Where(x => x.EmployeeID == employee.EmployeeID).FirstOrDefault();
                 if (user != null)
@@ -238,7 +238,7 @@ namespace AppDocumentManagement.UI.ViewModels
                     registredUser.Userlogin = user.RegistredUserLogin;
                     registredUser.UserRole = user.UserRole.ToString();
                     registredUser.UserIsRegistrated = user.IsRegistered;
-                    registredUser.RegistredDate = user.RegistredUserTime;
+                    registredUser.RegistredDate = user.UserRegistrationTime;
                 }
                 AllUsers.Add(registredUser);
             }

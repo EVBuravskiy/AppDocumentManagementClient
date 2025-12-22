@@ -1,5 +1,5 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
-using AppDocumentManagement.EmployeeService.Services;
+﻿using AppDocumentManagement.EmployeesService.Service;
+using AppDocumentManagement.EmployeesService.Services;
 using AppDocumentManagement.Models;
 using System.Windows;
 
@@ -60,7 +60,7 @@ namespace AppDocumentManagement.UI.Utilities
         {
             RegistredUser registredUser = new RegistredUser();
             registredUser.RegistredUserLogin = "Admin01";
-            registredUser.RegistredUserTime = DateTime.Now;
+            registredUser.UserRegistrationTime = DateTime.Now;
             string password = $"{registredUser.RegistredUserLogin}-01Nimda";
             registredUser.RegistredUserPassword = PassHasher.CalculateMD5Hash(password);
             registredUser.IsRegistered = true;

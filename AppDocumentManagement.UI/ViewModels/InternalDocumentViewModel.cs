@@ -1,4 +1,4 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
+﻿using AppDocumentManagement.EmployeesService.Service;
 using AppDocumentManagement.InternalDocumentService.Services;
 using AppDocumentManagement.Models;
 using AppDocumentManagement.UI.Utilities;
@@ -211,9 +211,9 @@ namespace AppDocumentManagement.UI.ViewModels
                         InternalDocumentWindow.ChangeApproveManagerBtnTitle.Visibility = Visibility.Visible;
                         DepartmentService departmentService = new DepartmentService();
                         Department department = departmentService.GetDepartmentByID(ApprovedManager.DepartmentID).Result;
-                        ApprovedManager.EmployeeDepartment = department;
+                        ApprovedManager.Department = department;
                     }
-                    ApprovedManagerDepartment = ApprovedManager.EmployeeDepartment.DepartmentTitle;
+                    ApprovedManagerDepartment = ApprovedManager.Department.DepartmentTitle;
                     ApprovedManagerPosition = ApprovedManager.Position;
                     ApprovedManagerFullName = ApprovedManager.EmployeeFullName;
 
@@ -226,8 +226,8 @@ namespace AppDocumentManagement.UI.ViewModels
                     {
                         DepartmentService departmentService = new DepartmentService();
                         Department department = departmentService.GetDepartmentByID(Signatory.DepartmentID).Result;
-                        Signatory.EmployeeDepartment = department;
-                        SignatoryDepartment = Signatory.EmployeeDepartment.DepartmentTitle;
+                        Signatory.Department = department;
+                        SignatoryDepartment = Signatory.Department.DepartmentTitle;
                         SignatoryPosition = Signatory.Position;
                         SignatoryFullName = Signatory.EmployeeFullName;
 
@@ -284,7 +284,7 @@ namespace AppDocumentManagement.UI.ViewModels
         public ICommand IOpenApprovedManagerWindow => new RelayCommand(openApprovedManagerWindow => OpenApprovedManagerWindow());
         private void OpenApprovedManagerWindow()
         {
-            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true);
+            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true, null);
             examiningPersonsWindow.ShowDialog();
             if(examiningPersonsWindow.viewModel.SelectedEmployee != null)
             {
@@ -297,7 +297,7 @@ namespace AppDocumentManagement.UI.ViewModels
         {
             if (ApprovedManager != null)
             {
-                ApprovedManagerDepartment = ApprovedManager.EmployeeDepartment.DepartmentTitle;
+                ApprovedManagerDepartment = ApprovedManager.Department.DepartmentTitle;
                 ApprovedManagerPosition = ApprovedManager.Position;
                 ApprovedManagerFullName = ApprovedManager.EmployeeFullName;
             }
@@ -306,7 +306,7 @@ namespace AppDocumentManagement.UI.ViewModels
         public ICommand IOpenSignatoryWindow => new RelayCommand(openSignatoryWindow => OpenSignatoryWindow());
         private void OpenSignatoryWindow()
         {
-            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(false);
+            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(false, null);
             examiningPersonsWindow.ShowDialog();
             if (examiningPersonsWindow.viewModel.SelectedEmployee != null)
             {
@@ -319,7 +319,7 @@ namespace AppDocumentManagement.UI.ViewModels
         {
             if (Signatory != null)
             {
-                SignatoryDepartment = Signatory.EmployeeDepartment.DepartmentTitle;
+                SignatoryDepartment = Signatory.Department.DepartmentTitle;
                 SignatoryPosition = Signatory.Position;
                 SignatoryFullName = Signatory.EmployeeFullName;
             }
@@ -391,7 +391,7 @@ namespace AppDocumentManagement.UI.ViewModels
                 int number = internalDocumentsService.GetCountInternalDocumentByType(newInternalDocument.InternalDocumentType) + 1;
                 newInternalDocument.InternalDocumentRegistrationNumber = $"{number}/{type}"; 
                 newInternalDocument.RegistrationDate = DateTime.Now;
-                newInternalDocument.IsRegistated = true;
+                newInternalDocument.IsRegistered = true;
             }
             if (internalDocumentsService.AddInternalDocument(newInternalDocument).Result)
             { 
@@ -454,9 +454,10 @@ namespace AppDocumentManagement.UI.ViewModels
             newInternalDocument.InternalDocumentDate = InternalDocumentDate;
             if (InternalDocument != null)
             {
+                newInternalDocument.InternalDocumentRegistrationNumber = InternalDocument.InternalDocumentRegistrationNumber;
                 newInternalDocument.InternalDocumentID = InternalDocument.InternalDocumentID;
                 newInternalDocument.RegistrationDate = InternalDocument.RegistrationDate;
-                newInternalDocument.IsRegistated = InternalDocument.IsRegistated;
+                newInternalDocument.IsRegistered = InternalDocument.IsRegistered;
             }
             return newInternalDocument;
         }
@@ -484,7 +485,7 @@ namespace AppDocumentManagement.UI.ViewModels
         private void SendToExaminingPerson()
         {
             if (!ValidationInternalDocument()) return;
-            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true);
+            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true, null);
             examiningPersonsWindow.ShowDialog();
             bool result = false;
             if (examiningPersonsWindow.viewModel.SelectedEmployee != null)
@@ -494,16 +495,19 @@ namespace AppDocumentManagement.UI.ViewModels
                 internalDocument.EmployeeRecievedDocument = examiningPersonsWindow.viewModel.SelectedEmployee;
                 EmployeeRecievedDocument = internalDocument.EmployeeRecievedDocument;
                 InternalDocumentsService internalDocumentsService = new InternalDocumentsService();
-                if (internalDocument.IsRegistated == false)
+                if (internalDocument.IsRegistered == false)
                 {
+                    string type = InternalDocumentTypeConverter.ConvertToString(internalDocument.InternalDocumentType).Substring(0, 2);
+                    int number = internalDocumentsService.GetCountInternalDocumentByType(internalDocument.InternalDocumentType) + 1;
+                    internalDocument.InternalDocumentRegistrationNumber = $"{number}/{type}";
                     internalDocument.RegistrationDate = DateTime.Now;
-                    internalDocument.SendingDate = DateTime.Now;
-                    internalDocument.IsRegistated = true;
+                    internalDocument.InternalDocumentSendingDate = DateTime.Now;
+                    internalDocument.IsRegistered = true;
                     result = internalDocumentsService.AddInternalDocument(internalDocument).Result;
                 }
                 else
                 {
-                    internalDocument.SendingDate = DateTime.Now;
+                    internalDocument.InternalDocumentSendingDate = DateTime.Now;
                     result = internalDocumentsService.UpdateInternalDocument(internalDocument).Result;
                 }
             }

@@ -1,15 +1,19 @@
-﻿using AppDocumentManagement.EmployeeService.Converters;
+﻿using AppDocumentManagement.EmployeeService;
+using AppDocumentManagement.EmployeesService.Converters;
 using AppDocumentManagement.Models;
 using Grpc.Net.Client;
 
-namespace AppDocumentManagement.EmployeeService.Service
+namespace AppDocumentManagement.EmployeesService.Service
 {
     public class EmployesService
     {
         public async Task<bool> AddEmployee(Employee employee)
         {
             MEmployee mEmployee = MEmployeeConverter.ConvertToMEmployee(employee);
-            using var channel = GrpcChannel.ForAddress("http://localhost:6001");
+            using var channel = GrpcChannel.ForAddress("http://localhost:6001", new GrpcChannelOptions
+            {
+                MaxReceiveMessageSize = 20 * 1024 * 1024
+            });
             var client = new employeeApi.employeeApiClient(channel);
             var boolReply = client.AddEmployee(mEmployee);
             return boolReply.Result;

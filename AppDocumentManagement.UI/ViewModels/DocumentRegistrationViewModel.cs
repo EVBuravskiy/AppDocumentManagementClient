@@ -1,4 +1,4 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
+﻿using AppDocumentManagement.EmployeesService.Service;
 using AppDocumentManagement.ExternalDocumentService.Services;
 using AppDocumentManagement.InternalDocumentService.Services;
 using AppDocumentManagement.Models;
@@ -6,6 +6,7 @@ using AppDocumentManagement.UI.Utilities;
 using AppDocumentManagement.UI.Views;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -264,9 +265,17 @@ namespace AppDocumentManagement.UI.ViewModels
         private void InitializeCurrentUser(int currentUserID)
         {
             if (currentUserID == 0) return;
-            EmployesService employesService = new EmployesService();
-            currentUser = employesService.GetEmployeeByID(currentUserID).Result;
-            Greating = $"Добрый день, {currentUser.EmployeeFirstMiddleName}!";
+            try
+            {
+                EmployesService employesService = new EmployesService();
+                currentUser = employesService.GetEmployeeByID(currentUserID).Result;
+                Greating = $"Добрый день, {currentUser.EmployeeFirstMiddleName}!";
+            }
+            catch
+            {
+                MessageBox.Show("Внимание! Сервер в текущее время не доступен. Попробуйте зайти в приложение позже");
+                DocumentRegistrationWindow.Close();
+            }
         }
 
         private void InitializeDocumentRegistrationStatus()
@@ -314,7 +323,7 @@ namespace AppDocumentManagement.UI.ViewModels
                 foreach (Employee employee in Employees)
                 {
                     Department department = Departments.Where(d => d.DepartmentID == employee.DepartmentID).FirstOrDefault();
-                    employee.EmployeeDepartment = department;
+                    employee.Department = department;
                 }
             }
         }

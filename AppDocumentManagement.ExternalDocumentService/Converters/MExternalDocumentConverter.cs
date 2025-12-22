@@ -14,14 +14,12 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             externalDocument.ContractorCompanyID = mExternalDocument.ContractorCompanyID;
             externalDocument.ExternalDocumentType = ExternalDocumentTypeConverter.BackConvert(mExternalDocument.ExternalDocumentType);
             externalDocument.RegistrationDate = DateTime.Parse(mExternalDocument.ExternalDocumentRegistrationDate);
-            externalDocument.IsRegistated = mExternalDocument.IsRegistrated;
             externalDocument.ReceivingEmployeeID = mExternalDocument.ReceivingEmployeeID;
             if (mExternalDocument.ExternalDocumentSendingDate != "")
             {
                 externalDocument.ExternalDocumentSendingDate = DateTime.Parse(mExternalDocument.ExternalDocumentSendingDate);
             }
             externalDocument.ExternalDocumentStatus = DocumentStatusConverter.BackConvert(mExternalDocument.ExternalDocumentStatus);
-            externalDocument.IsDeleted = mExternalDocument.IsDeleted;
             if (mExternalDocument.ExternalDocumentFiles != null && mExternalDocument.ExternalDocumentFiles.Count > 0)
             {
                 externalDocument.ExternalDocumentFiles = new List<ExternalDocumentFile>();
@@ -51,7 +49,6 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             }
             mExternalDocument.ExternalDocumentType = ExternalDocumentTypeConverter.ToIntConvert(externalDocument.ExternalDocumentType);
             mExternalDocument.ExternalDocumentRegistrationDate = externalDocument.RegistrationDate.ToShortDateString();
-            mExternalDocument.IsRegistrated = externalDocument.IsRegistated;
             if (externalDocument.ReceivingEmployee != null)
             {
                 mExternalDocument.ReceivingEmployeeID = externalDocument.ReceivingEmployee.EmployeeID;
@@ -65,7 +62,6 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
                 mExternalDocument.ExternalDocumentSendingDate = externalDocument.ExternalDocumentSendingDate.ToString();
             }
             mExternalDocument.ExternalDocumentStatus = DocumentStatusConverter.ToIntConvert(externalDocument.ExternalDocumentStatus);
-            mExternalDocument.IsDeleted = externalDocument.IsDeleted;
             if (externalDocument.ExternalDocumentFiles != null && externalDocument.ExternalDocumentFiles.Count > 0)
             {
                 foreach (ExternalDocumentFile file in externalDocument.ExternalDocumentFiles)

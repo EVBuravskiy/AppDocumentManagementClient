@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDocumentManagement.Inter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDocumentManagement.UI", "AppDocumentManagement.UI\AppDocumentManagement.UI.csproj", "{FEA2BC9D-53A9-4012-B0F2-7FF3B754C40C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDocumentManagement.ProductionTaskService", "AppDocumentManagement.ProductionTaskService\AppDocumentManagement.ProductionTaskService.csproj", "{466538CD-EEE2-4801-979B-1C6DDFD470E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FEA2BC9D-53A9-4012-B0F2-7FF3B754C40C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEA2BC9D-53A9-4012-B0F2-7FF3B754C40C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEA2BC9D-53A9-4012-B0F2-7FF3B754C40C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{466538CD-EEE2-4801-979B-1C6DDFD470E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{466538CD-EEE2-4801-979B-1C6DDFD470E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{466538CD-EEE2-4801-979B-1C6DDFD470E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{466538CD-EEE2-4801-979B-1C6DDFD470E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

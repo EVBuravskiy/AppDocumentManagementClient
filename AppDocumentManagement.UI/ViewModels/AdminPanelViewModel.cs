@@ -1,7 +1,7 @@
 ﻿using AppDocumentManagement.UI.Views;
 using System.Windows.Input;
 using AppDocumentManagement.Models;
-using AppDocumentManagement.EmployeeService.Service;
+using AppDocumentManagement.EmployeesService.Service;
 
 namespace AppDocumentManagement.UI.ViewModels
 {
@@ -66,5 +66,7 @@ namespace AppDocumentManagement.UI.ViewModels
             ManagerPanelWindow managerPanelWindow = new ManagerPanelWindow(currentUser.EmployeeID);
             managerPanelWindow.Show();
         }
+
+        public ICommand IExit => new RelayCommand(exit => { _adminPanelWindow.Close(); });
     }
 }

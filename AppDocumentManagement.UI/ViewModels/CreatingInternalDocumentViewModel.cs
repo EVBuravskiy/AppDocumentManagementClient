@@ -1,4 +1,4 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
+﻿using AppDocumentManagement.EmployeesService.Service;
 using AppDocumentManagement.InternalDocumentService.Services;
 using AppDocumentManagement.Models;
 using AppDocumentManagement.UI.Utilities;
@@ -140,7 +140,7 @@ namespace AppDocumentManagement.UI.ViewModels
         private void SendInternalDocument()
         {
             InternalDocument newInternalDocument = CreateInternalDocument();
-            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true);
+            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true, currentUser.Department);
             examiningPersonsWindow.ShowDialog();
             Employee sendingEmployee = examiningPersonsWindow.viewModel.SelectedEmployee;
             if (sendingEmployee == null)
@@ -149,7 +149,7 @@ namespace AppDocumentManagement.UI.ViewModels
                 return;
             }
             newInternalDocument.EmployeeRecievedDocumentID = sendingEmployee.EmployeeID;
-            newInternalDocument.SendingDate = DateTime.Now;
+            newInternalDocument.InternalDocumentSendingDate = DateTime.Now;
             InternalDocumentsService internalDocumentsService = new InternalDocumentsService();
             bool result = internalDocumentsService.AddInternalDocument(newInternalDocument).Result;
             if (result)
@@ -191,7 +191,7 @@ namespace AppDocumentManagement.UI.ViewModels
             newInternalDocument.SignatoryID = currentUser.EmployeeID;
             newInternalDocument.InternalDocumentRegistrationNumber = GetInternalDocumentNumber();
             newInternalDocument.RegistrationDate = DateTime.Now;
-            newInternalDocument.IsRegistated = true;
+            newInternalDocument.IsRegistered = true;
             if (InternalDocumentFiles.Count > 0)
             {
                 newInternalDocument.InternalDocumentFiles = InternalDocumentFiles.ToList();

@@ -6,7 +6,8 @@
         public string FileName { get; set; }
         public string FileExtension { get; set; }
         public byte[] FileData { get; set; }
-        public int InternalDocumentID { get; set; }
         public InternalDocument InternalDocument { get; set; }
+        public int InternalDocumentID { get; set; }
+
     }
 }

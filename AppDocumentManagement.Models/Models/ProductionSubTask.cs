@@ -1,0 +1,12 @@
+﻿namespace AppDocumentManagement.Models
+{
+    public class ProductionSubTask
+    {
+        public int ProductionSubTaskID { get; set; }
+        public string ProductionSubTaskDescription { get; set; }
+        public DateTime ProductionSubTaskCreateTime { get; set; }
+        public ProductionTask ProductionTask { get; set; }
+        public int ProductionTaskID { get; set; }
+        public bool IsDone { get; set; } = false;
+    }
+}

@@ -1,4 +1,4 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
+﻿using AppDocumentManagement.EmployeesService.Service;
 using AppDocumentManagement.Models;
 
 
@@ -21,6 +21,7 @@ namespace AppDocumentManagement.UI.Utilities
 
         public static int DepartmentToInt(Department department, List<Department> departments)
         {
+            if (department == null) return 0;
             for (int i = 0; i < departments.Count; i++)
             {
                 if (departments[i].DepartmentID == department.DepartmentID)

@@ -8,6 +8,7 @@ service internalDocumentAPI {
   //InternalDocument
   rpc AddInternalDocument(MInternalDocument) returns (BoolReply);
   rpc GetInternalDocuments(EmptyRequest) returns (MInternalDocumentList);
+  rpc GetInternalDocumentsByInternalDocumentID(IDRequest) returns(MInternalDocument);
   rpc GetInternalDocumentsByEmployeeRecievedDocumentID(IDRequest) returns (MInternalDocumentList);
   rpc RemoveInternalDocument(IDRequest) returns (BoolReply);
   rpc UpdateInternalDocument(MInternalDocument) returns (BoolReply);
@@ -37,14 +38,15 @@ message MInternalDocument{
 	int32 InternalDocumentSygnatoryID = 4;
 	int32 InternalDocumentApprovedManagerID = 5;
 	int32 InternalDocumentRecievedEmployeeID = 6;
-	string RegistrationDate = 7;
-	string InternalDocumentRegistrationNumber = 8;
-	bool IsRegistated = 9;
-	string SendingDate = 10;
-	int32 InternalDocumentStatus = 11;
-	string InternalDocumentTitle = 12;
-	string InternalDocumentContent = 13;
-	repeated MInternalDocumentFile InternalDocumentFiles = 14;
+	repeated MInternalDocumentFile InternalDocumentFiles = 7;
+	string RegistrationDate = 8;
+	string InternalDocumentRegistrationNumber = 9;
+	bool IsRegistered = 10;
+	string InternalDocumentSendingDate = 11;
+	int32 InternalDocumentStatus = 12;
+	string InternalDocumentTitle = 13;
+	string InternalDocumentContent = 14;
+	int32 ProductionTaskID = 15;
 }
 
 message MInternalDocumentList{

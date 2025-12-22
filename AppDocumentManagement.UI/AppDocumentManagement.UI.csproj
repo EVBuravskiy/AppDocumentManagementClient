@@ -21,6 +21,7 @@
     <ProjectReference Include="..\AppDocumentManagement.ExternalDocumentService\AppDocumentManagement.ExternalDocumentService.csproj" />
     <ProjectReference Include="..\AppDocumentManagement.InternalDocumentService\AppDocumentManagement.InternalDocumentService.csproj" />
     <ProjectReference Include="..\AppDocumentManagement.Models\AppDocumentManagement.Models.csproj" />
+    <ProjectReference Include="..\AppDocumentManagement.ProductionTaskService\AppDocumentManagement.ProductionTaskService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

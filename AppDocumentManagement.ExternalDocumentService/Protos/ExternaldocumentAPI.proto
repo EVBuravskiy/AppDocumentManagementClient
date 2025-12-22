@@ -8,6 +8,7 @@ service externalDocumentAPI {
 	//ExternalDocument
 	rpc AddExternalDocument(MExternalDocument) returns (BoolReply);
 	rpc GetAllExternalDocuments(EmptyRequest) returns (MExternalDocumentList);
+	rpc GetExternalDocumentsByExternalDocumentID(IDRequest) returns (MExternalDocument);
 	rpc GetExternalDocumentsByEmployeeReceivedDocumentID(IDRequest) returns (MExternalDocumentList);
 	rpc UpdateExternalDocument(MExternalDocument) returns (BoolReply);
 	rpc RemoveExternalDocument(IDRequest) returns (BoolReply);
@@ -48,11 +49,11 @@ message MExternalDocument{
 	repeated MExternalDocumentFile ExternalDocumentFiles = 7;
 	string ExternalDocumentRegistrationDate = 8;
 	string ExternalDocumentRegistrationNumber = 9;
-	bool IsRegistrated = 10;
+	bool IsRegistered = 10;
 	int32 ReceivingEmployeeID = 11;
 	string ExternalDocumentSendingDate = 12;
 	int32 ExternalDocumentStatus = 13;
-	bool IsDeleted = 14;
+	int32 ProductionTaskID = 14;
 }
 
 message MExternalDocumentList{
@@ -81,7 +82,6 @@ message MContractorCompany{
 	string ContractorCompanyPhone = 5;
 	string ContractorCompanyEmail = 6;
 	string ContractorCompanyInformation = 7;
-	bool IsDeleted = 8;
 }
 
 message MContractorCompanyList{

@@ -1,5 +1,5 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
-using AppDocumentManagement.EmployeeService.Services;
+﻿using AppDocumentManagement.EmployeesService.Service;
+using AppDocumentManagement.EmployeesService.Services;
 using AppDocumentManagement.Models;
 using AppDocumentManagement.UI.Utilities;
 using AppDocumentManagement.UI.Views;
@@ -210,7 +210,7 @@ namespace AppDocumentManagement.UI.ViewModels
             UserFirstName = selectedEmployee.EmployeeFirstName;
             UserLastName = selectedEmployee.EmployeeLastName;
             UserMiddleName = selectedEmployee.EmployeeMiddleName;
-            UserDepartmentTitle = selectedEmployee.EmployeeDepartment.DepartmentTitle;
+            UserDepartmentTitle = selectedEmployee.Department.DepartmentTitle;
             UserPosition = selectedEmployee.Position;
             InitializeUserRoles();
             GetUserLogin();
@@ -269,7 +269,7 @@ namespace AppDocumentManagement.UI.ViewModels
             string passwordforhasher = $"{UserLogin}-{UserPassword}";
             registredUser.RegistredUserPassword = PassHasher.CalculateMD5Hash(passwordforhasher);
             registredUser.UserRole = SelectedUserRole;
-            registredUser.RegistredUserTime = DateTime.Now;
+            registredUser.UserRegistrationTime = DateTime.Now;
             registredUser.EmployeeID = _employee.EmployeeID;
             bool result = false;
             if (!_isRegistred)

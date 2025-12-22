@@ -27,7 +27,7 @@
                             CornerRadius="5">
                         <Image Width="100"
                            Height="100"
-                           Source="{Binding EmployeePhoto.PhotoPath,
+                           Source="{Binding EmployeePhoto.FilePath,
                         FallbackValue={StaticResource DefaultContactImage},
                         TargetNullValue={StaticResource DefaultContactImage}}"
                            Stretch="UniformToFill"/>
@@ -50,7 +50,7 @@
                         <Label Margin="0 20 0 5"
                                Padding="10, 0"
                                FontFamily="Arial"
-                               FontSize="22"
+                               FontSize="14"
                                FontWeight="Bold"
                                HorizontalAlignment="Center"
                                Content="{Binding EmployeeLastName}"/>
@@ -58,11 +58,11 @@
                                     HorizontalAlignment="Center">
                             <TextBlock Padding="10, 0"
                                        FontFamily="Arial"
-                                       FontSize="14"
+                                       FontSize="12"
                                        Text="{Binding EmployeeFirstName}"/>
                             <TextBlock Padding="10, 0"
                                        FontFamily="Arial"
-                                       FontSize="14"
+                                       FontSize="12"
                                        Text="{Binding EmployeeMiddleName}"/>
                         </StackPanel>
                     </StackPanel>

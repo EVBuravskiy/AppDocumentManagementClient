@@ -126,14 +126,21 @@ namespace AppDocumentManagement.UI.ViewModels
             }
         }
 
-        public ExternalDocumentShowViewModel(ExternalDocumentShowWindow externalDocumentShowWindow, Employee currentEmployee, ExternalDocument inputExternalDocument, ContractorCompany documentContractorCompany)
+        public ExternalDocumentShowViewModel(ExternalDocumentShowWindow externalDocumentShowWindow, ExternalDocument inputExternalDocument, ContractorCompany documentContractorCompanyID, Employee currentEmployee)
         {
             ExternalDocumentShowWindow = externalDocumentShowWindow;
-            CurrentEmployee = currentEmployee;
-            EmployeeRole role = currentEmployee.EmployeeRole;
             fileDialogService = new WindowsDialogService();
             ExternalDocument = inputExternalDocument;
-            ExternalDocument.ContractorCompany = documentContractorCompany;
+            CurrentEmployee = currentEmployee;
+            if (inputExternalDocument.ContractorCompanyID != 0)
+            {
+                ContractorCompanyService contractorCompanyService = new ContractorCompanyService();
+                ContractorCompany company = contractorCompanyService.GetContractorCompanyByID(inputExternalDocument.ContractorCompanyID).Result;
+                if (company != null)
+                {
+                    ExternalDocument.ContractorCompany = company;
+                }
+            }
             ExternalDocumentFilesList = new List<ExternalDocumentFile>();
             ExternalDocumentFiles = new ObservableCollection<ExternalDocumentFile>();
             if (inputExternalDocument != null)
@@ -141,17 +148,17 @@ namespace AppDocumentManagement.UI.ViewModels
                 DocumentType = ExternalDocumentTypeConverter.ConvertToString(ExternalDocument.ExternalDocumentType);
                 DocumentNumber = inputExternalDocument.ExternalDocumentNumber;
                 DocumentTitle = inputExternalDocument.ExternalDocumentTitle;
-                if (documentContractorCompany != null)
+                if (ExternalDocument.ContractorCompany != null)
                 {
-                    TextBlockCompanyTitle = documentContractorCompany.ContractorCompanyTitle;
-                    TextBlockCompanyShortTitle = documentContractorCompany.ContractorCompanyShortTitle;
-                    TextBlockCompanyAddress = $"Юридический адрес: {documentContractorCompany.ContractorCompanyAddress}";
-                    TextBlockCompanyPhone = $"Контактный телефон: {documentContractorCompany.ContractorCompanyPhone}";
-                    TextBlockCompanyEmail = $"Адрес электронной почты: {documentContractorCompany.ContractorCompanyEmail}";
+                    TextBlockCompanyTitle = ExternalDocument.ContractorCompany.ContractorCompanyTitle;
+                    TextBlockCompanyShortTitle = ExternalDocument.ContractorCompany.ContractorCompanyShortTitle;
+                    TextBlockCompanyAddress = $"Юридический адрес: {ExternalDocument.ContractorCompany.ContractorCompanyAddress}";
+                    TextBlockCompanyPhone = $"Контактный телефон: {ExternalDocument.ContractorCompany.ContractorCompanyPhone}";
+                    TextBlockCompanyEmail = $"Адрес электронной почты: {ExternalDocument.ContractorCompany.ContractorCompanyEmail}";
                 }
                 GetExternalDocumentFiles();
                 InitializeExternalDocumentFiles();
-                if(role == EmployeeRole.Performer)
+                if (CurrentEmployee.EmployeeRole == EmployeeRole.Performer)
                 {
                     ExternalDocumentShowWindow.ExternalDocumentFiles.Height = new GridLength(420, GridUnitType.Pixel);
                     ExternalDocumentShowWindow.ExternalDocumentButtons.Height = new GridLength(0, GridUnitType.Pixel);
@@ -214,7 +221,7 @@ namespace AppDocumentManagement.UI.ViewModels
         public ICommand IBrowseExternalDocumentFile => new RelayCommand(browseExternalDocumentFile => BrowseExternalDocumentFile());
         private void BrowseExternalDocumentFile()
         {
-            var filePath = fileDialogService.OpenFile("Text files(*.txt)| *.txt | PDF files(*.pdf) | *.pdf | Image files(*.BMP; *.JPG; *.GIF)| *.BMP; *.JPG; *.GIF | All files(*.*) | *.*");
+            var filePath = fileDialogService.OpenFile("Files|*.txt;*.jpg;*.jpeg;*.png;*.pdf|All files");
             if (filePath == null) return;
             string fileName = FileProcessing.GetFileName(filePath);
             string fileExtension = FileProcessing.GetFileExtension(filePath);
@@ -225,60 +232,16 @@ namespace AppDocumentManagement.UI.ViewModels
             documentFile.ExternalFileData = fileData;
             documentFile.ExternalDocument = ExternalDocument;
             ExternalDocumentFileService externalDocumentFileService = new ExternalDocumentFileService();
-            bool result = externalDocumentFileService.AddExternalDocumentFile(documentFile).Result;
-            if (result) MessageBox.Show("Файл успешно добавлен");
-            else MessageBox.Show("Не удалось добавить файл");
+            externalDocumentFileService.AddExternalDocumentFile(documentFile);
             GetExternalDocumentFiles();
             InitializeExternalDocumentFiles();
-        }
-
-        public ICommand IAgreeDocument => new RelayCommand(agreeDocument => AgreeDocument());
-        private void AgreeDocument()
-        {
-            bool result = false;
-            if (CurrentEmployee != null)
-            {
-                ExternalDocument.ExternalDocumentStatus = DocumentStatus.Agreed;
-                ExternalDocumentsService externalDocumentsService = new ExternalDocumentsService();
-                result = externalDocumentsService.UpdateExternalDocument(ExternalDocument).Result;
-            }
-            if (result)
-            {
-                MessageBox.Show($"Документ был согласован: {CurrentEmployee.EmployeeFullName}");
-                ExternalDocumentShowWindow.Close();
-            }
-            else
-            {
-                MessageBox.Show("Ошибка в согласовании документа");
-            }
-        }
-
-        public ICommand IRefuseDocument => new RelayCommand(refuseDocument => RefuseDocument());
-        private void RefuseDocument()
-        {
-            bool result = false;
-            if (CurrentEmployee != null)
-            {
-                ExternalDocument.ExternalDocumentStatus = DocumentStatus.Refused;
-                ExternalDocumentsService externalDocumentsService = new ExternalDocumentsService();
-                result = externalDocumentsService.UpdateExternalDocument(ExternalDocument).Result;
-            }
-            if (result)
-            {
-                MessageBox.Show($"В согласовании документа было отказано: {CurrentEmployee.EmployeeFullName}");
-                ExternalDocumentShowWindow.Close();
-            }
-            else
-            {
-                MessageBox.Show("Ошибка в согласовании документа");
-            }
         }
 
         public ICommand ISendToWork => new RelayCommand(sendToWork => SendToWork());
 
         private void SendToWork()
         {
-            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true);
+            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true, null);
             examiningPersonsWindow.ShowDialog();
             bool result = false;
             if (examiningPersonsWindow.viewModel.SelectedEmployee != null)
@@ -299,8 +262,12 @@ namespace AppDocumentManagement.UI.ViewModels
             }
         }
 
-        //TODO: Реализовать создание задачи к документу
-        public ICommand ICreateTask;
+        public ICommand ICreateTask => new RelayCommand(createTask => CreateTask());
+        private void CreateTask()
+        {
+            ProductionTaskWindow productionTaskWindow = new ProductionTaskWindow(CurrentEmployee, ExternalDocument, null);
+            productionTaskWindow.ShowDialog();
+        }
 
         public ICommand IExit => new RelayCommand(exit => { ExternalDocumentShowWindow.Close(); });
     }

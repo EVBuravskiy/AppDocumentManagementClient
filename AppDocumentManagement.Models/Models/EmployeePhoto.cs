@@ -1,4 +1,6 @@
-﻿namespace AppDocumentManagement.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AppDocumentManagement.Models
 {
     public class EmployeePhoto
     {
@@ -8,6 +10,7 @@
         public byte[] FileData { get; set; }
         public Employee Employee { get; set; }
         public int EmployeeID { get; set; }
-        public string PhotoPath { get; set; }
+        [NotMapped]
+        public string FilePath { get; set; }
     }
 }

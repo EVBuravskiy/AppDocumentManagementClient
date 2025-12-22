@@ -1,4 +1,4 @@
-﻿using AppDocumentManagement.EmployeeService.Service;
+﻿using AppDocumentManagement.EmployeesService.Service;
 using AppDocumentManagement.Models;
 using AppDocumentManagement.UI.Utilities;
 using AppDocumentManagement.UI.Views;
@@ -186,7 +186,7 @@ namespace AppDocumentManagement.UI.ViewModels
             foreach (EmployeePhoto photo in EmployeePhotos)
             {
                 string photoPath = FileProcessing.SaveEmployeePhotoToTempFolder(photo);
-                photo.PhotoPath = photoPath;
+                photo.FilePath = photoPath;
             }
         }
 
@@ -199,10 +199,18 @@ namespace AppDocumentManagement.UI.ViewModels
             {
                 foreach (Employee employee in allEmployees)
                 {
-                    Department department = Departments.Where(x => x.DepartmentID == employee.DepartmentID).FirstOrDefault();
-                    employee.DepartmentID = department.DepartmentID;
-                    EmployeePhoto employeePhoto = EmployeePhotos.Where(p => p.EmployeeID == employee.EmployeeID).FirstOrDefault();
-                    employee.EmployeePhoto = employeePhoto;
+                    Department department = Departments.SingleOrDefault(x => x.DepartmentID == employee.DepartmentID);
+                    if(department != null)
+                    {
+                        employee.Department = department;
+                        employee.DepartmentID = department.DepartmentID;
+                    }
+                    EmployeePhoto employeePhoto = EmployeePhotos.SingleOrDefault(p => p.EmployeeID == employee.EmployeeID);
+                    if (employeePhoto != null)
+                    {
+                        employee.EmployeePhoto = employeePhoto;
+                        employee.EmployeePhotoID = employeePhoto.EmployeePhotoID;
+                    }
                 }
             }
             if (allEmployees.Count > 0)

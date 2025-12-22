@@ -312,7 +312,7 @@ namespace AppDocumentManagement.UI.ViewModels
             if (SelectedDocument == null)
             {
                 newDocument.RegistrationDate = DateTime.Now;
-                newDocument.IsRegistated = true;
+                newDocument.IsRegistered = true;
             }
             result = externalDocumentsService.AddExternalDocument(newDocument).Result;
             if (result)
@@ -334,7 +334,7 @@ namespace AppDocumentManagement.UI.ViewModels
             SelectedDocument.ContractorCompany = ContractorCompany;
             SelectedDocument.ExternalDocumentType = SelectedDocumentType;
             SelectedDocument.ExternalDocumentFiles = DocumentFiles.ToList();
-            SelectedDocument.IsRegistated = true;
+            SelectedDocument.IsRegistered = true;
             if(SelectedDocument.ReceivingEmployee == null || SelectedDocument.ReceivingEmployee != EmployeeReceivedDocument)
             {
                 SelectedDocument.ReceivingEmployee   = EmployeeReceivedDocument;
@@ -363,13 +363,13 @@ namespace AppDocumentManagement.UI.ViewModels
             newDocument.ContractorCompany = ContractorCompany;
             newDocument.ExternalDocumentType = SelectedDocumentType;
             newDocument.ExternalDocumentFiles = DocumentFiles.ToList();
-            newDocument.IsRegistated = false;
+            newDocument.IsRegistered = false;
             if(SelectedDocument != null)
             {
                 newDocument.ContractorCompany = SelectedDocument.ContractorCompany;
                 newDocument.ExternalDocumentID = SelectedDocument.ExternalDocumentID;
                 newDocument.RegistrationDate = SelectedDocument.RegistrationDate;
-                newDocument.IsRegistated = SelectedDocument.IsRegistated;
+                newDocument.IsRegistered = SelectedDocument.IsRegistered;
             }
             return newDocument;
         }
@@ -403,7 +403,7 @@ namespace AppDocumentManagement.UI.ViewModels
         private void SendToExaminingPerson()
         {
             if (!ValidationDocument()) return;
-            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true);
+            ExaminingPersonsWindow examiningPersonsWindow = new ExaminingPersonsWindow(true, null);
             examiningPersonsWindow.ShowDialog();
             bool result = false;
             if (examiningPersonsWindow.viewModel.SelectedEmployee != null)
@@ -411,11 +411,11 @@ namespace AppDocumentManagement.UI.ViewModels
                 ExternalDocument document = CreateDocument();
                 document.ReceivingEmployee = examiningPersonsWindow.viewModel.SelectedEmployee;
                 ExternalDocumentsService externalDocumentsService = new ExternalDocumentsService();
-                if (document.IsRegistated == false)
+                if (document.IsRegistered == false)
                 {
                     document.RegistrationDate = DateTime.Now;
                     document.ExternalDocumentSendingDate = DateTime.Now;
-                    document.IsRegistated = true;
+                    document.IsRegistered = true;
                     result = externalDocumentsService.AddExternalDocument(document).Result;
                 }
                 else
