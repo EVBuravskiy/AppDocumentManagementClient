@@ -373,15 +373,18 @@ namespace AppDocumentManagement.UI.ViewModels
             MessageBoxResult mainMessageBoxResult = MessageBox.Show("Подтвердить завершение текущей задачи?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (mainMessageBoxResult == MessageBoxResult.Yes)
             {
-                if (CurrentProductionTask != null && CurrentProductionTask.ProductionSubTasks != null && CurrentProductionTask.ProductionSubTasks.Count > 0)
+                if (CurrentProductionTask != null && CurrentProductionTask.ProductionSubTasks != null)
                 {
                     bool allSubTaskIsDone = true;
-                    foreach (ProductionSubTask subTask in CurrentProductionTask.ProductionSubTasks)
+                    if (CurrentProductionTask.ProductionSubTasks.Count > 0)
                     {
-                        if (subTask.IsDone != true)
+                        foreach (ProductionSubTask subTask in CurrentProductionTask.ProductionSubTasks)
                         {
-                            allSubTaskIsDone = false;
-                            break;
+                            if (subTask.IsDone != true)
+                            {
+                                allSubTaskIsDone = false;
+                                break;
+                            }
                         }
                     }
                     bool TaskIsDone = true;
