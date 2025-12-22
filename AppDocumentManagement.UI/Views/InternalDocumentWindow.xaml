@@ -135,8 +135,7 @@
                                     <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"
                                                    FontSize="12"
-                                                   Text="Информация об инициаторе / подписанте"
-                                                   Margin="0 5 0 5"/>
+                                                   Margin="0 5 0 5">Информация об <LineBreak/>инициаторе/подписанте</TextBlock>
                                     <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"
                                                    FontSize="14"

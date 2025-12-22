@@ -18,7 +18,7 @@
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="60px"/>
-            <RowDefinition Height="240px"/>
+            <RowDefinition Height="180px"/>
             <RowDefinition Height="240px"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60px"/>
@@ -171,10 +171,11 @@
                      Style="{StaticResource ItemTitleBox}"
                      VerticalAlignment="Top"
                      FontSize="14"
-                     Text="{Binding ContractorCompanyInfo}"
+                     Text="{Binding ContractorCompanyInformation}"
                      Background="WhiteSmoke"
                      SpellCheck.IsEnabled="True"
-                     Height="200"
+                     Height="240"
+                     TextWrapping="Wrap"
                      ToolTip="Введите дополнительную информацию о контрагенте..."
                      />
             <Label IsHitTestVisible="False" 
@@ -186,7 +187,7 @@
                    Visibility="{Binding Text.IsEmpty, ElementName=ContractorCompanyInfo, Converter={StaticResource BooleanToVisibilityConverter}}"
                    Margin="30 10"
                    VerticalContentAlignment="Center"
-                   Height="200"/>
+                   Height="240"/>
         </Grid>
         <Grid Grid.Row="4">
             <Button Content="Удалить контрагента" 

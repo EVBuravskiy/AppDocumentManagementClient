@@ -14,6 +14,7 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             externalDocument.ContractorCompanyID = mExternalDocument.ContractorCompanyID;
             externalDocument.ExternalDocumentType = ExternalDocumentTypeConverter.BackConvert(mExternalDocument.ExternalDocumentType);
             externalDocument.RegistrationDate = DateTime.Parse(mExternalDocument.ExternalDocumentRegistrationDate);
+            externalDocument.IsRegistered = mExternalDocument.IsRegistered;
             externalDocument.ReceivingEmployeeID = mExternalDocument.ReceivingEmployeeID;
             if (mExternalDocument.ExternalDocumentSendingDate != "")
             {
@@ -49,6 +50,7 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             }
             mExternalDocument.ExternalDocumentType = ExternalDocumentTypeConverter.ToIntConvert(externalDocument.ExternalDocumentType);
             mExternalDocument.ExternalDocumentRegistrationDate = externalDocument.RegistrationDate.ToShortDateString();
+            mExternalDocument.IsRegistered = externalDocument.IsRegistered;
             if (externalDocument.ReceivingEmployee != null)
             {
                 mExternalDocument.ReceivingEmployeeID = externalDocument.ReceivingEmployee.EmployeeID;
