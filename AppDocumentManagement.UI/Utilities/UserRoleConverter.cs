@@ -16,6 +16,7 @@ namespace AppDocumentManagement.UI.Utilities
                     UserRole.HeadOfDepartment => "Начальник отдела",
                     UserRole.Performer => "Специалист",
                     UserRole.Сlerk => "Делопроизводитель",
+                    UserRole.PersonnelOfficer => "Работник отдела кадров"
                 };
             }
             return value.ToString();
@@ -31,6 +32,7 @@ namespace AppDocumentManagement.UI.Utilities
                 "Начальник отдела" => UserRole.HeadOfDepartment,
                 "Специалист" => UserRole.Performer,
                 "Делопроизводитель" => UserRole.Сlerk,
+                "Работник отдела кадров" => UserRole.PersonnelOfficer
             };
         }
 
@@ -44,6 +46,7 @@ namespace AppDocumentManagement.UI.Utilities
                 UserRole.HeadOfDepartment => 3,
                 UserRole.Performer => 4,
                 UserRole.Сlerk => 5,
+                UserRole.PersonnelOfficer => 6
             };
         }
 
@@ -59,6 +62,7 @@ namespace AppDocumentManagement.UI.Utilities
                 3 => UserRole.HeadOfDepartment,
                 4 => UserRole.Performer,
                 5 => UserRole.Сlerk,
+                6 => UserRole.PersonnelOfficer,
                 _ => UserRole.Performer,
             };
         }

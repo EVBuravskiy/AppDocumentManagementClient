@@ -27,7 +27,7 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <Label x:Name="GreetingLabel"
-                   Content="Панель руководителя" 
+                   Content="Панель задач и документов" 
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Center" 
                    FontFamily="Arial" 

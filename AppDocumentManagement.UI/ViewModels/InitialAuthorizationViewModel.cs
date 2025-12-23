@@ -208,6 +208,14 @@ namespace AppDocumentManagement.UI.ViewModels
                         documentRegistrationWindow.Show();
                         InitialAuthorizationWindow.Close();
                         break;
+                    case UserRole.PersonnelOfficer:
+                        DepartmentsEmployeesPanelWindow departmentsEmployeesPanelWindow = new DepartmentsEmployeesPanelWindow(currentUser.EmployeeID);
+                        departmentsEmployeesPanelWindow.Show();
+                        InitialAuthorizationWindow.Close();
+                        break;
+                    default:
+                        MessageBox.Show("Общая ошибка приложения! Обратитесь к администратору");
+                        break;
                 }
             }
             catch

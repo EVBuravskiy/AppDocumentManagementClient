@@ -526,6 +526,13 @@ namespace AppDocumentManagement.UI.ViewModels
             InitializeEmployees();
         }
 
+        public ICommand IOpenManagerPanelWindow => new RelayCommand(openManagerPanelWindow => OpenManagerPanelWindow());
+        private void OpenManagerPanelWindow()
+        {
+            ManagerPanelWindow managerPanelWindow = new ManagerPanelWindow(currentUser.EmployeeID);
+            managerPanelWindow.Show();
+        }
+
         public ICommand IExit => new RelayCommand(exit => Exit());
         private void Exit()
         {

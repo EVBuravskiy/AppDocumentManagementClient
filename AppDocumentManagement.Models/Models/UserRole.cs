@@ -8,5 +8,6 @@
         HeadOfDepartment,
         Performer,
         Сlerk,
+        PersonnelOfficer
     }
 }
