@@ -90,6 +90,16 @@
                         Command="{Binding IShowInternalDocuments}">
                     <TextBlock TextAlignment="Center"> Внутренние <LineBreak/> документы</TextBlock>
                 </Button>
+                <Button Grid.Row="2" 
+                        x:Name="DocumentTaskBtn"
+                        Content="Документы и задачи"    
+                        Style="{StaticResource Buttons}"
+                        FontFamily="Arial" 
+                        FontSize="14" 
+                        FontWeight="Bold"
+                        Padding="10"
+                        Margin="5"
+                        Command="{Binding IOpenManagerPanelWindow}"/>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.Background>

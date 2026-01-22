@@ -635,6 +635,13 @@ namespace AppDocumentManagement.UI.ViewModels
             GetDocumentBySearchString(SearchString);
         }
 
+        public ICommand IOpenManagerPanelWindow => new RelayCommand(openManagerPanelWindow => OpenManagerPanelWindow());
+        private void OpenManagerPanelWindow()
+        {
+            ManagerPanelWindow managerPanelWindow = new ManagerPanelWindow(currentUser.EmployeeID);
+            managerPanelWindow.Show();
+        }
+
         public ICommand IExit => new RelayCommand(exit => { DocumentRegistrationWindow.Close(); });
     }
 }
