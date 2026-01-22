@@ -139,10 +139,12 @@
             <Button Style="{StaticResource Buttons}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Content="Редактировать контрагента"
                     Padding="10 10"
                     Margin="20 0"
-                    Command="{Binding IEditContractorCompany}"/>
+                    Command="{Binding IEditContractorCompany}">
+                <TextBlock HorizontalAlignment="Center"
+                           TextAlignment="Center">Изменить данные <LineBreak/>контрагента</TextBlock>                
+            </Button>
             <Button Style="{StaticResource Buttons}"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"

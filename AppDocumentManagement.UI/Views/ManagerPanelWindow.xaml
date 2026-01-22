@@ -461,7 +461,7 @@
                                             <!-- Согласовавшее лицо -->
                                             <ColumnDefinition Width="150"/>
                                             <!-- Кому направлено на рассмотрение -->
-                                            <ColumnDefinition Width="130"/>
+                                            <ColumnDefinition Width="120"/>
                                             <!--Дата направления на рассмотрение-->
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0"
@@ -562,7 +562,7 @@
                                                         <!-- Согласовавшее лицо -->
                                                         <ColumnDefinition Width="150"/>
                                                         <!-- Кому направлено на рассмотрение -->
-                                                        <ColumnDefinition Width="130"/>
+                                                        <ColumnDefinition Width="120"/>
                                                         <!--Дата направления на рассмотрение-->
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0"

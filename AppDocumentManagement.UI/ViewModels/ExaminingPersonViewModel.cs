@@ -192,5 +192,7 @@ namespace AppDocumentManagement.UI.ViewModels
                 ExaminingPersonsWindow.Close();
             }
         }
+
+        public ICommand IExit => new RelayCommand(exit => ExaminingPersonsWindow.Close());
     }
 }

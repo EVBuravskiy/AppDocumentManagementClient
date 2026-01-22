@@ -124,5 +124,7 @@ namespace AppDocumentManagement.UI.ViewModels
         {
             Window.Close();
         }
+
+        public ICommand IExit => new RelayCommand(exit => Window.Close());
     }
 }
