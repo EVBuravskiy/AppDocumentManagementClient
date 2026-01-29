@@ -7,6 +7,11 @@ namespace AppDocumentManagement.EmployeesService.Service
 {
     public class EmployeePhotoService
     {
+        /// <summary>
+        /// Function for adding employee photo
+        /// </summary>
+        /// <param name="employeePhoto"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddEmployeePhoto(EmployeePhoto employeePhoto)
         {
             MEmployeePhoto mEmployeePhoto = MEmployeePhotoConverter.ConvertToMEmployeePhoto(employeePhoto);
@@ -18,7 +23,10 @@ namespace AppDocumentManagement.EmployeesService.Service
             var boolReply = client.AddEmployeePhoto(mEmployeePhoto);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function of receiving photos of all employees
+        /// </summary>
+        /// <returns>List of employee photos</returns>
         public async Task<List<EmployeePhoto>> GetEmployeePhotos()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001", new GrpcChannelOptions
@@ -35,7 +43,11 @@ namespace AppDocumentManagement.EmployeesService.Service
             }
             return employeePhotos;
         }
-
+        /// <summary>
+        /// Function for obtaining a photo of an employee by his ID number
+        /// </summary>
+        /// <param name="employeeID"></param>
+        /// <returns></returns>
         public async Task<EmployeePhoto> GetEmployeePhotoByEmployeeID(int employeeID)
         {
             IDRequest iDRequest = new IDRequest() { ID = employeeID };

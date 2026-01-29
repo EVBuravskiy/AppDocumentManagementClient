@@ -7,6 +7,11 @@ namespace AppDocumentManagement.EmployeesService.Services
 {
     public class RegisterUserService
     {
+        /// <summary>
+        /// Function for adding user registration data
+        /// </summary>
+        /// <param name="registredUser"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddRegistratedUser(RegistredUser registredUser)
         {
             MRegistredUser mRegistredUser = MRegistredUserConverter.ConvertToMRegistredUser(registredUser);
@@ -15,7 +20,10 @@ namespace AppDocumentManagement.EmployeesService.Services
             var boolReply = client.AddRegistratedUser(mRegistredUser);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function to get all registered users
+        /// </summary>
+        /// <returns>List of registered users</returns>
         public async Task<List<RegistredUser>> GetAllRegistredUsers()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001");
@@ -29,7 +37,11 @@ namespace AppDocumentManagement.EmployeesService.Services
             }
             return registredUsers;
         }
-
+        /// <summary>
+        /// Function for obtaining user data by employee ID number
+        /// </summary>
+        /// <param name="employeeID"></param>
+        /// <returns>RegistredUser</returns>
         public async Task<RegistredUser> GetRegistredUserByEmployeeID(int employeeID)
         {
             IDRequest iDRequest = new IDRequest() { ID = employeeID };
@@ -39,7 +51,11 @@ namespace AppDocumentManagement.EmployeesService.Services
             RegistredUser registredUser = MRegistredUserConverter.ConvertToRegistredUser(mRegistredUser);
             return registredUser;
         }
-
+        /// <summary>
+        /// User registration data update function
+        /// </summary>
+        /// <param name="registredUser"></param>
+        /// <returns>bool</returns>
         public async Task<bool> UpdateRegistratedUser(RegistredUser registredUser)
         {
             MRegistredUser mRegistredUser = MRegistredUserConverter.ConvertToMRegistredUser(registredUser);
@@ -48,7 +64,11 @@ namespace AppDocumentManagement.EmployeesService.Services
             var boolReply = client.UpdateRegistratedUser(mRegistredUser);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for deleting user registration data
+        /// </summary>
+        /// <param name="registredUserID"></param>
+        /// <returns>bool</returns>
         public async Task<bool> RemoveRegistratedUser(int registredUserID)
         {
             IDRequest iDRequest = new IDRequest() { ID = registredUserID };
@@ -57,7 +77,12 @@ namespace AppDocumentManagement.EmployeesService.Services
             var boolReply = client.RemoveRegistratedUser(iDRequest);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for obtaining user data by login and password
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns>RegistredUser</returns>
         public async Task<RegistredUser> GetRegistratedUser(string login, string password)
         {
             StringRequest stringRequest = new StringRequest() { Login = login, Password = password };
@@ -67,7 +92,10 @@ namespace AppDocumentManagement.EmployeesService.Services
             RegistredUser registredUser = MRegistredUserConverter.ConvertToRegistredUser(mRegistredUser);
             return registredUser;
         }
-
+        /// <summary>
+        /// Checking administrator availability
+        /// </summary>
+        /// <returns>bool</returns>
         public async Task<bool> CheckAviableAdministrator()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001");
