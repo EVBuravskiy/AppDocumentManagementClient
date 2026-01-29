@@ -3,8 +3,16 @@ using Google.Protobuf;
 
 namespace AppDocumentManagement.ExternalDocumentService.Converters
 {
+    /// <summary>
+    /// MExternalDocumentFile Message Converter Class
+    /// </summary>
     public class MExternalDocumentFileConverter
     {
+        /// <summary>
+        /// Function to convert from MExternalDocumentFile message to ExternalDocumentFile class
+        /// </summary>
+        /// <param name="mExternalDocumentFile"></param>
+        /// <returns>ExternalDocumentFile</returns>
         public static ExternalDocumentFile ConvertToExternalDocumentFile(MExternalDocumentFile mExternalDocumentFile)
         {
             ExternalDocumentFile externalDocumentFile= new ExternalDocumentFile();
@@ -18,7 +26,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             }
             return externalDocumentFile;
         }
-
+        /// <summary>
+        /// Function to convert from ExternalDocumentFile class to MExternalDocumentFile message
+        /// </summary>
+        /// <param name="externalDocumentFile"></param>
+        /// <returns>MExternalDocumentFile</returns>
         public static MExternalDocumentFile ConvertToMExternalDocumentFile(ExternalDocumentFile externalDocumentFile)
         {
             MExternalDocumentFile mExternalDocumentFile = new MExternalDocumentFile();

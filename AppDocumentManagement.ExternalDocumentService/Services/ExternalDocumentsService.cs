@@ -4,8 +4,16 @@ using Grpc.Net.Client;
 
 namespace AppDocumentManagement.ExternalDocumentService.Services
 {
+    /// <summary>
+    /// Class of service for sending and receiving ExternalDocument messages
+    /// </summary>
     public class ExternalDocumentsService
     {
+        /// <summary>
+        /// Function for adding a new external document
+        /// </summary>
+        /// <param name="externalDocument"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddExternalDocument(ExternalDocument externalDocument)
         {
             MExternalDocument mExternalDocument = MExternalDocumentConverter.ConvertToMExternalDocument(externalDocument);
@@ -14,7 +22,10 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
             var boolReply = client.AddExternalDocument(mExternalDocument);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function to get all external documents
+        /// </summary>
+        /// <returns>List of external documents</returns>
         public async Task<List<ExternalDocument>> GetAllExternalDocuments()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6002");
@@ -28,7 +39,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
             }
             return externalDocuments;
         }
-
+        /// <summary>
+        /// Function to get external document by its ID
+        /// </summary>
+        /// <param name="externalDocumentID"></param>
+        /// <returns>ExternalDocument</returns>
         public async Task<ExternalDocument> GetExternalDocumentsByExternalDocumentID(int externalDocumentID)
         {
             IDRequest iDRequest = new IDRequest() { ID = externalDocumentID };
@@ -38,7 +53,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
             ExternalDocument externalDocument = MExternalDocumentConverter.ConvertToExternalDocument(mExternalDocument);
             return externalDocument;
         }
-
+        /// <summary>
+        /// Function for getting external documents by employee ID
+        /// </summary>
+        /// <param name="recievedEmployeeID"></param>
+        /// <returns>List of external documents</returns>
         public async Task<List<ExternalDocument>> GetExternalDocumentsByEmployeeReceivedDocumentID(int recievedEmployeeID)
         {
             IDRequest iDRequest = new IDRequest() { ID = recievedEmployeeID };
@@ -53,7 +72,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
             }
             return externalDocuments;
         }
-
+        /// <summary>
+        /// External document data update function
+        /// </summary>
+        /// <param name="externalDocument"></param>
+        /// <returns>bool</returns>
         public async Task<bool> UpdateExternalDocument(ExternalDocument externalDocument)
         {
             MExternalDocument mExternalDocument = MExternalDocumentConverter.ConvertToMExternalDocument(externalDocument);
@@ -62,7 +85,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
             var boolReply = client.UpdateExternalDocument(mExternalDocument);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for deleting an external document
+        /// </summary>
+        /// <param name="externalDocumentID"></param>
+        /// <returns>bool</returns>
         public async Task<bool> RemoveExternalDocument(int externalDocumentID)
         {
             IDRequest iDRequest = new IDRequest() { ID = externalDocumentID };

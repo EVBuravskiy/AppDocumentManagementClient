@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.ExternalDocumentService.Converters
 {
+    /// <summary>
+    /// MContractorCompany Message Converter Class
+    /// </summary>
     public class MContractorCompanyConverter
     {
+        /// <summary>
+        /// Function to convert from MContractorCompany message to ContractorCompany class
+        /// </summary>
+        /// <param name="mContractorCompany"></param>
+        /// <returns>ContractorCompany</returns>
         public static ContractorCompany ConvertToContractorCompany(MContractorCompany mContractorCompany)
         {
             ContractorCompany contractorCompany = new ContractorCompany();
@@ -19,7 +27,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             }
             return contractorCompany;
         }
-
+        /// <summary>
+        /// Function to convert from ContractorCompany class to MContractorCompany message
+        /// </summary>
+        /// <param name="contractorCompany"></param>
+        /// <returns>MContractorCompany</returns>
         public static MContractorCompany ConvertToMContractorCompany(ContractorCompany contractorCompany)
         {
             MContractorCompany mContractorCompany = new MContractorCompany();

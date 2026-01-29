@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.ExternalDocumentService.Converters
 {
+    /// <summary>
+    /// MExternalDocument Message Converter Class
+    /// </summary>
     public class MExternalDocumentConverter
     {
+        /// <summary>
+        /// Function to convert from MExternalDocument message to ExternalDocument class
+        /// </summary>
+        /// <param name="mExternalDocument"></param>
+        /// <returns>ExternalDocument</returns>
         public static ExternalDocument ConvertToExternalDocument(MExternalDocument mExternalDocument)
         {
             ExternalDocument externalDocument = new ExternalDocument();
@@ -33,6 +41,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Converters
             return externalDocument;
         }
 
+        /// <summary>
+        /// Function to convert from ExternalDocument class to MExternalDocument message
+        /// </summary>
+        /// <param name="externalDocument"></param>
+        /// <returns>MExternalDocument</returns>
         public static MExternalDocument ConvertToMExternalDocument(ExternalDocument externalDocument)
         {
             MExternalDocument mExternalDocument = new MExternalDocument();

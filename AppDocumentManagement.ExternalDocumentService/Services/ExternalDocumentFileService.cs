@@ -4,8 +4,16 @@ using Grpc.Net.Client;
 
 namespace AppDocumentManagement.ExternalDocumentService.Services
 {
+    /// <summary>
+    /// Class of service for sending and receiving ExternalDocumentFile messages
+    /// </summary>
     public class ExternalDocumentFileService
     {
+        /// <summary>
+        /// Function for adding file to an external document
+        /// </summary>
+        /// <param name="externalDocumentFile"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddExternalDocumentFile(ExternalDocumentFile externalDocumentFile)
         {
             MExternalDocumentFile mExternalDocumentFile = MExternalDocumentFileConverter.ConvertToMExternalDocumentFile(externalDocumentFile);
@@ -17,7 +25,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
             var boolReply = client.AddExternalDocumentFile(mExternalDocumentFile);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for adding files to an external document
+        /// </summary>
+        /// <param name="externalDocumentFiles"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddExternalDocumentFiles(List<ExternalDocumentFile> externalDocumentFiles)
         {
             MExternalDocumentFileList mExternalDocumentFileList = new MExternalDocumentFileList();
@@ -34,7 +46,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
             var boolReply = client.AddExternalDocumentFiles(mExternalDocumentFileList);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for obtaining external document files
+        /// </summary>
+        /// <param name="externalDocumentID"></param>
+        /// <returns>List of external document files</returns>
         public async Task<List<ExternalDocumentFile>> GetExternalDocumentFiles(int externalDocumentID)
         {
             IDRequest iDRequest = new IDRequest() { ID = externalDocumentID };
@@ -52,7 +68,11 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
             }
             return externalDocumentFiles;
         }
-
+        /// <summary>
+        /// Function for remove file from external document
+        /// </summary>
+        /// <param name="externalDocumentFileID"></param>
+        /// <returns>bool</returns>
         public async Task<bool> RemoveExternalDocumentFile(int externalDocumentFileID)
         {
             IDRequest iDRequest = new IDRequest() { ID= externalDocumentFileID };
