@@ -9,7 +9,7 @@
         Title="АИС Документооборот"  
         Height="900"
         Width="600"
-        Icon="/Resources/Images/AppIcon.png" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Icon="/Resources/Images/AppIcon.png" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
 
     <Grid>
         <Grid.Background>

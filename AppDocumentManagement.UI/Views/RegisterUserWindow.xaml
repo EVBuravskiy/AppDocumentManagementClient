@@ -10,7 +10,7 @@
         Width="600"
         Icon="/Resources/Images/AppIcon.png" 
         WindowStartupLocation="CenterScreen" 
-        WindowStyle="ThreeDBorderWindow" ResizeMode="NoResize">
+        WindowStyle="None" ResizeMode="NoResize">
 
     <Grid>
         <Grid.Background>
