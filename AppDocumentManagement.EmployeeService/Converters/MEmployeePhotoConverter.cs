@@ -4,8 +4,16 @@ using Google.Protobuf;
 
 namespace AppDocumentManagement.EmployeesService.Converters
 {
+    /// <summary>
+    /// MEmployeePhoto Message Converter Class
+    /// </summary>
     public class MEmployeePhotoConverter
     {
+        /// <summary>
+        /// Function to convert from MEmployeePhoto message to EmployeePhoto class
+        /// </summary>
+        /// <param name="mEmployeePhoto"></param>
+        /// <returns>EmployeePhoto</returns>
         public static EmployeePhoto ConvertToEmployeePhoto(MEmployeePhoto mEmployeePhoto)
         {
             EmployeePhoto employeePhoto = new EmployeePhoto();
@@ -17,6 +25,11 @@ namespace AppDocumentManagement.EmployeesService.Converters
             return employeePhoto;
         }
 
+        /// <summary>
+        /// Function to convert from EmployeePhoto class to MEmployeePhoto message
+        /// </summary>
+        /// <param name="mEmployeePhoto"></param>
+        /// <returns>MEmployeePhoto</returns>
         public static MEmployeePhoto ConvertToMEmployeePhoto(EmployeePhoto employeePhoto)
         {
             MEmployeePhoto mEmployeePhoto = new MEmployeePhoto();

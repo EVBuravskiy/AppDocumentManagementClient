@@ -5,6 +5,9 @@ using Grpc.Net.Client;
 
 namespace AppDocumentManagement.EmployeesService.Service
 {
+    /// <summary>
+    /// Class of service for sending and receiving Department messages
+    /// </summary>
     public class DepartmentService
     {
         /// <summary>

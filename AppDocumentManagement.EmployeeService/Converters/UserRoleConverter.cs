@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.EmployeesService.Converters
 {
+    /// <summary>
+    /// UserRole Enumeration Converter Class
+    /// </summary>
     public class UserRoleConverter
     {
+        /// <summary>
+        /// Function to convert from UserRole enum to int
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>int</returns>
         public static int ToIntConvert(Enum value)
         {
             return value switch
@@ -16,7 +24,11 @@ namespace AppDocumentManagement.EmployeesService.Converters
                 UserRole.Сlerk => 5,
             };
         }
-
+        /// <summary>
+        /// Function to convert from int to UserRole enum
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>UserRole</returns>
         public static UserRole BackConvert(int value)
         {
             int inputvalue = (int)value;

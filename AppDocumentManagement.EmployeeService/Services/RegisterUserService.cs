@@ -5,6 +5,9 @@ using Grpc.Net.Client;
 
 namespace AppDocumentManagement.EmployeesService.Services
 {
+    /// <summary>
+    /// Class of service for sending and receiving Register User messages.
+    /// </summary>
     public class RegisterUserService
     {
         /// <summary>

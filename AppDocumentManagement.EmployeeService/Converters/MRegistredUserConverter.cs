@@ -3,8 +3,16 @@ using AppDocumentManagement.Models;
 
 namespace AppDocumentManagement.EmployeesService.Converters
 {
+    /// <summary>
+    /// MRegistredUser Message Converter Class
+    /// </summary>
     public class MRegistredUserConverter
     {
+        /// <summary>
+        /// Function to convert from MRegistredUser message to RegistredUser class
+        /// </summary>
+        /// <param name="mRegistredUser"></param>
+        /// <returns>RegistredUser</returns>
         public static RegistredUser ConvertToRegistredUser(MRegistredUser mRegistredUser)
         {
             RegistredUser registredUser = new RegistredUser();
@@ -27,6 +35,11 @@ namespace AppDocumentManagement.EmployeesService.Converters
             return registredUser;
         }
 
+        /// <summary>
+        /// Function to convert from RegistredUser class to MRegistredUser message
+        /// </summary>
+        /// <param name="mRegistredUser"></param>
+        /// <returns>MRegistredUser</returns>
         public static MRegistredUser ConvertToMRegistredUser(RegistredUser registredUser)
         {
             MRegistredUser mRegistredUser = new MRegistredUser();

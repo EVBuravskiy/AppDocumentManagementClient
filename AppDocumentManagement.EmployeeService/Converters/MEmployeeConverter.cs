@@ -3,8 +3,16 @@ using AppDocumentManagement.Models;
 
 namespace AppDocumentManagement.EmployeesService.Converters
 {
+    /// <summary>
+    /// MEmployee Message Converter Class
+    /// </summary>
     public class MEmployeeConverter
     {
+        /// <summary>
+        /// Function to convert from MEmployee message to Employee class
+        /// </summary>
+        /// <param name="mEmployee"></param>
+        /// <returns>Employee</returns>
         public static Employee ConvertToEmployee(MEmployee mEmployee)
         {
             Employee employee = new Employee();
@@ -24,7 +32,11 @@ namespace AppDocumentManagement.EmployeesService.Converters
             }
             return employee;
         }
-
+        /// <summary>
+        /// Function to convert from Employee class to MEmployee message
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns>MEmployee</returns>
         public static MEmployee ConvertToMEmployee(Employee employee)
         {
             MEmployee mEmployee = new MEmployee();

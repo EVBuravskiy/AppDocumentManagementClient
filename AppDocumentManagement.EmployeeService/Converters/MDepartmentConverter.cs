@@ -3,8 +3,16 @@ using AppDocumentManagement.Models;
 
 namespace AppDocumentManagement.EmployeesService.Converters
 {
+    /// <summary>
+    /// MDepartment Message Converter Class
+    /// </summary>
     public class MDepartmentConverter
     {
+        /// <summary>
+        /// Function to convert from MDepartment message to Department class
+        /// </summary>
+        /// <param name="mDepartment"></param>
+        /// <returns>Department</returns>
         public static Department ConvertToDepartment(MDepartment mDepartment)
         {
             Department department = new Department();
@@ -16,7 +24,11 @@ namespace AppDocumentManagement.EmployeesService.Converters
             department.DepartmentShortTitle = mDepartment.DepartmentShortTitle;
             return department;
         }
-
+        /// <summary>
+        /// Function to convert from Department class to MDepartment message
+        /// </summary>
+        /// <param name="department"></param>
+        /// <returns>MDepartment</returns>
         public static MDepartment ConvertToMDepartment(Department department)
         {
             MDepartment mDepartment = new MDepartment();
