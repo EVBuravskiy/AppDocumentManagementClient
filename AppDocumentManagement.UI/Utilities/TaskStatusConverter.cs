@@ -9,9 +9,20 @@ using System.Windows.Data;
 
 namespace AppDocumentManagement.UI.Utilities
 {
+    /// <summary>
+    /// Task status converter class
+    /// </summary>
     [ValueConversion(typeof(ProductionTaskStatus), typeof(String))]
     public class TaskStatusConverter : IValueConverter
     {
+        /// <summary>
+        /// Function to convert ProductionTaskStatus to string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns>string</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
@@ -28,7 +39,14 @@ namespace AppDocumentManagement.UI.Utilities
             }
             return value;
         }
-
+        /// <summary>
+        /// Function to convert string to ProductionTaskStatus
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns>ProductionTaskStatus</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string strValue = value as string;

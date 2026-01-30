@@ -4,8 +4,16 @@ using System.Text;
 
 namespace AppDocumentManagement.UI.Utilities
 {
+    /// <summary>
+    /// Password hasher class
+    /// </summary>
     class PassHasher
     {
+        /// <summary>
+        /// Function to calculate hash
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>string</returns>
         static public string CalculateMD5Hash(string input)
         {
             MD5 md5 = MD5.Create();

@@ -2,6 +2,9 @@
 
 namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Employee's photo class
+    /// </summary>
     public class EmployeePhoto
     {
         public int EmployeePhotoID { get; set; }

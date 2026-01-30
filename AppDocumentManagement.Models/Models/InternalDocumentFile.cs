@@ -1,5 +1,8 @@
 ﻿namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Internal document file class
+    /// </summary>
     public class InternalDocumentFile
     {
         public int InternalDocumentFileID { get; set; }

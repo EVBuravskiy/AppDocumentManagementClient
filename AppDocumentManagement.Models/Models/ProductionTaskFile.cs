@@ -1,5 +1,8 @@
 ﻿namespace AppDocumentManagement.Models
 { 
+    /// <summary>
+    /// Task file class
+    /// </summary>
     public class ProductionTaskFile
     {
         public int ProductionTaskFileID { get; set; }

@@ -2,6 +2,9 @@
 
 namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Task class
+    /// </summary>
     public class ProductionTask
     {
         public int ProductionTaskID { get; set; }

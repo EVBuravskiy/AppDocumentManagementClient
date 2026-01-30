@@ -6,8 +6,15 @@ using System.Windows;
 
 namespace AppDocumentManagement.UI.Utilities
 {
+    /// <summary>
+    /// Default administration class
+    /// </summary>
     public class DefaultAdmin
     {
+        /// <summary>
+        /// Function to create default administrator
+        /// </summary>
+        /// <returns>bool</returns>
         public static bool CreateDefaultAdmin()
         {
             Department defaultDepartment = CreateDefaultDepartment();
@@ -24,7 +31,10 @@ namespace AppDocumentManagement.UI.Utilities
                 return false;
             }
         }
-
+        /// <summary>
+        /// Function to create default department
+        /// </summary>
+        /// <returns>Department</returns>
         private static Department CreateDefaultDepartment()
         {
             Department defaultDepartment = new Department();
@@ -39,7 +49,11 @@ namespace AppDocumentManagement.UI.Utilities
             }
             return defaultDepartment;
         }
-
+        /// <summary>
+        /// Function to create default employee
+        /// </summary>
+        /// <param name="defaultDepartment"></param>
+        /// <returns>Employee</returns>
         private static Employee CreateDefaultEmployee(Department defaultDepartment)
         {
             Employee defaultEmployee = new Employee();
@@ -55,7 +69,11 @@ namespace AppDocumentManagement.UI.Utilities
             bool result = employesService.AddEmployee(defaultEmployee).Result;
             return defaultEmployee;
         }
-
+        /// <summary>
+        /// Function for registering the default administrator
+        /// </summary>
+        /// <param name="defaultEmployee"></param>
+        /// <returns>bool</returns>
         private static bool RegistredDefaultAdmin(Employee defaultEmployee)
         {
             RegistredUser registredUser = new RegistredUser();

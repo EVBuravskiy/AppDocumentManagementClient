@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.UI.Utilities
 {
+    /// <summary>
+    /// Document status converter for UI
+    /// </summary>
     public class DocumentStatusConverter
     {
+        /// <summary>
+        /// Function to convert DocumentStatus to string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>string</returns>
         public static string ConvertToString(object value)
         {
             if (value is DocumentStatus externalDocumentStatus)
@@ -17,7 +25,11 @@ namespace AppDocumentManagement.UI.Utilities
             }
             return value.ToString();
         }
-
+        /// <summary>
+        /// Function to convert DocumentStatus to string
+        /// </summary>
+        /// <param name="documentStatus"></param>
+        /// <returns>string</returns>
         public static string ConvertEnumToString(DocumentStatus documentStatus)
         {
             return documentStatus switch
@@ -27,7 +39,11 @@ namespace AppDocumentManagement.UI.Utilities
                 DocumentStatus.Refused => "Отказанo"
             };
         }
-
+        /// <summary>
+        /// Function to convert string to DocumentStatus
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>DocumentStatus</returns>
         public static DocumentStatus ConvertToEnum(string value)
         {
             return value switch
@@ -37,7 +53,11 @@ namespace AppDocumentManagement.UI.Utilities
                 "Отказанo" => DocumentStatus.Refused,
             };
         }
-
+        /// <summary>
+        /// Function to convert DocumentStatus enum to int
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>int</returns>
         public static int ToIntConvert(Enum value)
         {
             return value switch
@@ -48,7 +68,11 @@ namespace AppDocumentManagement.UI.Utilities
                 _ => 0,
             };
         }
-
+        /// <summary>
+        /// Function to convert int to DocumentStatus enum
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static DocumentStatus BackConvert(int value)
         {
             int inputvalue = (int)value;

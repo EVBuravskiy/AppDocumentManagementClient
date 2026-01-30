@@ -1,10 +1,13 @@
 ﻿namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Enum of internal document types
+    /// </summary>
     public enum InternalDocumentType
     {
-        Order,          //Приказ
-        Direction,      //Указание/распоряжение
-        Report,         //Рапорт
-        OfficialLetter, //Служебное письмо 
+        Order,          
+        Direction,      
+        Report,         
+        OfficialLetter, 
     }
 }

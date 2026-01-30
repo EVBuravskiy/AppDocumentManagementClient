@@ -1,5 +1,8 @@
 ﻿namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Registered User Class
+    /// </summary>
     public class RegistredUser
     {
         public int RegistredUserID { get; set; }

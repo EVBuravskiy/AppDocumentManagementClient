@@ -2,6 +2,9 @@
 
 namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Task comment class
+    /// </summary>
     public class ProductionTaskComment
     {
         public int ProductionTaskCommentID { get; set; }

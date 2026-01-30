@@ -1,9 +1,12 @@
 ﻿namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Enum of document statuses
+    /// </summary>
     public enum DocumentStatus
     {
-        UnderConsideration,     //На рассмотрении
-        Agreed,                 //Согласован
-        Refused                 //Отказан
+        UnderConsideration,     
+        Agreed,                 
+        Refused                 
     }
 }

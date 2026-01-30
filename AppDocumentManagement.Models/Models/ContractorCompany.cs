@@ -1,5 +1,8 @@
 ﻿namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Contractor company class
+    /// </summary>
     public class ContractorCompany
     {
         public int ContractorCompanyID { get; set; }

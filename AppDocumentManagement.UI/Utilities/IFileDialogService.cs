@@ -1,5 +1,8 @@
 ﻿namespace AppDocumentManagement.UI.Utilities
 {
+    /// <summary>
+    /// File dialog service interface
+    /// </summary>
     public interface IFileDialogService
     {
         string OpenFile();

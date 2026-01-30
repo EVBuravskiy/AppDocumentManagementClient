@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.UI.Utilities
 {
+    /// <summary>
+    /// Employee role converter class
+    /// </summary>
     public class EmployeeRoleConverter
     {
+        /// <summary>
+        /// Function to convert EmployeeRole to string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>string</returns>
         public static string ConvertToString(object value)
         {
             if (value is EmployeeRole role)
@@ -18,7 +26,11 @@ namespace AppDocumentManagement.UI.Utilities
             }
             return value.ToString();
         }
-
+        /// <summary>
+        /// Function to convert string to EmployeeRole
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>EmployeeRole</returns>
         public static EmployeeRole ConvertToEnum(string value)
         {
             return value switch
@@ -29,6 +41,11 @@ namespace AppDocumentManagement.UI.Utilities
                 "Исполнитель" => EmployeeRole.Performer
             };
         }
+        /// <summary>
+        /// Function to convert EmployeeRole enum to int
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>int</returns>
         public static int ToIntConvert(Enum value)
         {
             return value switch
@@ -39,7 +56,11 @@ namespace AppDocumentManagement.UI.Utilities
                 EmployeeRole.Performer => 3,
             };
         }
-
+        /// <summary>
+        /// Function to convert int to EmployeeRole enum
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static EmployeeRole BackConvert(int value)
         {
             int inputvalue = (int)value;

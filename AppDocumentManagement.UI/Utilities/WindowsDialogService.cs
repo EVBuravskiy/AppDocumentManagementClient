@@ -4,8 +4,15 @@ using System.IO;
 
 namespace AppDocumentManagement.UI.Utilities
 {
+    /// <summary>
+    /// Window dialog class
+    /// </summary>
     public class WindowsDialogService : IFileDialogService
     {
+        /// <summary>
+        /// Function to open file
+        /// </summary>
+        /// <returns>file name</returns>
         public string OpenFile()
         {
             var dialog = new OpenFileDialog();
@@ -18,7 +25,11 @@ namespace AppDocumentManagement.UI.Utilities
             }
             return null;
         }
-
+        /// <summary>
+        /// Function to open file by file extension
+        /// </summary>
+        /// <param name="fileExtension"></param>
+        /// <returns>file name</returns>
         public string OpenFile(string fileExtension)
         {
             var dialog = new OpenFileDialog();
@@ -31,7 +42,12 @@ namespace AppDocumentManagement.UI.Utilities
             }
             return null;
         }
-
+        /// <summary>
+        /// Function to save file
+        /// </summary>
+        /// <param name="fileExtension"></param>
+        /// <param name="fileName"></param>
+        /// <returns>file name</returns>
         public string SaveFile(string fileExtension, string fileName)
         {
             var dialog = new SaveFileDialog();
@@ -50,12 +66,20 @@ namespace AppDocumentManagement.UI.Utilities
             }
             return null;
         }
-
+        /// <summary>
+        /// Function to show message box with input message
+        /// </summary>
+        /// <param name="message"></param>
+        /// <exception cref="NotImplementedException"></exception>
         public void ShowMessageBox(string message)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Function to get a file by filter
+        /// </summary>
+        /// <param name="fileExtension"></param>
+        /// <returns>string</returns>
         private string GetFileFilter(string fileExtension)
         {
             return fileExtension switch

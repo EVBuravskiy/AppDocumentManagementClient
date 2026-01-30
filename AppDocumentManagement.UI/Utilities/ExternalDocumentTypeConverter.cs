@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.UI.Utilities
 {
+    /// <summary>
+    /// External document type converter class
+    /// </summary>
     public class ExternalDocumentTypeConverter
     {
+        /// <summary>
+        /// Function to convert ExternalDocumentType enum to string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>string</returns>
         public static string ConvertToString(object value)
         {
             if (value is ExternalDocumentType type)
@@ -18,7 +26,11 @@ namespace AppDocumentManagement.UI.Utilities
             }
             return value.ToString();
         }
-
+        /// <summary>
+        /// Function to convert string to ExternalDocumentType enum
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static ExternalDocumentType ConvertToEnum(string value)
         {
             return value switch
@@ -30,7 +42,11 @@ namespace AppDocumentManagement.UI.Utilities
                 _ => ExternalDocumentType.Contract,
             };
         }
-
+        /// <summary>
+        /// Function to convert ExternalDocumentType enum to int
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>int</returns>
         public static int ToIntConvert(Enum value)
         {
             return value switch
@@ -42,7 +58,11 @@ namespace AppDocumentManagement.UI.Utilities
                 _ => 0,
             };
         }
-
+        /// <summary>
+        /// Function to convert int to ExternalDocumentType enum
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static ExternalDocumentType BackConvert(int value)
         {
             int inputvalue = (int)value;

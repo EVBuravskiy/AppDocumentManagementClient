@@ -1,5 +1,8 @@
 ﻿namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Subtask class
+    /// </summary>
     public class ProductionSubTask
     {
         public int ProductionSubTaskID { get; set; }

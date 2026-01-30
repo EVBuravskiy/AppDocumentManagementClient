@@ -1,5 +1,8 @@
 ﻿namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// Department class
+    /// </summary>
     public class Department
     {
         public int DepartmentID { get; set; }

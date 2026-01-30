@@ -4,8 +4,16 @@ using System.Windows.Data;
 
 namespace AppDocumentManagement.UI.Utilities
 {
+    /// <summary>
+    /// InternalDocumentType converter class for UI
+    /// </summary>
     public class InternalDocumentTypeConverter : IValueConverter
     {
+        /// <summary>
+        /// Function to convert InternalDocumentType to string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>string</returns>
         public static string ConvertToString(object value)
         {
             if (value is InternalDocumentType type)
@@ -20,7 +28,11 @@ namespace AppDocumentManagement.UI.Utilities
             }
             return value.ToString();
         }
-
+        /// <summary>
+        /// Function to convert string to InternalDocumentType
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>InternalDocumentType</returns>
         public static InternalDocumentType ConvertToEnum(string value)
         {
             return value switch
@@ -31,7 +43,11 @@ namespace AppDocumentManagement.UI.Utilities
                 "Служебная записка" => InternalDocumentType.OfficialLetter,
             };
         }
-
+        /// <summary>
+        /// Function to convert InternalDocumentType to int
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>int</returns>
         public static int ToIntConvert(Enum value)
         {
             return value switch
@@ -43,7 +59,11 @@ namespace AppDocumentManagement.UI.Utilities
                 _ => 0,
             };
         }
-
+        /// <summary>
+        /// Function to convert int to InternalDocumentType
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static InternalDocumentType BackConvert(int value)
         {
             int inputvalue = (int)value;
@@ -57,12 +77,26 @@ namespace AppDocumentManagement.UI.Utilities
                 _ => InternalDocumentType.Order
             };
         }
-
+        /// <summary>
+        /// Default function to convert InternalDocumentType to string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return ConvertToString(value);
         }
-
+        /// <summary>
+        /// Default function to convert InternalDocumentType to string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return ConvertToString(value);

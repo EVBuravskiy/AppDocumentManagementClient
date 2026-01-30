@@ -1,5 +1,8 @@
 ﻿namespace AppDocumentManagement.Models
 {
+    /// <summary>
+    /// External document file class
+    /// </summary>
     public class ExternalDocumentFile
     {
         public int ExternalDocumentFileID { get; set; }
