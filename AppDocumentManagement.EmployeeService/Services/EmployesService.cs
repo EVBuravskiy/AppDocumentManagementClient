@@ -29,7 +29,7 @@ namespace AppDocumentManagement.EmployeesService.Service
         /// <summary>
         /// The function of obtaining all employees
         /// </summary>
-        /// <returns>List of employees</returns>
+        /// <returns>List of Employees</returns>
         public async Task<List<Employee>> GetAllEmployees()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001");
@@ -46,7 +46,7 @@ namespace AppDocumentManagement.EmployeesService.Service
         /// <summary>
         /// Function to get a list of all available employees.
         /// </summary>
-        /// <returns>List of available employees</returns>
+        /// <returns>List of Employees</returns>
         public async Task<List<Employee>> GetAllAvailableEmployees()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001");
@@ -78,7 +78,7 @@ namespace AppDocumentManagement.EmployeesService.Service
         /// Function for obtaining a list of employees by department identification number
         /// </summary>
         /// <param name="departmentID"></param>
-        /// <returns>List of employees</returns>
+        /// <returns>List of Employees</returns>
         public async Task<List<Employee>> GetEmployeesByDepartmentID(int departmentID)
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001");

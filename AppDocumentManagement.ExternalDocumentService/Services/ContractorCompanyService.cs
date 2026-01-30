@@ -25,7 +25,7 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
         /// <summary>
         /// Function to get all contractor companies
         /// </summary>
-        /// <returns>List of contractor companies</returns>
+        /// <returns>List of ContractorCompanys</returns>
         public async Task<List<ContractorCompany>> GetContractorCompanies()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6002");
@@ -42,7 +42,7 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
         /// <summary>
         /// Function to get available contractor companies
         /// </summary>
-        /// <returns>List of contractor companies</returns>
+        /// <returns>List of ContractorCompanys</returns>
         public async Task<List<ContractorCompany>> GetAvailableContractorCompanies()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6002");

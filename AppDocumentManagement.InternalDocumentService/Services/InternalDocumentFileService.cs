@@ -50,7 +50,7 @@ namespace AppDocumentManagement.InternalDocumentService.Services
         /// Function for obtaining internal document files by its ID
         /// </summary>
         /// <param name="internalDocumentID"></param>
-        /// <returns>List of internal document files</returns>
+        /// <returns>List of InternalDocumentFiles</returns>
         public async Task<List<InternalDocumentFile>> GetInternalDocumentFiles(int internalDocumentID)
         {
             IDRequest iDRequest = new IDRequest() { ID = internalDocumentID };

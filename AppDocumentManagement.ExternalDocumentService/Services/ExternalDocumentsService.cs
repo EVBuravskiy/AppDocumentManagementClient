@@ -25,7 +25,7 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
         /// <summary>
         /// Function to get all external documents
         /// </summary>
-        /// <returns>List of external documents</returns>
+        /// <returns>List of ExternalDocuments</returns>
         public async Task<List<ExternalDocument>> GetAllExternalDocuments()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6002");
@@ -57,7 +57,7 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
         /// Function for getting external documents by employee ID
         /// </summary>
         /// <param name="recievedEmployeeID"></param>
-        /// <returns>List of external documents</returns>
+        /// <returns>List of ExternalDocuments</returns>
         public async Task<List<ExternalDocument>> GetExternalDocumentsByEmployeeReceivedDocumentID(int recievedEmployeeID)
         {
             IDRequest iDRequest = new IDRequest() { ID = recievedEmployeeID };

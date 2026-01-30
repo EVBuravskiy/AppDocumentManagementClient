@@ -29,7 +29,7 @@ namespace AppDocumentManagement.EmployeesService.Service
         /// <summary>
         /// Function of receiving photos of all employees
         /// </summary>
-        /// <returns>List of employee photos</returns>
+        /// <returns>List of EmployeePhotos</returns>
         public async Task<List<EmployeePhoto>> GetEmployeePhotos()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001", new GrpcChannelOptions
@@ -50,7 +50,7 @@ namespace AppDocumentManagement.EmployeesService.Service
         /// Function for obtaining a photo of an employee by his ID number
         /// </summary>
         /// <param name="employeeID"></param>
-        /// <returns></returns>
+        /// <returns>EmployeePhoto</returns>
         public async Task<EmployeePhoto> GetEmployeePhotoByEmployeeID(int employeeID)
         {
             IDRequest iDRequest = new IDRequest() { ID = employeeID };

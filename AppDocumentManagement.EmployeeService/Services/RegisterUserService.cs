@@ -26,7 +26,7 @@ namespace AppDocumentManagement.EmployeesService.Services
         /// <summary>
         /// Function to get all registered users
         /// </summary>
-        /// <returns>List of registered users</returns>
+        /// <returns>List of RegistredUsers</returns>
         public async Task<List<RegistredUser>> GetAllRegistredUsers()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001");

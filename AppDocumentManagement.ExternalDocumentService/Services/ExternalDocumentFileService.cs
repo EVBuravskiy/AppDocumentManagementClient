@@ -50,7 +50,7 @@ namespace AppDocumentManagement.ExternalDocumentService.Services
         /// Function for obtaining external document files
         /// </summary>
         /// <param name="externalDocumentID"></param>
-        /// <returns>List of external document files</returns>
+        /// <returns>List of ExternalDocumentFiles</returns>
         public async Task<List<ExternalDocumentFile>> GetExternalDocumentFiles(int externalDocumentID)
         {
             IDRequest iDRequest = new IDRequest() { ID = externalDocumentID };

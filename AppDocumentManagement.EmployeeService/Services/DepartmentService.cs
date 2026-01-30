@@ -26,7 +26,7 @@ namespace AppDocumentManagement.EmployeesService.Service
         /// <summary>
         /// Function to get all departments
         /// </summary>
-        /// <returns>List of departments</returns>
+        /// <returns>List of Departments</returns>
         public async Task<List<Department>> GetAllDepartments()
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001");
