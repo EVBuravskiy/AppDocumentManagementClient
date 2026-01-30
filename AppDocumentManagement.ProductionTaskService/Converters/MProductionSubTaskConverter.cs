@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.ProductionTaskService.Converters
 {
+    /// <summary>
+    /// MProductionSubTask Message Converter Class
+    /// </summary>
     public class MProductionSubTaskConverter
     {
+        /// <summary>
+        /// Function to convert from MProductionSubTask message to ProductionSubTask class
+        /// </summary>
+        /// <param name="mProductionSubTask"></param>
+        /// <returns>ProductionSubTask</returns>
         public static ProductionSubTask ConvertToProductionSubTask(MProductionSubTask mProductionSubTask)
         {
             ProductionSubTask productionSubTask = new ProductionSubTask();
@@ -20,7 +28,11 @@ namespace AppDocumentManagement.ProductionTaskService.Converters
             productionSubTask.IsDone = mProductionSubTask.IsDone;
             return productionSubTask;
         }
-
+        /// <summary>
+        /// Function to convert from ProductionSubTask class to MProductionSubTask message
+        /// </summary>
+        /// <param name="productionSubTask"></param>
+        /// <returns>MProductionSubTask</returns>
         public static MProductionSubTask ConvertToMProductionSubTask(ProductionSubTask productionSubTask)
         {
             MProductionSubTask mProductionSubTask = new MProductionSubTask();
@@ -29,10 +41,7 @@ namespace AppDocumentManagement.ProductionTaskService.Converters
                 mProductionSubTask.ProductionSubTaskID = productionSubTask.ProductionSubTaskID;
             }
             mProductionSubTask.ProductionSubTaskDescription = productionSubTask.ProductionSubTaskDescription;
-            if (productionSubTask.ProductionSubTaskCreateTime != null)
-            {
-                mProductionSubTask.ProductionSubTaskCreateTime = productionSubTask.ProductionSubTaskCreateTime.ToShortDateString();
-            }
+            mProductionSubTask.ProductionSubTaskCreateTime = productionSubTask.ProductionSubTaskCreateTime.ToShortDateString();
             mProductionSubTask.ProductionTaskID = productionSubTask.ProductionTaskID;
             mProductionSubTask.IsDone = productionSubTask.IsDone;
             return mProductionSubTask;

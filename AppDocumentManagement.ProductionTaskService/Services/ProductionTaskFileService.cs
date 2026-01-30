@@ -4,8 +4,16 @@ using Grpc.Net.Client;
 
 namespace AppDocumentManagement.ProductionTaskService.Services
 {
+    /// <summary>
+    /// Class of service for sending and receiving ProductionTaskFile messages
+    /// </summary>
     public class ProductionTaskFileService
     {
+        /// <summary>
+        /// Function for adding a new file to a task
+        /// </summary>
+        /// <param name="productionTaskFile"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddProductionTaskFile(ProductionTaskFile productionTaskFile)
         {
             MProductionTaskFile mProductionTaskFile = MProductionTaskFileConverter.ConvertToMProductionTaskFile(productionTaskFile);
@@ -14,7 +22,11 @@ namespace AppDocumentManagement.ProductionTaskService.Services
             var boolReply = client.AddProductionTaskFile(mProductionTaskFile);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for adding files to a task
+        /// </summary>
+        /// <param name="productionTaskFiles"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddProductionTaskFiles(List<ProductionTaskFile> productionTaskFiles)
         {
             MProductionTaskFileList mProductionTaskFileList = new MProductionTaskFileList();
@@ -28,7 +40,11 @@ namespace AppDocumentManagement.ProductionTaskService.Services
             var boolReply = client.AddProductionTaskFiles(mProductionTaskFileList);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for getting task files
+        /// </summary>
+        /// <param name="productionTaskID"></param>
+        /// <returns>List of ProductionTaskFiles</returns>
         public async Task<List<ProductionTaskFile>> GetProductionTaskFiles(int productionTaskID)
         {
             IDRequest iDRequest = new IDRequest() { ID = productionTaskID };
@@ -43,7 +59,11 @@ namespace AppDocumentManagement.ProductionTaskService.Services
             }
             return productionTaskFiles;
         }
-
+        /// <summary>
+        /// Function to remove a task file.
+        /// </summary>
+        /// <param name="productionTaskFile"></param>
+        /// <returns>bool</returns>
         public async Task<bool> RemoveProductionTaskFile(ProductionTaskFile productionTaskFile)
         {
             IDRequest iDRequest = new IDRequest() { ID = productionTaskFile.ProductionTaskFileID };

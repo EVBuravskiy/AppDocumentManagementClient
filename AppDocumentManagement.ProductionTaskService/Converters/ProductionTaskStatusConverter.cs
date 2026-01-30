@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.ProductionTaskService.Converters
 {
+    /// <summary>
+    /// ProductionTaskStatus Enumeration Converter Class
+    /// </summary>
     public class ProductionTaskStatusConverter
     {
+        /// <summary>
+        /// Function to convert from ProductionTaskStatus enum to int
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>int</returns>
         public static int ToIntConvert(Enum value)
         {
             return value switch
@@ -14,7 +22,11 @@ namespace AppDocumentManagement.ProductionTaskService.Converters
                 _ => 0,
             };
         }
-
+        /// <summary>
+        /// Function to convert from int to ProductionTaskStatus enum
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static ProductionTaskStatus BackConvert(int value)
         {
             int inputvalue = (int)value;

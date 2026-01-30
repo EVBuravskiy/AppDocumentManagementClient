@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.ProductionTaskService.Converters
 {
+    /// <summary>
+    /// MProductionTask Message Converter Class
+    /// </summary>
     public class MProductionTaskConverter
     {
+        /// <summary>
+        /// Function to convert from MProductionTask message to ProductionTask class
+        /// </summary>
+        /// <param name="mProductionTask"></param>
+        /// <returns>ProductionTask</returns>
         public static ProductionTask ConvertToProductionTask(MProductionTask mProductionTask)
         {
             ProductionTask productionTask = new ProductionTask();
@@ -63,7 +71,11 @@ namespace AppDocumentManagement.ProductionTaskService.Converters
             }
             return productionTask;
         }
-
+        /// <summary>
+        /// Function to convert from ProductionTask class to MProductionTask message
+        /// </summary>
+        /// <param name="productionTask"></param>
+        /// <returns>MProductionTask</returns>
         public static MProductionTask ConvertToMProductionTask(ProductionTask productionTask)
         {
             MProductionTask mProductionTask = new MProductionTask();
@@ -75,14 +87,8 @@ namespace AppDocumentManagement.ProductionTaskService.Converters
             mProductionTask.Priority = productionTask.Priority;
             mProductionTask.ExternalDocumentID = productionTask.ExternalDocumentID;
             mProductionTask.InternalDocumentID = productionTask.InternalDocumentID;
-            if (productionTask.ProductionTaskCreateDate != null)
-            {
-                mProductionTask.ProductionTaskCreateDate = productionTask.ProductionTaskCreateDate.ToShortDateString();
-            }
-            if (productionTask.ProductionTaskDueDate != null)
-            {
-                mProductionTask.ProductionTaskDueDate = productionTask.ProductionTaskDueDate.ToShortDateString();
-            }
+            mProductionTask.ProductionTaskCreateDate = productionTask.ProductionTaskCreateDate.ToShortDateString();
+            mProductionTask.ProductionTaskDueDate = productionTask.ProductionTaskDueDate.ToShortDateString();
             mProductionTask.ProductionTaskDescription = productionTask.ProductionTaskDescription;
             if (productionTask.EmployeesID != null && productionTask.EmployeesID.Count > 0)
             {

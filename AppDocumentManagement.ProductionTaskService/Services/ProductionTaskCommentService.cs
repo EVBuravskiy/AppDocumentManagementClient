@@ -4,8 +4,16 @@ using Grpc.Net.Client;
 
 namespace AppDocumentManagement.ProductionTaskService.Services
 {
+    /// <summary>
+    /// Class of service for sending and receiving ProductionTaskComment messages
+    /// </summary>
     public class ProductionTaskCommentService
     {
+        /// <summary>
+        /// Function for adding a comment to a task
+        /// </summary>
+        /// <param name="productionTaskComment"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddProductionTaskComment(ProductionTaskComment productionTaskComment)
         {
             MProductionTaskComment mProductionTaskComment = MProductionTaskCommentConverter.ConvertToMProductionTaskComment(productionTaskComment);
@@ -14,7 +22,11 @@ namespace AppDocumentManagement.ProductionTaskService.Services
             var boolReply = client.AddProductionTaskComment(mProductionTaskComment);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for adding comments to a task
+        /// </summary>
+        /// <param name="productionTaskComments"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddProductionTaskComments(List<ProductionTaskComment> productionTaskComments)
         {
             MProductionTaskCommentList mProductionTaskCommentList = new MProductionTaskCommentList();
@@ -28,7 +40,11 @@ namespace AppDocumentManagement.ProductionTaskService.Services
             var boolReply = client.AddProductionTaskComments(mProductionTaskCommentList);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for getting comments to a task.
+        /// </summary>
+        /// <param name="productionTaskID"></param>
+        /// <returns>List of ProductionTaskComments</returns>
         public async Task<List<ProductionTaskComment>> GetProductionTaskComments(int productionTaskID)
         {
             IDRequest iDRequest = new IDRequest() { ID = productionTaskID };
@@ -43,6 +59,5 @@ namespace AppDocumentManagement.ProductionTaskService.Services
             }
             return productionTaskComments;
         }
-
     }
 }

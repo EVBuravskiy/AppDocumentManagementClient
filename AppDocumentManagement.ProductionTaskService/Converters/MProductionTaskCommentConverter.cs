@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.ProductionTaskService.Converters
 {
+    /// <summary>
+    /// MProductionTaskComment Message Converter Class
+    /// </summary>
     public class MProductionTaskCommentConverter
     {
+        /// <summary>
+        /// Function to convert from MProductionTaskComment message to ProductionTaskComment class
+        /// </summary>
+        /// <param name="mProductionTaskComment"></param>
+        /// <returns>ProductionTaskComment</returns>
         public static ProductionTaskComment ConvertToProductionTaskComment(MProductionTaskComment mProductionTaskComment)
         {
             ProductionTaskComment productionTaskComment = new ProductionTaskComment();
@@ -20,7 +28,11 @@ namespace AppDocumentManagement.ProductionTaskService.Converters
             productionTaskComment.EmployeeID = mProductionTaskComment.EmployeeID;
             return productionTaskComment;
         }
-
+        /// <summary>
+        /// Function to convert from ProductionTaskComment class to MProductionTaskComment message
+        /// </summary>
+        /// <param name="productionTaskComment"></param>
+        /// <returns>MProductionTaskComment</returns>
         public static MProductionTaskComment ConvertToMProductionTaskComment(ProductionTaskComment productionTaskComment)
         {
             MProductionTaskComment mProductionTaskComment = new MProductionTaskComment();
@@ -28,10 +40,7 @@ namespace AppDocumentManagement.ProductionTaskService.Converters
             {
                 mProductionTaskComment.ProductionTaskCommentID = productionTaskComment.ProductionTaskCommentID;
             }
-            if (productionTaskComment.ProductionTaskCommentDate != null)
-            {
-                mProductionTaskComment.ProductionTaskCommentDate = productionTaskComment.ProductionTaskCommentDate.ToShortDateString();
-            }
+            mProductionTaskComment.ProductionTaskCommentDate = productionTaskComment.ProductionTaskCommentDate.ToShortDateString();
             mProductionTaskComment.ProductionTaskCommentText = productionTaskComment.ProductionTaskCommentText;
             mProductionTaskComment.ProductionTaskID = productionTaskComment.ProductionTaskID;
             mProductionTaskComment.EmployeeID = productionTaskComment.EmployeeID;

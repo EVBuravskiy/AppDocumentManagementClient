@@ -4,8 +4,16 @@ using Grpc.Net.Client;
 
 namespace AppDocumentManagement.ProductionTaskService.Services
 {
+    /// <summary>
+    /// Class of service for sending and receiving ProductionSubTask messages
+    /// </summary>
     public class ProductionTaskSubService
     {
+        /// <summary>
+        /// Add subtask function
+        /// </summary>
+        /// <param name="productionSubTask"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddProductionSubTask(ProductionSubTask productionSubTask)
         {
             MProductionSubTask mProductionSubTask = MProductionSubTaskConverter.ConvertToMProductionSubTask(productionSubTask);
@@ -14,7 +22,11 @@ namespace AppDocumentManagement.ProductionTaskService.Services
             var boolReply = client.AddProductionSubTask(mProductionSubTask);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Add subtasks function
+        /// </summary>
+        /// <param name="productionSubTasks"></param>
+        /// <returns>bool</returns>
         public async Task<bool> AddProductionSubTasks(List<ProductionSubTask> productionSubTasks)
         {
             MProductionSubTaskList mProductionSubTaskList = new MProductionSubTaskList();
@@ -28,7 +40,11 @@ namespace AppDocumentManagement.ProductionTaskService.Services
             var boolReply = client.AddProductionSubTasks(mProductionSubTaskList);
             return boolReply.Result;
         }
-
+        /// <summary>
+        /// Function for getting subtasks
+        /// </summary>
+        /// <param name="productionTaskID"></param>
+        /// <returns>List of ProductionSubTasks</returns>
         public async Task<List<ProductionSubTask>> GetProductionSubTasks(int productionTaskID)
         {
             IDRequest iDRequest = new IDRequest() { ID = productionTaskID };
@@ -43,7 +59,11 @@ namespace AppDocumentManagement.ProductionTaskService.Services
             }
             return productionSubTasks;
         }
-
+        /// <summary>
+        /// Subtask update function
+        /// </summary>
+        /// <param name="productionSubTask"></param>
+        /// <returns>bool</returns>
         public async Task<bool> UpdateProductionSubTask(ProductionSubTask productionSubTask)
         {
             MProductionSubTask mProductionSubTask = MProductionSubTaskConverter.ConvertToMProductionSubTask(productionSubTask);

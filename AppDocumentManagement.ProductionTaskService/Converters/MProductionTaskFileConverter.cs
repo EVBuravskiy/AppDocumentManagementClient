@@ -3,8 +3,16 @@ using Google.Protobuf;
 
 namespace AppDocumentManagement.ProductionTaskService.Converters
 {
+    /// <summary>
+    /// MProductionTaskFile Message Converter Class
+    /// </summary>
     public class MProductionTaskFileConverter
     {
+        /// <summary>
+        /// Function to convert from MProductionTaskFile message to ProductionTaskFile class
+        /// </summary>
+        /// <param name="mProductionTaskFile"></param>
+        /// <returns>ProductionTaskFile</returns>
         public static ProductionTaskFile ConvertToProductionTaskFile(MProductionTaskFile mProductionTaskFile)
         {
             ProductionTaskFile productionTaskFile = new ProductionTaskFile();
@@ -21,7 +29,11 @@ namespace AppDocumentManagement.ProductionTaskService.Converters
             }
             return productionTaskFile;
         }
-
+        /// <summary>
+        /// Function to convert from ProductionTaskFile class to MProductionTaskFile message
+        /// </summary>
+        /// <param name="productionTaskFile"></param>
+        /// <returns></returns>
         public static MProductionTaskFile ConvertToMProductionTaskFile(ProductionTaskFile productionTaskFile)
         {
             MProductionTaskFile mProductionTaskFile = new MProductionTaskFile();
