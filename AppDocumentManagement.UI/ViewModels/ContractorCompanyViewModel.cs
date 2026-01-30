@@ -8,13 +8,26 @@ using AppDocumentManagement.ExternalDocumentService.Services;
 
 namespace AppDocumentManagement.UI.ViewModels
 {
+    /// <summary>
+    /// ViewModel for ContractorCompanyWindow
+    /// </summary>
     public class ContractorCompanyViewModel : BaseViewModelClass
     {
+        /// <summary>
+        /// ContractorCompanyWindow announcement
+        /// </summary>
         private ContractorCompanyWindow ContractorCompanyWindow;
-
+        /// <summary>
+        /// Declaring a property for the ContractorCompany
+        /// </summary>
         private ContractorCompany? ContractorCompany;
-
+        /// <summary>
+        /// Declaring a string for a company name
+        /// </summary>
         private string contractorCompanyTitle;
+        /// <summary>
+        /// Declaring a property for the string representation of the company name
+        /// </summary>
         public string ContractorCompanyTitle
         {
             get => contractorCompanyTitle;
@@ -24,7 +37,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(ContractorCompanyTitle));
             }
         }
+        /// <summary>
+        /// Declaring a string for a short company name
+        /// </summary>
         private string contractorCompanyShortTitle;
+        /// <summary>
+        /// Declaring a property for the short string representation of the company name
+        /// </summary>
         public string ContractorCompanyShortTitle
         {
             get => contractorCompanyShortTitle;
@@ -34,7 +53,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(ContractorCompanyShortTitle));
             }
         }
+        /// <summary>
+        /// Declaring a string for a company address
+        /// </summary>
         private string contractorCompanyAddress;
+        /// <summary>
+        /// Declaring a property for the string representation of the company's address
+        /// </summary>
         public string ContractorCompanyAddress
         {
             get => contractorCompanyAddress;
@@ -44,8 +69,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(ContractorCompanyAddress));
             }
         }
-
+        /// <summary>
+        /// Declaring a string for a company phone
+        /// </summary>
         private string contractorCompanyPhone;
+        /// <summary>
+        /// Declaring a property for the string representation of the company's phone
+        /// </summary>
         public string ContractorCompanyPhone
         {
             get => contractorCompanyPhone;
@@ -55,8 +85,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(ContractorCompanyPhone));
             }
         }
-
+        /// <summary>
+        /// Declaring a string for a company email
+        /// </summary>
         private string contractorCompanyEmail;
+        /// <summary>
+        /// Declaring a property for the string representation of the company's email
+        /// </summary>
         public string ContractorCompanyEmail
         {
             get => contractorCompanyEmail;
@@ -66,8 +101,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(ContractorCompanyEmail));
             }
         }
-
+        /// <summary>
+        /// Declaring a string for information about a contractor company
+        /// </summary>
         private string contractorCompanyInformation;
+        /// <summary>
+        /// Declaring a property for the string representation of the information about a contractor company
+        /// </summary>
         public string ContractorCompanyInformation
         {
             get => contractorCompanyInformation;
@@ -77,9 +117,15 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(ContractorCompanyInformation));
             }
         }
-
+        /// <summary>
+        /// Declaring a boolean value to define a new contractor company
+        /// </summary>
         private bool isNew = true;
-
+        /// <summary>
+        /// ContractorCompanyViewModel constructor
+        /// </summary>
+        /// <param name="contractorCompanyWindow"></param>
+        /// <param name="selectedContractorCompany"></param>
         public ContractorCompanyViewModel(ContractorCompanyWindow contractorCompanyWindow, ContractorCompany selectedContractorCompany)
         {
             ContractorCompanyWindow = contractorCompanyWindow;
@@ -95,7 +141,9 @@ namespace AppDocumentManagement.UI.ViewModels
                 ContractorCompanyInformation = selectedContractorCompany.ContractorCompanyInformation;
             }
         }
-
+        /// <summary>
+        /// Declaration of the command to save the contractor company
+        /// </summary>
         public ICommand ISaveContractorCompany => new RelayCommand(saveContractorCompany => SaveContractorCompany());
         private void SaveContractorCompany()
         {
@@ -130,7 +178,10 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             Exit();
         }
-
+        /// <summary>
+        /// Function for checking entered data for a contractor company
+        /// </summary>
+        /// <returns></returns>
         private bool ValidateContractorCompany()
         {
             if (string.IsNullOrEmpty(ContractorCompanyTitle))
@@ -209,8 +260,13 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             return true;
         }
-
+        /// <summary>
+        /// Declaration of the command to remove the selected contractor company
+        /// </summary>
         public ICommand IRemoveContractorCompany => new RelayCommand(removeContractorCompany => RemoveContractorCompany());
+        /// <summary>
+        /// Function to remove the selected contractor company
+        /// </summary>
         private void RemoveContractorCompany()
         {
             bool result = false;
@@ -234,8 +290,13 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             Exit();
         }
-
+        /// <summary>
+        /// Declaration of the command to close ContractorCompanyWindow
+        /// </summary>
         public ICommand IExit => new RelayCommand(exit => Exit());
+        /// <summary>
+        /// Function to close ContractorCompanyWindow
+        /// </summary>
         private void Exit()
         {
             ContractorCompanyWindow.Close();
