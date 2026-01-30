@@ -2,8 +2,16 @@
 
 namespace AppDocumentManagement.InternalDocumentService.Converters
 {
+    /// <summary>
+    /// DocumentStatus Enumeration Converter Class
+    /// </summary>
     public class DocumentStatusConverter
     {
+        /// <summary>
+        /// Function to convert from DocumentStatus enum to int
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>int</returns>
         public static int ToIntConvert(Enum value)
         {
             return value switch
@@ -14,7 +22,11 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
                 _ => 0,
             };
         }
-
+        /// <summary>
+        /// Function to convert from int to DocumentStatus enum
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>DocumentStatus</returns>
         public static DocumentStatus BackConvert(int value)
         {
             int inputvalue = (int)value;

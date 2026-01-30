@@ -2,9 +2,16 @@
 
 namespace AppDocumentManagement.InternalDocumentService.Converters
 {
+    /// <summary>
+    /// MInternalDocument Message Converter Class
+    /// </summary>
     public class MInternalDocumentConverter
     {
-
+        /// <summary>
+        /// Function to convert from MInternalDocument message to InternalDocument class
+        /// </summary>
+        /// <param name="mInternalDocument"></param>
+        /// <returns>InternalDocument</returns>
         public static InternalDocument ConvertToInternalDocument(MInternalDocument mInternalDocument)
         {
             InternalDocument internalDocument = new InternalDocument();
@@ -41,17 +48,18 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
             }
             return internalDocument;
         }
-
+        /// <summary>
+        /// Function to convert from InternalDocument class to MInternalDocument message
+        /// </summary>
+        /// <param name="internalDocument"></param>
+        /// <returns>MInternalDocument</returns>
         public static MInternalDocument ConvertToMInternalDocument(InternalDocument internalDocument)
         {
             MInternalDocument mInternalDocument = new MInternalDocument();
-            mInternalDocument.InternalDocumentID = internalDocument.InternalDocumentID; //1
-            mInternalDocument.InternalDocumentType = InternalDocumentTypeConverter.ToIntConvert(internalDocument.InternalDocumentType); //2
-            if (internalDocument.InternalDocumentDate != null) //3
-            {
-                mInternalDocument.InternalDocumentDate = internalDocument.InternalDocumentDate.ToShortDateString();
-            }
-            if (internalDocument.Signatory != null) //4
+            mInternalDocument.InternalDocumentID = internalDocument.InternalDocumentID;
+            mInternalDocument.InternalDocumentType = InternalDocumentTypeConverter.ToIntConvert(internalDocument.InternalDocumentType); 
+            mInternalDocument.InternalDocumentDate = internalDocument.InternalDocumentDate.ToShortDateString();
+            if (internalDocument.Signatory != null) 
             {
                 mInternalDocument.InternalDocumentSygnatoryID = internalDocument.Signatory.EmployeeID;
             }
@@ -59,7 +67,7 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
             {
                 mInternalDocument.InternalDocumentSygnatoryID = internalDocument.SignatoryID;
             }
-            if (internalDocument.ApprovedManager != null) //5
+            if (internalDocument.ApprovedManager != null) 
             {
                 mInternalDocument.InternalDocumentApprovedManagerID = internalDocument.ApprovedManager.EmployeeID;
             }
@@ -67,7 +75,7 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
             {
                 mInternalDocument.InternalDocumentApprovedManagerID = internalDocument.ApprovedManagerID;
             }
-            if (internalDocument.EmployeeRecievedDocument != null) //6
+            if (internalDocument.EmployeeRecievedDocument != null) 
             {
                 mInternalDocument.InternalDocumentRecievedEmployeeID = internalDocument.EmployeeRecievedDocument.EmployeeID;
             }
@@ -75,13 +83,10 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
             {
                 mInternalDocument.InternalDocumentRecievedEmployeeID = internalDocument.EmployeeRecievedDocumentID;
             }
-            if (internalDocument.RegistrationDate != null) //7
-            {
-                mInternalDocument.RegistrationDate = internalDocument.RegistrationDate.ToShortDateString();
-            }
+            mInternalDocument.RegistrationDate = internalDocument.RegistrationDate.ToShortDateString();
             mInternalDocument.InternalDocumentRegistrationNumber = internalDocument.InternalDocumentRegistrationNumber ?? ""; //8
-            mInternalDocument.IsRegistered = internalDocument.IsRegistered; //9
-            if (internalDocument.InternalDocumentSendingDate != null) //10
+            mInternalDocument.IsRegistered = internalDocument.IsRegistered; 
+            if (internalDocument.InternalDocumentSendingDate != null) 
             {
                 mInternalDocument.InternalDocumentSendingDate = internalDocument.InternalDocumentSendingDate.ToString();
             }

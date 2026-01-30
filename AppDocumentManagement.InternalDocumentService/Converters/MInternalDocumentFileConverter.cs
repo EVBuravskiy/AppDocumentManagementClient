@@ -3,8 +3,16 @@ using Google.Protobuf;
 
 namespace AppDocumentManagement.InternalDocumentService.Converters
 {
+    /// <summary>
+    /// MInternalDocumentFile Message Converter Class
+    /// </summary>
     public class MInternalDocumentFileConverter
     {
+        /// <summary>
+        /// Function to convert from MInternalDocumentFile message to InternalDocumentFile class
+        /// </summary>
+        /// <param name="mInternalDocumentFile"></param>
+        /// <returns>InternalDocumentFile</returns>
         public static InternalDocumentFile ConvertToInternalDocumentFile(MInternalDocumentFile mInternalDocumentFile)
         {
             InternalDocumentFile internalDocumentFile = new InternalDocumentFile();
@@ -18,7 +26,11 @@ namespace AppDocumentManagement.InternalDocumentService.Converters
             }
             return internalDocumentFile;
         }
-
+        /// <summary>
+        /// Function to convert from InternalDocumentFile class to MInternalDocumentFile message
+        /// </summary>
+        /// <param name="internalDocumentFile"></param>
+        /// <returns>MInternalDocumentFile</returns>
         public static MInternalDocumentFile ConvertToMInternalDocumentFile(InternalDocumentFile internalDocumentFile)
         {
             MInternalDocumentFile mInternalDocumentFile = new MInternalDocumentFile();
