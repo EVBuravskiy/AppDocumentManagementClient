@@ -640,6 +640,7 @@
                                                    FontFamily="Arial"
                                                    FontSize="16"
                                                    HorizontalAlignment="Left"
+                                                   TextWrapping="Wrap"
                                                    Text="{Binding SelectedEmployee.EmployeeInformation}"/>
                                     </StackPanel>
                                 </Grid>

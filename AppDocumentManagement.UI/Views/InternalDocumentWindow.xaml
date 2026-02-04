@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60px"/>
             <RowDefinition Height="80px"/>
-            <RowDefinition Height="200px"/>
+            <RowDefinition Height="220px"/>
             <RowDefinition Height="180px"/>
             <RowDefinition Height="200px"/>
             <RowDefinition Height="120px"/>

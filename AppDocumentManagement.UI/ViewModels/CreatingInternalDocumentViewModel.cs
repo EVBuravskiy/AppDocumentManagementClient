@@ -9,16 +9,38 @@ using System.Windows.Input;
 
 namespace AppDocumentManagement.UI.ViewModels
 {
+    /// <summary>
+    /// ViewModel for CreatingInternalDocumentWindow
+    /// </summary>
     public class CreatingInternalDocumentViewModel : BaseViewModelClass
     {
+        /// <summary>
+        /// CreatingInternalDocumentWindow announcement
+        /// </summary>
         private CreatingInternalDocumentWindow CreatingInternalDocumentWindow { get; set; }
+        /// <summary>
+        /// Declaration of the current user variable
+        /// </summary>
         private Employee currentUser;
+        /// <summary>
+        /// File handling service announcement
+        /// </summary>
         private IFileDialogService fileDialogService;
+        /// <summary>
+        /// Declaring a variable for the user who signed the document
+        /// </summary>
         private Employee CurrentSignatory;
+        /// <summary>
+        /// Property declaration for a list of internal document types
+        /// </summary>
         public List<string> InternalDocumentTypes { get; set; }
-
+        /// <summary>
+        /// Declaring a variable for the type of the selected internal document
+        /// </summary>
         private InternalDocumentType selectedInternalDocumentType;
-
+        /// <summary>
+        /// Property declaration for the selected internal document type
+        /// </summary>
         public InternalDocumentType SelectedInternalDocumentType
         {
             get => selectedInternalDocumentType;
@@ -28,8 +50,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(SelectedInternalDocumentType));
             }
         }
-
+        /// <summary>
+        /// Declaring an index for the selected internal document type
+        /// </summary>
         private int selectedInternalDocumentTypeIndex;
+        /// <summary>
+        /// Declaring a property for the index of the selected internal document type
+        /// </summary>
         public int SelectedInternalDocumentTypeIndex
         {
             get => selectedInternalDocumentTypeIndex;
@@ -43,7 +70,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// Declaring a variable for the date of an internal document
+        /// </summary>
         private DateTime internalDocumentDate;
+        /// <summary>
+        /// Declaring a property for the date of an internal document
+        /// </summary>
         public DateTime InternalDocumentDate
         {
             get => internalDocumentDate;
@@ -53,8 +86,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(InternalDocumentDate));
             }
         }
-
+        /// <summary>
+        /// Declaring a variable for the title of an internal document
+        /// </summary>
         private string internalDocumentTitle;
+        /// <summary>
+        /// Declaring a property for the title of an internal document
+        /// </summary>
         public string InternalDocumentTitle
         {
             get => internalDocumentTitle;
@@ -64,8 +102,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(InternalDocumentTitle));
             }
         }
-
+        /// <summary>
+        /// Declaring a variable for the content of an internal document
+        /// </summary>
         private string internalDocumentContent;
+        /// <summary>
+        /// Declaring a property for the content of an internal document
+        /// </summary>
         public string InternalDocumentContent
         {
             get => internalDocumentContent;
@@ -75,9 +118,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(InternalDocumentContent));
             }
         }
-
+        /// <summary>
+        /// Declaring a property for the InternalDocumentFile observable collection
+        /// </summary>
         public ObservableCollection<InternalDocumentFile> InternalDocumentFiles { get; set; }
-
+        /// <summary>
+        /// Declaring a property for the InternalDocumentFile collection
+        /// </summary>
         public InternalDocumentFile SelectedInternalDocumentFile { get; set; }
 
 

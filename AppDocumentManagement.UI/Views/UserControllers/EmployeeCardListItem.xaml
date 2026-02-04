@@ -23,7 +23,7 @@
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0"
                             BorderBrush="DimGray"
-                            BorderThickness="5"
+                            BorderThickness="0"
                             CornerRadius="5">
                         <Image Width="100"
                            Height="100"
@@ -45,6 +45,8 @@
                                    Padding="10, 0"
                                    FontFamily="Arial"
                                    FontSize="12"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center"
                                    HorizontalAlignment="Center"
                                    Text="{Binding Position}"/>
                         <Label Margin="0 20 0 5"

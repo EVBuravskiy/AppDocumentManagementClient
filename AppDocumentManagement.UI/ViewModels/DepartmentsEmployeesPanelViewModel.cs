@@ -182,11 +182,21 @@ namespace AppDocumentManagement.UI.ViewModels
         {
             EmployeePhotos = new List<EmployeePhoto>();
             EmployeePhotoService employeePhotoService = new EmployeePhotoService();
-            EmployeePhotos = employeePhotoService.GetEmployeePhotos().Result;
-            foreach (EmployeePhoto photo in EmployeePhotos)
+            try
             {
-                string photoPath = FileProcessing.SaveEmployeePhotoToTempFolder(photo);
-                photo.FilePath = photoPath;
+                EmployeePhotos = employeePhotoService.GetEmployeePhotos().Result;
+            }
+            catch
+            {
+                Console.WriteLine("Ошибка загрузки фотографий");
+            }
+            if (EmployeePhotos.Count > 0)
+            {
+                foreach (EmployeePhoto photo in EmployeePhotos)
+                {
+                    string photoPath = FileProcessing.SaveEmployeePhotoToTempFolder(photo);
+                    photo.FilePath = photoPath;
+                }
             }
         }
 

@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60px"/>
             <RowDefinition Height="60px"/>
-            <RowDefinition Height="120px"/>
+            <RowDefinition Height="160px"/>
             <RowDefinition Height="250px" x:Name="InternalDocumentContent"/>
             <RowDefinition Height="220px"/>
             <RowDefinition Height="150px" x:Name="InternalDocumentButtons"/>
@@ -175,6 +175,7 @@
                     <Label Grid.Column="0"  
                                Style="{StaticResource TopPanelLabel}"
                                HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
                                Foreground="Black"
                                Content="Наименование документа:"/>
                     <TextBlock Grid.Column="1" 
@@ -182,7 +183,7 @@
                                HorizontalAlignment="Left"
                                Foreground="Black"
                                TextWrapping="Wrap"
-                               FontSize="16"
+                               FontSize="14"
                                TextAlignment="Justify"
                                Text="{Binding InternalDocumentTitle}"/>
                 </Grid>

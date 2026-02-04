@@ -113,18 +113,20 @@
                                                    Stretch="UniformToFill"/>
                                 </Border>
                                 <Grid Grid.Column="1">
-                                    <StackPanel>
+                                    <StackPanel Width="280">
                                         <TextBlock Grid.Row="1"
-                                                           Padding="10, 0"
-                                                           FontFamily="Arial"
-                                                           FontSize="12"
-                                                           HorizontalAlignment="Left"
-                                                           Text="{Binding Position}"/>
+                                                   Padding="10, 0"
+                                                   FontFamily="Arial"
+                                                   FontSize="12"
+                                                   HorizontalAlignment="Left"
+                                                   TextWrapping="Wrap"
+                                                   Text="{Binding Position}"/>
                                         <TextBlock Padding="10, 0"
                                                            FontFamily="Arial"
                                                            FontSize="14"
                                                            FontWeight="Bold"
                                                            HorizontalAlignment="Left"
+                                                   TextWrapping="Wrap"
                                                            Text="{Binding EmployeeFullName}"/>
                                         <TextBlock Margin="0 5 0 0"
                                                            Padding="10, 0"

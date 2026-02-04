@@ -116,6 +116,7 @@
                                                                FontSize="14"
                                                                FontWeight="Bold"
                                                                HorizontalAlignment="Left"
+                                                               TextWrapping="Wrap"
                                                                Text="{Binding EmployeeDepartment.DepartmentTitle}"/>
                                                     <TextBlock Grid.Row="1"
                                                                Margin="0 10 0 5"
@@ -124,12 +125,14 @@
                                                                FontSize="14"
                                                                FontWeight="Bold"
                                                                HorizontalAlignment="Left"
+                                                               TextWrapping="Wrap"
                                                                Text="{Binding Position}"/>
                                                     <TextBlock Padding="10, 0"
                                                                FontFamily="Arial"
                                                                FontSize="14"
                                                                FontWeight="Bold"
                                                                HorizontalAlignment="Left"
+                                                               TextWrapping="Wrap"
                                                                Text="{Binding EmployeeFullName}"/>
                                                 </StackPanel>
                                             </Grid>

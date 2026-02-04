@@ -284,6 +284,7 @@ namespace AppDocumentManagement.UI.ViewModels
                 string fileName = FileProcessing.GetFileName(EmployeeImagePath);
                 if (!FileProcessing.CheckFileExist(fileName))
                 {
+
                     newEmployee.EmployeePhoto = CreateEmployeePhoto(EmployeeImagePath);
                 }
             }

@@ -22,6 +22,8 @@ namespace AppDocumentManagement.EmployeesService.Converters
                 UserRole.HeadOfDepartment => 3,
                 UserRole.Performer => 4,
                 UserRole.Сlerk => 5,
+                UserRole.PersonnelOfficer => 6,
+                _ => 4,
             };
         }
         /// <summary>
@@ -41,6 +43,7 @@ namespace AppDocumentManagement.EmployeesService.Converters
                 3 => UserRole.HeadOfDepartment,
                 4 => UserRole.Performer,
                 5 => UserRole.Сlerk,
+                6 => UserRole.PersonnelOfficer,
                 _ => UserRole.Performer,
             };
         }

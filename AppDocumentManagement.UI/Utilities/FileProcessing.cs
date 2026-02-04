@@ -42,10 +42,17 @@ namespace AppDocumentManagement.UI.Utilities
             {
                 return buffer;
             }
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+            try //ошибка в изменении ранее открытого файла
             {
-                buffer = new byte[fileStream.Length];
-                fileStream.Read(buffer, 0, buffer.Length);
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+                {
+                    buffer = new byte[fileStream.Length];
+                    fileStream.Read(buffer, 0, buffer.Length);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message + "\n");
             }
             return buffer;
         }
@@ -62,10 +69,24 @@ namespace AppDocumentManagement.UI.Utilities
             {
                 string directoryPath = $"{Directory.GetCurrentDirectory}\\ExternalDocuments\\";
                 filePath = $"{directoryPath}{documentFile.ExternalFileName}";
+                //ошибка в наличии файла при его сохранении в папку?
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        File.Delete(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message + "\n");
+                        Console.WriteLine("Ошибка в удалении изображения");
+                    }
+                }
             }
             using (FileStream fileStream = new FileStream(filePath, FileMode.OpenOrCreate))
             {
                 fileStream.Write(documentFile.ExternalFileData, 0, documentFile.ExternalFileData.Length);
+                fileStream.Close(); //ошибка в закрытии файла?
                 result = true;
             }
             return result;
@@ -158,13 +179,17 @@ namespace AppDocumentManagement.UI.Utilities
         public static bool CheckFileExist(string fileName)
         {
             string directoryPath = $"{Directory.GetCurrentDirectory()}\\TempEmployeePhotos\\";
+            string sourcePath = $"{directoryPath}{fileName}";
             if (!Directory.Exists(directoryPath))
             {
-                string sourcePath = $"{directoryPath}{fileName}";
                 if (File.Exists(sourcePath))
                 {
                     return true;
                 }
+            }
+            else if (File.Exists(sourcePath))
+            {
+                return true;
             }
             return false;
         }

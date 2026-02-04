@@ -34,7 +34,7 @@ namespace AppDocumentManagement.EmployeesService.Service
         {
             using var channel = GrpcChannel.ForAddress("http://localhost:6001", new GrpcChannelOptions
             {
-                MaxReceiveMessageSize = 20 * 1024 * 1024 
+                MaxReceiveMessageSize = 2000 * 1024 * 1024 
             });
             var client = new employeeApi.employeeApiClient(channel);
             MEmployeePhotoList mEmployeePhotoList = client.GetEmployeePhotos(new EmptyRequest());

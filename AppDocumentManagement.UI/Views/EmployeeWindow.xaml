@@ -275,6 +275,7 @@
                      Background="WhiteSmoke"
                      SpellCheck.IsEnabled="True"
                      Height="130"
+                     TextWrapping="Wrap"
                      ToolTip="Введите дополнительную информацию о сотруднике"
                      />
             <Label IsHitTestVisible="False" 
