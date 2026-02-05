@@ -8,26 +8,46 @@ using System.Windows.Input;
 
 namespace AppDocumentManagement.UI.ViewModels
 {
+    /// <summary>
+    /// ViewModel for DepartmentsEmployeesPanelWindow
+    /// </summary>
     public class DepartmentsEmployeesPanelViewModel : BaseViewModelClass
     {
+        /// <summary>
+        /// DepartmentsEmployeesPanelWindow announcement
+        /// </summary>
         private DepartmentsEmployeesPanelWindow DepartmentsEmployeesPanelWindow;
-
+        /// <summary>
+        /// Declaration of the current user variable
+        /// </summary>
         private Employee currentUser;
-
-        private string greating;
-        public string Greating
+        /// <summary>
+        /// Declaring a variable that reflects the greeting
+        /// </summary>
+        private string greeting = string.Empty;
+        /// <summary>
+        /// Property declaration for greeting
+        /// </summary>
+        public string Greeting
         {
-            get => greating;
+            get => greeting;
             set
             {
-                greating = value;
-                OnPropertyChanged(nameof(Greating));
+                greeting = value;
+                OnPropertyChanged(nameof(Greeting));
             }
         }
-
+        /// <summary>
+        /// Declaring a Boolean variable for an employee 
+        /// </summary>
         private bool _isEmployee = false;
-
+        /// <summary>
+        /// Declaring a variable for a mutable list
+        /// </summary>
         private string _labelListContent = "Список отделов";
+        /// <summary>
+        /// Declaring a property for a mutable list
+        /// </summary>
         public string LabelListContent
         {
             get { return _labelListContent; }
@@ -37,8 +57,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(LabelListContent));
             }
         }
-
+        /// <summary>
+        /// Declaring a variable for a changeable button name
+        /// </summary>
         private string _addBtnContent = "Добавить отдел";
+        /// <summary>
+        /// Declaring a property for a changeable button name
+        /// </summary>
         public string AddBtnContent
         {
             get { return _addBtnContent; }
@@ -48,9 +73,21 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(AddBtnContent));
             }
         }
+        /// <summary>
+        /// Declaring a property for a list of all departments
+        /// </summary>
         private List<Department> allDepartments { get; set; }
+        /// <summary>
+        /// Declaring a property for a observable collection of all departments
+        /// </summary>
         public ObservableCollection<Department> Departments { get; set; }
+        /// <summary>
+        /// Declaring a variable for the selected department
+        /// </summary>
         private Department _selectedDepartment = null;
+        /// <summary>
+        /// Declaring a property for the selected department
+        /// </summary>
         public Department SelectedDepartment
         {
             get => _selectedDepartment;
@@ -67,12 +104,25 @@ namespace AppDocumentManagement.UI.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// Declaring a property for a list of employee photos
+        /// </summary>
         private List<EmployeePhoto> EmployeePhotos { get; set; }
-
+        /// <summary>
+        /// Declaring a property for a list of employees
+        /// </summary>
         private List<Employee> allEmployees { get; set; }
+        /// <summary>
+        /// Declaring a property for employees in an ObservableCollection
+        /// </summary>
         public ObservableCollection<Employee> Employees { get; set; }
-
+        /// <summary>
+        /// Declaring a variable for the selected employee
+        /// </summary>
         private Employee _selectedEmployee = null;
+        /// <summary>
+        /// Declaring a property for the selected employee
+        /// </summary>
         public Employee SelectedEmployee
         {
             get => _selectedEmployee;
@@ -82,9 +132,17 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(SelectedEmployee));
             }
         }
-
+        /// <summary>
+        /// Declaring a property for employees of the selected department in an ObservableCollection
+        /// </summary>
         public ObservableCollection<Employee> EmployeesOfDepartment { get; set; }
+        /// <summary>
+        /// Declaring a variable for the general director
+        /// </summary>
         private Employee _deputyGeneralDirector;
+        /// <summary>
+        /// Declaring a property for the general director
+        /// </summary>
         public Employee DeputyGeneralDirector
         {
             get => _deputyGeneralDirector;
@@ -94,19 +152,33 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(DeputyGeneralDirector));
             }
         }
-        private Employee _headerOfDepartment;
-        public Employee HeaderOfDepartment
+        /// <summary>
+        /// Declaring a variable for the head of selected department
+        /// </summary>
+        private Employee _headOfDepartment;
+        /// <summary>
+        /// Declaring a property for the head of selected department
+        /// </summary>
+        public Employee HeadOfDepartment
         {
-            get => _headerOfDepartment;
+            get => _headOfDepartment;
             set
             {
-                _headerOfDepartment = value;
-                OnPropertyChanged(nameof(HeaderOfDepartment));
+                _headOfDepartment = value;
+                OnPropertyChanged(nameof(HeadOfDepartment));
             }
         }
+        /// <summary>
+        /// Declaring a property for the performers of the selected department in an ObservableCollection
+        /// </summary>
         public ObservableCollection<Employee> PerformersOfDepartment { get; set; }
-
+        /// <summary>
+        /// Declaring a variable for the selected performer
+        /// </summary>
         private Employee _selectedPerformer = null;
+        /// <summary>
+        /// Declaring a property for the selected performer
+        /// </summary>
         public Employee SelectedPerformer
         {
             get => _selectedPerformer;
@@ -120,8 +192,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// Declaring a variable for a search string
+        /// </summary>
         private string _searchString;
+        /// <summary>
+        /// Declaring a property for a search string
+        /// </summary>
         public string SearchString
         {
             get => _searchString;
@@ -131,8 +208,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(SearchString));
             }
         }
-
+        /// <summary>
+        /// Declaring a variable for the department size
+        /// </summary>
         private int departmentSize;
+        /// <summary>
+        /// Declaring a property for the department size
+        /// </summary>
         public int DepartmentSize
         {
             get => departmentSize;
@@ -142,7 +224,11 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(DepartmentSize));
             }
         }
-
+        /// <summary>
+        /// DepartmentsEmployeesPanelViewModel constructor
+        /// </summary>
+        /// <param name="inputWindow"></param>
+        /// <param name="currentUserID"></param>
         public DepartmentsEmployeesPanelViewModel(DepartmentsEmployeesPanelWindow inputWindow, int currentUserID)
         {
             DepartmentsEmployeesPanelWindow = inputWindow;
@@ -155,15 +241,20 @@ namespace AppDocumentManagement.UI.ViewModels
             InitializeEmployees();
             SelectedDepartment = Departments.FirstOrDefault();
         }
-
+        /// <summary>
+        /// Function to initialize the current user
+        /// </summary>
+        /// <param name="currentUserID"></param>
         private void InitializeCurrentUser(int currentUserID)
         {
             if (currentUserID == 0) return;
             EmployesService employesService = new EmployesService();
             currentUser = employesService.GetEmployeeByID(currentUserID).Result;
-            Greating = $"Добрый день, {currentUser.EmployeeFirstMiddleName}!";
+            Greeting = $"Добрый день, {currentUser.EmployeeFirstMiddleName}!";
         }
-
+        /// <summary>
+        /// Function to get and initialize a list of departments
+        /// </summary>
         private void InitializeDepartments()
         {
             Departments.Clear();
@@ -177,7 +268,9 @@ namespace AppDocumentManagement.UI.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// Function for getting a list of employee photos
+        /// </summary>
         private void GetEmployeesPhotos()
         {
             EmployeePhotos = new List<EmployeePhoto>();
@@ -199,7 +292,9 @@ namespace AppDocumentManagement.UI.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// Function to get and initialize an observable collection of employees
+        /// </summary>
         private void InitializeEmployees()
         {
             Employees = new ObservableCollection<Employee>();
@@ -232,7 +327,9 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             OnPropertyChanged(nameof(Employees));
         }
-
+        /// <summary>
+        /// Function for obtaining a list of employees of the selected department
+        /// </summary>
         private void GetEmployeesOfDepartment()
         {
             EmployeesOfDepartment.Clear();
@@ -248,7 +345,9 @@ namespace AppDocumentManagement.UI.ViewModels
             DepartmentSize = EmployeesOfDepartment.Count;
             OnPropertyChanged(nameof(EmployeesOfDepartment));
         }
-
+        /// <summary>
+        /// Function for obtaining an employee holding the position of Deputy General Director of the selected department
+        /// </summary>
         private void GetDeptyOfDepartment()
         {
             DeputyGeneralDirector = new Employee();
@@ -257,16 +356,20 @@ namespace AppDocumentManagement.UI.ViewModels
                 DeputyGeneralDirector = EmployeesOfDepartment.Where(x => x.EmployeeRole == EmployeeRole.DeputyGeneralDirector).FirstOrDefault();
             }
         }
-
+        /// <summary>
+        /// Function for obtaining an employee holding the position of head of the selected department
+        /// </summary>
         private void GetHeadOfDepartment()
         {
-            HeaderOfDepartment = new Employee();
+            HeadOfDepartment = new Employee();
             if (SelectedDepartment != null && EmployeesOfDepartment.Count > 0)
             {
-                HeaderOfDepartment = EmployeesOfDepartment.Where(x => x.EmployeeRole == EmployeeRole.HeadOfDepartment).FirstOrDefault();
+                HeadOfDepartment = EmployeesOfDepartment.Where(x => x.EmployeeRole == EmployeeRole.HeadOfDepartment).FirstOrDefault();
             }
         }
-
+        /// <summary>
+        /// Function for obtaining a list of performers of the selected department
+        /// </summary>
         private void GetPerformersOfDepartment()
         {
             PerformersOfDepartment.Clear();
@@ -282,8 +385,13 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             OnPropertyChanged(nameof(PerformersOfDepartment));
         }
-
+        /// <summary>
+        /// Declaring a command to show departments
+        /// </summary>
         public ICommand ISelectDepartments => new RelayCommand(selectDepartments => SelectDepartments());
+        /// <summary>
+        /// Function to show departments
+        /// </summary>
         private void SelectDepartments()
         {
             LabelListContent = "Список отделов";
@@ -297,8 +405,13 @@ namespace AppDocumentManagement.UI.ViewModels
             InitializeEmployees();
             SelectedDepartment = Departments.FirstOrDefault();
         }
-
+        /// <summary>
+        /// Declaring a command to show employees
+        /// </summary>
         public ICommand ISelectEmployees => new RelayCommand(selectEmployees => SelectEmployees());
+        /// <summary>
+        /// Function to show employees
+        /// </summary>
         private void SelectEmployees()
         {
             LabelListContent = "Список сотрудников";
@@ -310,13 +423,21 @@ namespace AppDocumentManagement.UI.ViewModels
             _isEmployee = true;
             SelectedEmployee = Employees.FirstOrDefault();
         }
+        /// <summary>
+        /// Declaring a search command
+        /// </summary>
         public ICommand IFindItem => new RelayCommand(findItem => FindItem());
-
+        /// <summary>
+        /// Search function 
+        /// </summary>
         private void FindItem()
         {
             FindItems(SearchString);
         }
-
+        /// <summary>
+        /// Search function by search bar
+        /// </summary>
+        /// <param name="searchString"></param>
         public void FindItems(string searchString)
         {
             SearchString = searchString;
@@ -329,7 +450,9 @@ namespace AppDocumentManagement.UI.ViewModels
                 FindEmployee();
             }
         }
-
+        /// <summary>
+        /// Department search function
+        /// </summary>
         private void FindDepartment()
         {
             Departments.Clear();
@@ -358,7 +481,9 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             SelectedDepartment = Departments.FirstOrDefault();
         }
-
+        /// <summary>
+        /// Employee search function
+        /// </summary>
         private void FindEmployee()
         {
             Employees.Clear();
@@ -386,8 +511,13 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             SelectedEmployee = Employees.FirstOrDefault();
         }
-
+        /// <summary>
+        /// Declaring a command to add a new element
+        /// </summary>
         public ICommand IAddItem => new RelayCommand(addItem => AddItem());
+        /// <summary>
+        /// Function to add a new element
+        /// </summary>
         private void AddItem()
         {
             if (!_isEmployee)
@@ -399,8 +529,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 AddNewEmployee();
             }
         }
-
+        /// <summary>
+        /// Declaring a command to add a new department
+        /// </summary>
         public ICommand IAddNewDepartment => new RelayCommand(addNewDepartment => AddNewDepartment());
+        /// <summary>
+        /// Function to add a new department
+        /// </summary>
         private void AddNewDepartment()
         {
             DepartmentWindow departmentWindow = new DepartmentWindow(null);
@@ -420,8 +555,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 SelectedDepartment = Departments.FirstOrDefault();
             }
         }
-
+        /// <summary>
+        /// Declare a command to edit the selected department
+        /// </summary>
         public ICommand IEditSelectedDepartment => new RelayCommand(editSelectedDepartment => EditSelectedDepartment());
+        /// <summary>
+        /// Function to edit the selected department
+        /// </summary>
         private void EditSelectedDepartment()
         {
             if (SelectedDepartment != null)
@@ -446,8 +586,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// Declaring a command to add a new employee
+        /// </summary>
         public ICommand IAddNewEmployee => new RelayCommand(addEmployee => AddNewEmployee());
+        /// <summary>
+        /// Function to add a new employee
+        /// </summary>
         private void AddNewEmployee()
         {
             EmployeeWindow employeeWindow = new EmployeeWindow(null);
@@ -475,7 +620,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 GetPerformersOfDepartment();
             }
         }
+        /// <summary>
+        /// Announce a command to update the selected employee's data.
+        /// </summary>
         public ICommand IUpdateEmployee => new RelayCommand(updateEmployee => UpdateEmployee());
+        /// <summary>
+        /// Function to update the selected employee's data
+        /// </summary>
         private void UpdateEmployee()
         {
             if (SelectedEmployee != null)
@@ -483,7 +634,9 @@ namespace AppDocumentManagement.UI.ViewModels
                 UpdateCurrentEmployee(SelectedEmployee);
             }
         }
-
+        /// <summary>
+        /// Function for updating data of the selected performer
+        /// </summary>
         private void UpdatePerformer()
         {
             if (SelectedPerformer != null)
@@ -497,6 +650,10 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             SelectedPerformer = null;
         }
+        /// <summary>
+        /// Function for updating data of the current employee.
+        /// </summary>
+        /// <param name="inputEmployee"></param>
         private void UpdateCurrentEmployee(Employee inputEmployee)
         {
             EmployeeWindow employeeWindow = new EmployeeWindow(inputEmployee);
@@ -517,7 +674,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 SelectedEmployee = Employees.FirstOrDefault();
             }
         }
+        /// <summary>
+        /// Announcement of a command to remove a selected employee
+        /// </summary>
         public ICommand IRemoveEmployee => new RelayCommand(removeEmployee => RemoveEmployee());
+        /// <summary>
+        /// Function to remove a selected employee
+        /// </summary>
         private void RemoveEmployee()
         {
             if (SelectedEmployee != null)
@@ -535,15 +698,25 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             InitializeEmployees();
         }
-
+        /// <summary>
+        /// Declaring the command to open the manager panel window
+        /// </summary>
         public ICommand IOpenManagerPanelWindow => new RelayCommand(openManagerPanelWindow => OpenManagerPanelWindow());
+        /// <summary>
+        /// Function to open the manager panel window
+        /// </summary>
         private void OpenManagerPanelWindow()
         {
             ManagerPanelWindow managerPanelWindow = new ManagerPanelWindow(currentUser.EmployeeID);
             managerPanelWindow.Show();
         }
-
+        /// <summary>
+        /// Declaring the command to close DepartmentsEmployeesPanelWindow
+        /// </summary>
         public ICommand IExit => new RelayCommand(exit => Exit());
+        /// <summary>
+        /// Function to close DepartmentsEmployeesPanelWindow
+        /// </summary>
         private void Exit()
         {
             DepartmentsEmployeesPanelWindow.Close();

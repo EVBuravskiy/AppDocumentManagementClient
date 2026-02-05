@@ -123,11 +123,15 @@ namespace AppDocumentManagement.UI.ViewModels
         /// </summary>
         public ObservableCollection<InternalDocumentFile> InternalDocumentFiles { get; set; }
         /// <summary>
-        /// Declaring a property for the InternalDocumentFile collection
+        /// Declaring a property for the selected InternalDocumentFile
         /// </summary>
         public InternalDocumentFile SelectedInternalDocumentFile { get; set; }
 
-
+        /// <summary>
+        /// CreatingInternalDocumentViewModel constructor
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="currentUserID"></param>
         public CreatingInternalDocumentViewModel(CreatingInternalDocumentWindow window, int currentUserID)
         {
             CreatingInternalDocumentWindow = window;
@@ -139,14 +143,19 @@ namespace AppDocumentManagement.UI.ViewModels
             InternalDocumentDate = DateTime.Now;
             InternalDocumentFiles = new ObservableCollection<InternalDocumentFile>();
         }
-
+        /// <summary>
+        /// Function to initialize current user
+        /// </summary>
+        /// <param name="currentUserID"></param>
         private void InitializeCurrentUser(int currentUserID)
         {
             if (currentUserID == 0) return;
             EmployesService employeesService = new EmployesService();
             currentUser = employeesService.GetEmployeeByID(currentUserID).Result;
         }
-
+        /// <summary>
+        /// Function for initializing internal document types
+        /// </summary>
         private void InitializeInternalDocumentTypes()
         {
             var internalDocumentTypes = Enum.GetValues(typeof(InternalDocumentType));
@@ -157,8 +166,13 @@ namespace AppDocumentManagement.UI.ViewModels
             SelectedInternalDocumentType = InternalDocumentTypeConverter.ConvertToEnum(InternalDocumentTypes.FirstOrDefault());
             SelectedInternalDocumentTypeIndex = 0;
         }
-
+        /// <summary>
+        /// Declaring a command to add an internal document file
+        /// </summary>
         public ICommand IBrowseInternalDocumentFiles => new RelayCommand(browseInternalDocumentFiles => BrowseInternalDocumentFile());
+        /// <summary>
+        /// Function to add an internal document file
+        /// </summary>
         private void BrowseInternalDocumentFile()
         {
             var filePath = fileDialogService.OpenFile();
@@ -172,8 +186,13 @@ namespace AppDocumentManagement.UI.ViewModels
             internalDocumentFile.FileData = fileData;
             InternalDocumentFiles.Add(internalDocumentFile);
         }
-
+        /// <summary>
+        /// Declaring a command to delete an internal document file
+        /// </summary>
         public ICommand IDeleteInternalDocumentFile => new RelayCommand(deleteInternalDocumentFile => DeleteInternalDocumentFile());
+        /// <summary>
+        /// Function to delete an internal document file
+        /// </summary>
         private void DeleteInternalDocumentFile()
         {
             if (SelectedInternalDocumentFile != null)
@@ -181,9 +200,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 InternalDocumentFiles.Remove(SelectedInternalDocumentFile);
             }
         }
-
+        /// <summary>
+        /// Declaring a command to send an internal document to an employee
+        /// </summary>
         public ICommand ISendInternalDocument => new RelayCommand(sendInternalDocument => SendInternalDocument());
-
+        /// <summary>
+        /// Function to send an internal document to an employee
+        /// </summary>
         private void SendInternalDocument()
         {
             InternalDocument newInternalDocument = CreateInternalDocument();
@@ -209,8 +232,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 MessageBox.Show($"Ошибка в сохранении созданного внутреннего документа");
             }
         }
-
+        /// <summary>
+        /// Declaring a command to register an internal document
+        /// </summary>
         public ICommand IRegisterInternalDocument => new RelayCommand(registerInternalDocument => RegisterInternalDocument());
+        /// <summary>
+        /// Function to register an internal document
+        /// </summary>
         private void RegisterInternalDocument()
         {
             InternalDocument newInternalDocument = CreateInternalDocument();
@@ -226,7 +254,10 @@ namespace AppDocumentManagement.UI.ViewModels
                 MessageBox.Show($"Ошибка в сохранении созданного внутреннего документа");
             }
         }
-
+        /// <summary>
+        /// Function for creating a new internal document
+        /// </summary>
+        /// <returns>InternalDocument</returns>
         private InternalDocument CreateInternalDocument()
         {
             InternalDocument newInternalDocument = new InternalDocument();
@@ -245,7 +276,10 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             return newInternalDocument;
         }
-        
+        /// <summary>
+        /// Function for obtaining the internal document number
+        /// </summary>
+        /// <returns>string</returns>
         private string GetInternalDocumentNumber()
         {
             InternalDocumentsService internalDocumentsService = new InternalDocumentsService();
@@ -253,6 +287,9 @@ namespace AppDocumentManagement.UI.ViewModels
             int number = internalDocumentsService.GetCountInternalDocumentByType(SelectedInternalDocumentType) + 1;
             return $"{number}/{type}";
         }
+        /// <summary>
+        /// Command for close CreatingInternalDocumentWindow
+        /// </summary>
         public ICommand IExit => new RelayCommand(exit => { CreatingInternalDocumentWindow.Close(); });
     }
 }
