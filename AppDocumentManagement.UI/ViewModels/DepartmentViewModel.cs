@@ -7,13 +7,26 @@ using System.Windows.Media;
 
 namespace AppDocumentManagement.UI.ViewModels
 {
+    /// <summary>
+    /// ViewModel for DepartmentWindow
+    /// </summary>
     public class DepartmentViewModel : BaseViewModelClass
     {
+        /// <summary>
+        /// DepartmentWindow announcement
+        /// </summary>
         private DepartmentWindow DepartmentWindow;
-
+        /// <summary>
+        /// Declaring a variable for the selected department
+        /// </summary>
         private Department _selectedDepartment = null;
-
+        /// <summary>
+        /// Declaring a variable for the name of the selected department
+        /// </summary>
         private string _departmentTitle = "";
+        /// <summary>
+        /// Declaring a property for the name of the selected department
+        /// </summary>
         public string DepartmentTitle
         {
             get => _departmentTitle;
@@ -23,8 +36,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(DepartmentTitle));
             }
         }
-
+        /// <summary>
+        /// Declaring a variable for the short name of the selected department
+        /// </summary>
         private string _departmentShortTitle = "";
+        /// <summary>
+        /// Declaring a property for the short name of the selected department
+        /// </summary>
         public string DepartmentShortTitle
         {
             get => _departmentShortTitle;
@@ -34,8 +52,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(DepartmentShortTitle));
             }
         }
-
+        /// <summary>
+        /// Declaring a variable for the button name to be changed
+        /// </summary>
         private string removeBtnTitle = "Очистить данные";
+        /// <summary>
+        /// Declaring a property for the button name to be changed.
+        /// </summary>
         public string RemoveBtnTitle
         {
             get => removeBtnTitle;
@@ -45,6 +68,11 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(RemoveBtnTitle));
             }
         }
+        /// <summary>
+        /// DepartmentViewModel constructor
+        /// </summary>
+        /// <param name="departmentWindow"></param>
+        /// <param name="inputDepartment"></param>
         public DepartmentViewModel(DepartmentWindow departmentWindow, Department inputDepartment)
         {
             DepartmentWindow = departmentWindow;
@@ -56,9 +84,13 @@ namespace AppDocumentManagement.UI.ViewModels
                 RemoveBtnTitle = "Удалить отдел";
             }
         }
-
+        /// <summary>
+        /// Announcement of the command to delete the selected department
+        /// </summary>
         public ICommand IDelete => new RelayCommand(delete => Delete());
-
+        /// <summary>
+        /// Function to delete the selected department
+        /// </summary>
         private void Delete()
         {
             bool result = false;
@@ -84,8 +116,13 @@ namespace AppDocumentManagement.UI.ViewModels
             MessageBox.Show($"Ошибка! Удаление отдела {DepartmentTitle} не выполнено");
             DepartmentWindow.Close();
         }
-
+        /// <summary>
+        /// Announcement of the command to save the selected department
+        /// </summary>
         public ICommand ISave => new RelayCommand(save => Save());
+        /// <summary>
+        /// Function to save the selected department
+        /// </summary>
         private void Save()
         {
             if (!ValidateDepatment()) return;
@@ -115,7 +152,10 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             MessageBox.Show($"Ошибка! Сохранение отдела {DepartmentTitle} не выполнено");
         }
-
+        /// <summary>
+        /// Function for checking the entered data of the department
+        /// </summary>
+        /// <returns>bool</returns>
         private bool ValidateDepatment()
         {
             if (string.IsNullOrEmpty(DepartmentTitle))
@@ -144,8 +184,13 @@ namespace AppDocumentManagement.UI.ViewModels
             }
             return true;
         }
-
+        /// <summary>
+        /// Announcement of the command to close DepartmentWindow
+        /// </summary>
         public ICommand IExit => new RelayCommand(exit => Exit());
+        /// <summary>
+        /// Function to close DepartmentWindow
+        /// </summary>
         private void Exit()
         {
             DepartmentTitle = "";
