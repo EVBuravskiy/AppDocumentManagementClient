@@ -99,11 +99,12 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <Grid Margin="20 10">
+                    <Grid Margin="20 10 5 10">
                         <Border x:Name="SignatoryInfo"
-                                        CornerRadius="5"
-                                        BorderThickness="0"
-                                        BorderBrush="Transparent">
+                                CornerRadius="5"
+                                BorderThickness="2"
+                                BorderBrush="DarkGray"
+                                Background="WhiteSmoke">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"
@@ -131,11 +132,12 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <Grid Margin="20 10">
+                    <Grid Margin="5 10 20 10">
                         <Border x:Name="AgreeEmployer"
-                                        CornerRadius="5"
-                                        BorderThickness="0"
-                                        BorderBrush="Transparent">
+                                CornerRadius="5"
+                                BorderThickness="2"
+                                BorderBrush="DarkGray"
+                                Background="WhiteSmoke">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"

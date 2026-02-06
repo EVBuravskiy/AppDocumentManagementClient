@@ -125,12 +125,13 @@
                         </Button>
                     </Grid>
                     <Grid Grid.Row="1"
-                              Margin="20 10">
+                              Margin="20 10 5 10">
                         <Grid>
                             <Border x:Name="SignatoryInfo"
-                                        CornerRadius="5"
-                                        BorderThickness="0"
-                                        BorderBrush="Transparent">
+                                    CornerRadius="5"
+                                    BorderThickness="2"
+                                    BorderBrush="DarkGray"
+                                    Background="WhiteSmoke">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"
@@ -180,12 +181,13 @@
                             </Button>
                         </Grid>
                         <Grid Grid.Row="1"
-                              Margin="20 10">
+                              Margin="5 10 20 10">
                             <Grid>
                                 <Border x:Name="AgreeEmployer"
                                         CornerRadius="5"
-                                        BorderThickness="0"
-                                        BorderBrush="Transparent">
+                                        BorderThickness="2"
+                                        BorderBrush="DarkGray"
+                                        Background="WhiteSmoke">
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Style="{StaticResource AdminDocumentTextblock}"
                                                    HorizontalAlignment="Center"
