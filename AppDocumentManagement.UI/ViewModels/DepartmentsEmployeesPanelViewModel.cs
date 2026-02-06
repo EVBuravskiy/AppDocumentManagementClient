@@ -224,6 +224,17 @@ namespace AppDocumentManagement.UI.ViewModels
                 OnPropertyChanged(nameof(DepartmentSize));
             }
         }
+        private string employeeCountNaming = "сотрудников";
+
+        public string EmployeeCountNaming
+        {
+            get => employeeCountNaming;
+            set
+            {
+                employeeCountNaming = value;
+                OnPropertyChanged(nameof(EmployeeCountNaming));
+            }
+        }
         /// <summary>
         /// DepartmentsEmployeesPanelViewModel constructor
         /// </summary>
@@ -343,6 +354,18 @@ namespace AppDocumentManagement.UI.ViewModels
                 }
             }
             DepartmentSize = EmployeesOfDepartment.Count;
+            if (DepartmentSize == 1)
+            {
+                EmployeeCountNaming = "сотрудник";
+            }
+            else if (DepartmentSize > 1 && DepartmentSize < 5)
+            {
+                EmployeeCountNaming = "сотрудника";
+            }
+            else
+            {
+                EmployeeCountNaming = "сотрудников";
+            }
             OnPropertyChanged(nameof(EmployeesOfDepartment));
         }
         /// <summary>
